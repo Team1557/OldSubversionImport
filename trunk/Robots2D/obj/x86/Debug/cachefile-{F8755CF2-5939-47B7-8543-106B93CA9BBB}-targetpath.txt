@@ -1,7 +1,0 @@
-Content\RobotFont.xnb
-Content\RobotTourney.xnb
-Content\PartGrid.xnb
-Content\ArenaCenter.xnb
-Content\FIRST.xnb
-Content\WorldGrid.xnb
-Content\MetalClang.xnb
