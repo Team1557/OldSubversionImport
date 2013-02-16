@@ -1,0 +1,155 @@
+<link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.0.custom.min.css" />
+  <script src="js/jquery-1.8.3.js"></script>
+<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script><script src="jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="style.css"/>
+
+<br/>
+<center><span class="question"></span></center>
+<br/><br/><br/>
+
+<div id="main">
+<span id="scoreContainer">Score: <span id="score">0</span></span>
+<div id="scoreText">YOU FAIL</div>
+<img id="spoiler" src="" width="40%" style="float:right;">
+<table id="qanda">
+	<tr>
+		<td style="width:200px"><div class="supersuperduper red answerbutton button" id="buttonA">A</div></td>
+		<td class="answer" id="answerA">A</td>
+	</tr>
+	<tr>
+		<td><div class="supersuperduper orange answerbutton button" id="buttonB">B</div></td>
+		<td class="answer" id="answerB">B</td>
+	</tr>
+	<tr>
+		<td><div class="supersuperduper yellow answerbutton button" id="buttonC">C</div></td>
+		<td class="answer" id="answerC">C</td>
+	</tr>
+	<tr>
+		<td><div class="supersuperduper green answerbutton button" id="buttonD">D</div></td>
+		<td class="answer" id="answerD">D</td>
+	</tr>
+	<tr>
+		<td><div class="supersuperduper blue answerbutton button" id="buttonE">E</div></td>
+		<td class="answer" id="answerE">E</td>
+	</tr>
+</table>
+</div>
+<div id="scoreContinue"><div class="supersuperduper green button" onclick="location.reload(true);" style="background-image:url('rainbow.png')" id="continue">Continue</div></div>
+
+<script>
+	$("#main").fadeIn(1000);
+	
+	var questions = [
+		{
+			question:"You are heading to a competition, what shoes should you wear?",
+			answers:["Tennis shoes", 	"Flip-flops", 		"Barefoot", 		"Boots", 		""],
+			values:	[90,				-80,				-150,				100,			0],
+			images:	["",				"",					"",				"",				"eyepoked.jpg"],
+		},
+		{
+			question:"Now you have made it to the pit area, what should you wear for eye protection?",
+			answers:["I don't need anything", 		"Sunglasses", 		"Safety glasses", 		"", 			""],
+			values:	[-100,							-30,				100,					0,				0],
+			images:	["",				"",					"",					"",				"lays.jpg"],
+		},
+		{
+			question:"You’re working on the robot, when you notice that one of the wheels are loose, ",
+			answers:["I should tell somebody", 			"I should help fix it", 		"It's fine, I don't need to let anybody know", 		"Write a memo for later", 	""],
+			values:	[90,								100,							-150,												-100,						0],
+			images:	["",				"",					"",					"",				"lays.jpg"],
+		},
+		{
+			question:"There’s something leaking out of the battery, what should you do?",
+			answers:["Wipe it up with a paper towel", 			"Pour baking soda on it", 		"Pour baking powder on it", 		"Taste it to see if it's Kool-aid", 	""],
+			values:	[-150,										150,							0,									-400,									0],
+			images:	["",				"",					"",					"",				"lays.jpg"],
+		},
+	];
+	
+	var scores = [
+		// [any score less than the previous value is >>>, Text]
+		[-100000, "You area, failure", ""],
+		[-1000, "You are a danger to everybody around you", ""],
+		[0, "", ""],
+		[1, "You are a safety hazard.", ""],
+		[100, "You should READ THE MANUAL.", ""],
+		[200, "You have a lot more to learn about safety.", ""],
+		[300, "You're pretty good, but you still have some more to learn", ""],
+		[400, "Very good, you know a lot about FIRST safety", ""],
+		[500, "IMPOSSIBRU", ""],
+		[9001, "You are A HACKER.", "nails-in-office4.jpg"],
+	];
+
+	
+	var finalScore = 0;
+	var questionNumber = 0;
+	
+	$("#scoreContainer,#scoreText,#continue").css("visibility", "hidden");
+	
+	$(".answerbutton").bind("click", function() {
+		buttonId = $(this).parent().parent().index();
+		
+		finalScore += questions[questionNumber].values[buttonId];
+		$("#score").html(finalScore);
+		
+		console.debug(finalScore);
+		
+		//if (question.images[buttonId] != "") {
+			$("#spoiler")[0].src=question.images[buttonId];
+		//}
+		
+		questionNumber++;
+		changeQuestion(questionNumber);
+		//if (button == "A"
+	});
+	
+	$(".answerbutton").bind("hover", function() {
+		buttonId = $(this).parent().parent().index();
+		
+		if (questions[questionNumber].images[buttonId] != "") {
+			$("#spoiler")[0].src = questions[questionNumber].images[buttonId];
+		}
+	});
+	
+	
+	function changeQuestion(id) {
+		if (id >= questions.length) {
+			$("#qanda,.question").fadeOut(1000);
+			$("#scoreContainer,#scoreText,#continue").css("visibility", "visible");
+			
+			var scoreText = "unset";
+			var Theimage = "";
+			for (var i = 0; i < scores.length; i++) {
+				if (scores[i][0] <= finalScore)
+				{
+					scoreText = scores[i][1];
+					Theimage = scores[i][2];
+				}
+				else {
+					break;
+				}
+			}
+			
+			$("#scoreText").html(scoreText);
+			$("body")[0].style.backgroundImage = Theimage;
+		}
+		
+		question = questions[id];
+		$(".question").html(question.question);
+		
+		if (question.answers[0] != "") {$("#answerA").html(question.answers[0]);$("#answerA,#buttonA").fadeIn(1000);}
+		else $("#answerA,#buttonA").fadeOut(1000);
+		if (question.answers[1] != "") {$("#answerB").html(question.answers[1]);$("#answerB,#buttonB").fadeIn(1000);}
+		else $("#answerB,#buttonB").fadeOut(1000);
+		if (question.answers[2] != "") {$("#answerC").html(question.answers[2]);$("#answerC,#buttonC").fadeIn(1000);}
+		else $("#answerC,#buttonC").fadeOut(1000);
+		if (question.answers[3] != "") {$("#answerD").html(question.answers[3]);$("#answerD,#buttonD").fadeIn(1000);}
+		else $("#answerD,#buttonD").fadeOut(1000);
+		if (question.answers[4] != "") {$("#answerE").html(question.answers[4]);$("#answerE,#buttonE").fadeIn(1000);}
+		else $("#answerE,#buttonE").fadeOut(1000);
+		
+	}
+	
+	changeQuestion(0);
+	
+</script>
