@@ -35,6 +35,7 @@
 </table>
 </div>
 <div id="scoreContinue"><div class="supersuperduper green button" onclick="location.reload(true);" style="background-image:url('rainbow.png')" id="continue">Continue</div></div>
+<iframe id="game" style="width:1000px;height:800px;position:absolute;"></iframe>
 
 <script>
 	$("#main").fadeIn(1000);
@@ -64,6 +65,24 @@
 			values:	[-150,										150,							0,									-400,									0],
 			images:	["",				"",					"",					"",				"lays.jpg"],
 		},
+		{
+			question:"Somebody is about to drill into a piece of metal, when you notice they don’t have their safety glasses on.  What do you do?",
+			answers:["Make frantic hand motions", 			"Yell at them", 		"Quickly tell them to put their glasses on", 		"Laugh when they lose an eye", 	""],
+			values:	[-0,										50,						150,												-400,									0],
+			images:	["",				"",					"",					"",				"lays.jpg"],
+		},
+		{
+			question:"You need to lift the robot, you should...",
+			answers:["Use the force", 			"Use the centripetal force", 		"Get a teammate to help", 		"Prepare an intricate rope and pulley system ", 	""],
+			values:	[-200,						-70,								150,							-100,												0],
+			images:	["",						"",									"",								"pulley.gif",										""],
+		},
+		{
+			question:"Your teammates are working with the wires on the robot, when you notice that it is still on and enabled.  What do you do?",
+			answers:["Disable through the driver station", 			"Power it down with the breaker", 		"Tell them to taste the wires to see if they're on", 		"A and B", 	""],
+			values:	[50,												100,								-200,														150,		0],
+			images:	["",						"",									"",								"",										""],
+		},
 	];
 	
 	var scores = [
@@ -84,7 +103,7 @@
 	var finalScore = 0;
 	var questionNumber = 0;
 	
-	$("#scoreContainer,#scoreText,#continue").css("visibility", "hidden");
+	$("#scoreContainer,#scoreText,#continue,#game").css("visibility", "hidden");
 	
 	$(".answerbutton").bind("click", function() {
 		buttonId = $(this).parent().parent().index();
@@ -94,27 +113,32 @@
 		
 		console.debug(finalScore);
 		
-		//if (question.images[buttonId] != "") {
-			$("#spoiler")[0].src=question.images[buttonId];
-		//}
+		if (questions[questionNumber].images[buttonId] != "") {
+			$("#spoiler")[0].src =questions[questionNumber].images[buttonId];
+		}
+		else {
+			$("#spoiler")[0].src = "blank.png";
+		}
 		
 		questionNumber++;
 		changeQuestion(questionNumber);
-		//if (button == "A"
 	});
 	
 	$(".answerbutton").bind("hover", function() {
 		buttonId = $(this).parent().parent().index();
 		
 		if (questions[questionNumber].images[buttonId] != "") {
-			$("#spoiler")[0].src = questions[questionNumber].images[buttonId];
+			$("#spoiler")[0].src =questions[questionNumber].images[buttonId];
+		}
+		else {
+			$("#spoiler")[0].src = "";
 		}
 	});
 	
 	
 	function changeQuestion(id) {
 		if (id >= questions.length) {
-			$("#qanda,.question").fadeOut(1000);
+			$("#qanda,.question").fadeOut(2000);
 			$("#scoreContainer,#scoreText,#continue").css("visibility", "visible");
 			
 			var scoreText = "unset";
@@ -132,6 +156,11 @@
 			
 			$("#scoreText").html(scoreText);
 			$("body")[0].style.backgroundImage = Theimage;
+			
+			if (finalScore >= 9001) {
+				$("#game")[0].src="http://patorjk.com/games/snake/";
+				$("#game").css("visibility","visible");
+			}
 		}
 		
 		question = questions[id];
