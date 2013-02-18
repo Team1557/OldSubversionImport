@@ -1,6 +1,11 @@
 body {
 	font-family:Helvetica,sans-serif;
 	background-color:#FBFBFB;
+	background-image:url('');
+	background-position:right bottom;
+	background-repeat:no-repeat;
+	background-size:contain;
+	//background-size:cover;
 }
 
 .answer,.question {font-family:coolvetica;}

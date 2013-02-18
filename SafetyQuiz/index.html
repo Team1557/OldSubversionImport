@@ -1,3 +1,8 @@
+<html>
+<head>
+<title>1557 Safety Quiz</title>
+</head>
+<body onkeydown="function(e){console.debug(e);}">
 <link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.0.custom.min.css" />
   <script src="js/jquery-1.8.3.js"></script>
 <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script><script src="jquery-1.9.1.min.js"></script>
@@ -35,11 +40,8 @@
 </table>
 </div>
 <div id="scoreContinue"><div class="supersuperduper green button" onclick="location.reload(true);" style="background-image:url('rainbow.png')" id="continue">Continue</div></div>
-<iframe id="game" style="width:1000px;height:800px;position:absolute;"></iframe>
 
 <script>
-	$("#main").fadeIn(1000);
-	
 	var questions = [
 		{
 			question:"You are heading to a competition, what shoes should you wear?",
@@ -54,7 +56,7 @@
 			images:	["",				"",					"",					"",				"lays.jpg"],
 		},
 		{
-			question:"You’re working on the robot, when you notice that one of the wheels are loose, ",
+			question:"You’re working on the robot, when you notice that one of the wheels are loose, what should you do? ",
 			answers:["I should tell somebody", 			"I should help fix it", 		"It's fine, I don't need to let anybody know", 		"Write a memo for later", 	""],
 			values:	[90,								100,							-150,												-100,						0],
 			images:	["",				"",					"",					"",				"lays.jpg"],
@@ -80,23 +82,66 @@
 		{
 			question:"Your teammates are working with the wires on the robot, when you notice that it is still on and enabled.  What do you do?",
 			answers:["Disable through the driver station", 			"Power it down with the breaker", 		"Tell them to taste the wires to see if they're on", 		"A and B", 	""],
-			values:	[50,												100,								-200,														150,		0],
+			values:	[50,											100,								-200,														150,		0],
 			images:	["",						"",									"",								"",										""],
+		},
+		{
+			question:"You need to determine if a heat gun is hot",
+			answers:["Touch the heat gun with the back of your hand", 	"Smell it", 		"Touch it to something made of wood", 		"Touch it with your finger", 	""],
+			values:	[-100,												150,				125,										-150,			0],
+			images:	["",												"",					"",											"",				""],
+		},
+		{
+			question:"Your little brother is visiting the pit area",
+			answers:["Ignore him", 	"Tell him the rules", 	"Let him drive the robot in the next match", 		"B and C", 	""],
+			values:	[-100,			150,					-150,												-125,		0],
+			images:	["",			"",						"",													"",			""],
 		},
 	];
 	
+	var maxScore = 0;
+	var minScore = 0;
+	
+	for (var i = 0; i < questions.length; i++) {
+		localMaxScore = -100000000000000000;
+		localMinScore = 100000000000000000;
+		for (var j = 0; j < questions[i].values.length; j++) {
+			if (questions[i].values[j] > localMaxScore) {
+				localMaxScore = questions[i].values[j];
+			}
+			
+			if (questions[i].values[j] < localMinScore) {
+				localMinScore = questions[i].values[j];
+			}
+		}
+		
+		maxScore += localMaxScore;
+		minScore += localMinScore;
+	}
+	
+	console.debug("max score: " + maxScore);
+	console.debug("min score: " + minScore);
+	
 	var scores = [
 		// [any score less than the previous value is >>>, Text]
-		[-100000, "You area, failure", ""],
-		[-1000, "You are a danger to everybody around you", ""],
+		[minScore-1, "You suck worse than a broken vaccuum cleaner", "eyepoked.jpg"],
+		[minScore, "Congratulations, you have gotten the worst possible score.  I'm surprised you haven't broken the computer yet!", ""],
+		[minScore * .90, "my gramer is bad as ur score", ""],
+		[minScore * .80, "You must have been trying REALLY hard to get such a low score.", ""],
+		[minScore * .60, "You are a hazard to everybody around you", ""],
+		[minScore * .40, "", ""],
+		[minScore * .20, "", ""],
 		[0, "", ""],
-		[1, "You are a safety hazard.", ""],
-		[100, "You should READ THE MANUAL.", ""],
-		[200, "You have a lot more to learn about safety.", ""],
-		[300, "You're pretty good, but you still have some more to learn", ""],
-		[400, "Very good, you know a lot about FIRST safety", ""],
-		[500, "IMPOSSIBRU", ""],
-		[9001, "You are A HACKER.", "nails-in-office4.jpg"],
+		[maxScore * .20, "", ""],
+		[maxScore * .30, "", ""],
+		[maxScore * .40, "", ""],
+		[maxScore * .50, "", ""],
+		[maxScore * .60, "You have a lot more to learn about safety.", ""],
+		[maxScore * .70, "You're pretty good, but you still have some more to learn", ""],
+		[maxScore * .80, "Very good, you know a lot about FIRST safety", ""],
+		[maxScore * .90, "You are a safety guru!", ""],
+		[maxScore * 1, "Congratulations, you got 100%!", ""],
+		[maxScore+1, "You are A HACKER.", "Hacker_Detected.jpeg"],
 	];
 
 	
@@ -109,7 +154,6 @@
 		buttonId = $(this).parent().parent().index();
 		
 		finalScore += questions[questionNumber].values[buttonId];
-		$("#score").html(finalScore);
 		
 		console.debug(finalScore);
 		
@@ -141,7 +185,7 @@
 			$("#qanda,.question").fadeOut(2000);
 			$("#scoreContainer,#scoreText,#continue").css("visibility", "visible");
 			
-			var scoreText = "unset";
+			var scoreText = -1337;
 			var Theimage = "";
 			for (var i = 0; i < scores.length; i++) {
 				if (scores[i][0] <= finalScore)
@@ -154,13 +198,17 @@
 				}
 			}
 			
-			$("#scoreText").html(scoreText);
-			$("body")[0].style.backgroundImage = Theimage;
+			$("#score").html(finalScore);
 			
-			if (finalScore >= 9001) {
-				$("#game")[0].src="http://patorjk.com/games/snake/";
-				$("#game").css("visibility","visible");
+			
+			$("#scoreText").html(scoreText);
+			$("#spoiler")[0].src=Theimage;
+			$("body").css("background-image", Theimage);
+			
+			if (finalScore <= minScore) {
+				$("body").css("background-image", "feelbad.gif");
 			}
+			
 		}
 		
 		question = questions[id];
@@ -182,3 +230,5 @@
 	changeQuestion(0);
 	
 </script>
+</body>
+</html>
