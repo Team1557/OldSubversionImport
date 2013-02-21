@@ -1,8 +1,35 @@
+<!--acbbccdbb-->
 <html>
 <head>
 <title>1557 Safety Quiz</title>
+
+<script>
+	var totalTyped = "";
+	function documentButtonPress(e) {
+		//console.debug(e);
+		
+		if (e.keyCode >= 65 && e.keyCode <= 69) {
+			pressButton(e.keyCode - 65);
+		}
+		
+		var firstLetter = String.fromCharCode(e.keyCode).toUpperCase();
+		if( firstLetter.toLowerCase() != String.fromCharCode(e.keyCode)) {
+			totalTyped += String.fromCharCode(e.keyCode);
+			console.debug(totalTyped);
+		}
+		
+		if (e.keyCode == 13) {
+			if (questionNumber >= questions.length) 
+			{
+				location.reload(true);
+			}
+		}		
+	}
+</script>
+
+
 </head>
-<body onkeydown="function(e){console.debug(e);}">
+<body onkeydown="documentButtonPress(event);">
 <link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.0.custom.min.css" />
   <script src="js/jquery-1.8.3.js"></script>
 <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script><script src="jquery-1.9.1.min.js"></script>
@@ -39,14 +66,18 @@
 	</tr>
 </table>
 </div>
-<div id="scoreContinue"><div class="supersuperduper green button" onclick="location.reload(true);" style="background-image:url('rainbow.png')" id="continue">Continue</div></div>
 
+<span id="videocontainer"></span>
+
+
+<div id="scoreContinue"><div class="supersuperduper green button" onclick="location.reload(true);" style="background-image:url('rainbow.png')" id="continue">Continue</div></div>
+<span style="color:#fbfbfb">Cake, and grief counseling, will be available at the conclusion of the test. </span>
 <script>
 	var questions = [
 		{
 			question:"You are heading to a competition, what shoes should you wear?",
 			answers:["Tennis shoes", 	"Flip-flops", 		"Barefoot", 		"Boots", 		""],
-			values:	[90,				-80,				-150,				100,			0],
+			values:	[100,				-80,				-150,				100,			0],
 			images:	["",				"",					"",				"",				"eyepoked.jpg"],
 		},
 		{
@@ -124,9 +155,9 @@
 	
 	var scores = [
 		// [any score less than the previous value is >>>, Text]
-		[minScore-1, "You suck worse than a broken vaccuum cleaner", "eyepoked.jpg"],
+		[Number.MIN_VALUE, "You suck worse than a broken vaccuum cleaner", "eyepoked.jpg"],
 		[minScore, "Congratulations, you have gotten the worst possible score.  I'm surprised you haven't broken the computer yet!", ""],
-		[minScore * .90, "my gramer is bad as ur score", ""],
+		[minScore * .90, "my gramer is bad ur score as", ""],
 		[minScore * .80, "You must have been trying REALLY hard to get such a low score.", ""],
 		[minScore * .60, "You are a hazard to everybody around you", ""],
 		[minScore * .40, "", ""],
@@ -142,17 +173,17 @@
 		[maxScore * .90, "You are a safety guru!", ""],
 		[maxScore * 1, "Congratulations, you got 100%!", ""],
 		[maxScore+1, "You are A HACKER.", "Hacker_Detected.jpeg"],
+		[9001, "OVER 9000!", ""],
+		[9002, "You are A HACKER.", "Hacker_Detected.jpeg"],
 	];
-
 	
 	var finalScore = 0;
 	var questionNumber = 0;
 	
 	$("#scoreContainer,#scoreText,#continue,#game").css("visibility", "hidden");
 	
-	$(".answerbutton").bind("click", function() {
-		buttonId = $(this).parent().parent().index();
-		
+	function pressButton(buttonId) {
+		if (questions[questionNumber].answers[buttonId] != "") {
 		finalScore += questions[questionNumber].values[buttonId];
 		
 		console.debug(finalScore);
@@ -166,7 +197,15 @@
 		
 		questionNumber++;
 		changeQuestion(questionNumber);
+		}
+	}
+	
+	$(".answerbutton").bind("click", function() {
+		buttonId = $(this).parent().parent().index();
+		pressButton(buttonId);
 	});
+	
+	
 	
 	$(".answerbutton").bind("hover", function() {
 		buttonId = $(this).parent().parent().index();
@@ -183,12 +222,32 @@
 	function changeQuestion(id) {
 		if (id >= questions.length) {
 			$("#qanda,.question").fadeOut(2000);
+			
+			var hasSpecial = false;
+			
+			if (totalTyped.indexOf("SNAKE") !== -1) {
+				window.location = "fun.html";
+			}
+			
+			if (totalTyped.indexOf("PORTAL") !== -1) {
+				window.location = "portal.html";
+			}
+			
+			if ((finalScore == maxScore) && !hasSpecial) {
+			//if (true) {
+				finalScore = 9001;
+				$("#videocontainer").html('<video width="100%" height="100%" id="over9000video">  <source src="Over 9000.mp4#t=26" type="video/mp4"> </object> </video>');
+				$("#videocontainer video")[0].play();
+			}
+			else {
+			}
+			
 			$("#scoreContainer,#scoreText,#continue").css("visibility", "visible");
 			
 			var scoreText = -1337;
 			var Theimage = "";
 			for (var i = 0; i < scores.length; i++) {
-				if (scores[i][0] <= finalScore)
+				if ((scores[i][0] <= finalScore))
 				{
 					scoreText = scores[i][1];
 					Theimage = scores[i][2];
@@ -199,7 +258,6 @@
 			}
 			
 			$("#score").html(finalScore);
-			
 			
 			$("#scoreText").html(scoreText);
 			$("#spoiler")[0].src=Theimage;
