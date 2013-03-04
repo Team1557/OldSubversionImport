@@ -1,16 +1,25 @@
 body {
 	font-family:Helvetica,sans-serif;
 	background-color:#FBFBFB;
-	background-image:url('');
-	background-position:right bottom;
-	background-repeat:no-repeat;
-	background-size:contain;
-	//background-size:cover;
+	background-image:url('light_wool.png');
 }
 
-.answer,.question {font-family:coolvetica;}
-.answer {font-size:45px;}
-.question {font-size:70px;}
+.answer,.question {
+	font-family:coolvetica;
+	text-shadow: 3px 3px 9px rgba(150, 150, 150, .5);
+}
+.answer {
+	font-size:45px;
+}
+.question {
+	font-size:70px;
+	
+}
+
+
+::selection {background:rgba(250,250,250,0);}
+::-webkit-selection {background:rgba(250,250,250,0);}
+::-moz-selection {background:rgba(250,250,250,0);}
 
 #scoreContainer,#scoreText,#continue {
 	position:absolute;
@@ -32,7 +41,7 @@ body {
 #continue{text-align:center;right:200px;top:10%;left:40%;font-size:54px;width:25%}
 
 .button, .button:visited {
-    background: #222 url(overlay.png) repeat-x;
+    background: #222 url('subtlenet2transparent.png');
     display: inline-block;
     padding: 5px 10px 6px;
     color: #fff;
@@ -63,10 +72,15 @@ body {
 .super.button, .super.button:visited            { font-size: 34px;
                                           padding: 8px 14px 9px; }
 
-.supersuperduper.button, .supersuperduper.button:visited            { font-size: 72px;
-                                          padding: 16px 28px 18px; }
-										  
-										  .pink.button, .magenta.button:visited   { background-color: #e22092; }
+.supersuperduper.button, .supersuperduper.button:visited 
+{
+	font-size: 60px;
+	padding: 18px 26px 12px; 
+	margin-bottom:10px;
+	
+}
+
+	.pink.button, .magenta.button:visited   { background-color: #e22092; }
     .pink.button:hover                  { background-color: #c81e82; }
     .green.button, .green.button:visited    { background-color: #91bd09; }
     .green.button:hover                     { background-color: #749a02; }
@@ -78,6 +92,8 @@ body {
     .blue.button:hover                  { background-color: #2575cf; }
     .yellow.button, .yellow.button:visited  { background-color: #ffb515; }
     .yellow.button:hover                { background-color: #fc9200; }
+	.white.button, .white.button:visited  { background-color: #ffffff; color:#111111}
+    .white.button:hover                { background-color: #eeeeee; }
 
 	
 	
