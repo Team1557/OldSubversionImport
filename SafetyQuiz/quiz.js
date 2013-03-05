@@ -15,61 +15,56 @@ var questions = [
 	{
 		question:"You are in the pit area, what shoes should you be wearing?",
 		answers:["Tennis shoes", 	"Flip-flops", 		"Barefoot", 		"Boots", 		""],
-		values:	[scoreCorrect,				210,				0,					750,			0],
+		values:	[scoreCorrect,		scoreWrong,			scoreVeryWrong,		scoreCorrect,	0],
 		images:	[correct,			wrong,				veryWrong,			correct,		""],
 	},
 	{
 		question:"You are in the pit area, what should you wear for eye protection?",
 		answers:["I don't need anything", 		"Sunglasses", 		"Safety glasses", 		"", 			""],
-		values:	[0,								210,				scoreCorrect,					0,				0],
+		values:	[scoreVeryWrong,				scoreAlmost,		scoreCorrect,			0,				0],
 		images:	[veryWrong,						almostCorrect,		correct,				"",				""],
 	},
 	{
 		question:"You’re working on the robot, when you notice that one of the wheels are loose, what should you do? ",
 		answers:["I should tell somebody", 			"I should help fix it", 		"It's fine, I don't need to let anybody know", 		"Write a memo for later", 	""],
-		values:	[scoreCorrect,								scoreCorrect,							0,													150,						0],
+		values:	[scoreCorrect,						scoreCorrect,					scoreVeryWrong,										scoreWrong,					0],
 		images:	[correct,							correct,						veryWrong,											wrong,						""],
 	},
 	{
 		question:"There’s some liquid leaking out of the battery, what should you do?",
 		answers:["Wipe it up with a paper towel", 			"Pour baking soda on it", 		"Pour baking powder on it", 		"Taste it to see if it's Kool-aid", 	""],
-		values:	[40,										scoreCorrect,							0,									0,										0],
+		values:	[scoreWrong,								scoreCorrect,					scoreWrong,							scoreVeryWrong,							0],
 		images:	[wrong,										correct,						wrong,								veryWrong,								""],
 	},
 	{
 		question:"Somebody is about to drill into a piece of metal, when you notice they don’t have their safety glasses on.  What do you do?",
 		answers:["Make frantic hand motions", 		"Yell at them", 		"Quickly tell them to put their glasses on", 		"Laugh when they lose an eye", 		""],
-		values:	[0,									150,					scoreCorrect,												0,									0],
-		images:	[wrong,								almostCorrect,				correct,											veryWrong,							""],
+		values:	[scoreWrong,						scoreAlmost,			scoreCorrect,										scoreVeryWrong,						0],
+		images:	[wrong,								almostCorrect,			correct,											veryWrong,							""],
 	},
 	{
 		question:"You need to lift the robot, you should...",
 		answers:["Use the force", 			"Use the centripetal force", 		"Get a teammate to help", 		"Prepare an intricate rope and pulley system ", 	""],
-		values:	[0,							60,									scoreCorrect,							33,													0],
+		values:	[scoreVeryWrong,			scoreVeryWrong,						scoreCorrect,					scoreWrong,											0],
 		images:	[veryWrong,					veryWrong,							correct,						"pulley.png",										""],
 	},
-	/*
-	Y U be stealin my source code?
-	
-	Allowed to use under Creative Mode Attribution-NonCommercial 3.0 Unported
-	*/
 	{
 		question:"Your teammates are working with the wires on your robot, when you notice that it is still on and enabled.  What do you do?",
 		answers:["Just disable through the driver station", 	"Just power it down with the breaker", 		"Tell them to lick the wires to see if they're on", 		"A and B", 	""],
-		values:	[300,											900,										0,															scoreCorrect,		0],
+		values:	[scoreAlmost,									scoreAlmost,								scoreWrong,													scoreCorrect,		0],
 		images:	[almostCorrect,									almostCorrect,								veryWrong,													correct,										""],
 	},
 	{
 		question:"You need to determine if a heat gun is hot.  You...",
-		values:	[0,													scoreCorrect,					975,										0,								0],
 		answers:["Touch the heat gun with the back of your hand", 	"Smell the heat gun", 	"Touch it to something made of wood", 		"Briefly touch the metal", 		""],
+		values:	[scoreVeryWrong,									scoreCorrect,			scoreAlmost,								scoreWrong,						0],
 		images:	[veryWrong,											correct,				almostCorrect,								wrong,							""],
 	},
 	{
 		question:"Your little brother is visiting the pit area",
-		answers:["Ignore him", 	"Tell him the rules", 	"Let him drive the robot in the next match", 		"B and C", 	""],
-		values:	[0,				scoreCorrect,					0,													0,			0],
-		images:	[wrong,			correct,				veryWrong,											veryWrong,	""],
+		answers:["Ignore him", 	"Tell him the rules", 	"Let him drive the robot in the next match", 		"B and C", 		""],
+		values:	[scoreWrong,	scoreCorrect,			scoreVeryWrong,										scoreVeryWrong,	0],
+		images:	[wrong,			correct,				veryWrong,											veryWrong,		""],
 	},
 	{
 		question:"<b>BONUS QUESTION</b><br/>Do you even lift?",
