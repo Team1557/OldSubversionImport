@@ -1,3 +1,4 @@
+
 <!--acbbccdbb-->
 <html>
 <head>
@@ -114,11 +115,16 @@
 			values:	[0,							60,									1050,							33,													0],
 			images:	[veryWrong,					veryWrong,							correct,						"pulley.png",										""],
 		},
+		/*
+		Y U be stealin my source code?
+		
+		Allowed to use under Creative Mode Attribution-NonCommercial 3.0 Unported
+		*/
 		{
 			question:"Your teammates are working with the wires on your robot, when you notice that it is still on and enabled.  What do you do?",
 			answers:["Just disable through the driver station", 	"Just power it down with the breaker", 		"Tell them to lick the wires to see if they're on", 		"A and B", 	""],
 			values:	[300,											900,										0,															1500,		0],
-			images:	[wrong,											almostCorrect,								veryWrong,													correct,										""],
+			images:	[almostCorrect,											almostCorrect,								veryWrong,													correct,										""],
 		},
 		{
 			question:"You need to determine if a heat gun is hot.  You...",
@@ -181,9 +187,9 @@
 		[maxScore * .4, "You should take a saftey class", ""],
 		[maxScore * .5, "You might consider taking a safety class.", ""],
 		[maxScore * .6, "You will probably want to read the safety manual again.", ""],
-		[maxScore * .7, "You should read the safety manual", ""], 
+		[maxScore * .7, "You should read the safety manual steadily", ""], 
 		[maxScore * .75, "You could do with another safety quiz", ""],
-		[maxScore * .8, "You have a lot more to learn about safety.", ""],
+		[maxScore * .8, "You are getting better.", ""],
 		[maxScore * .85, "You're pretty good, but you still have a little more to learn", ""],
 		[maxScore * .9, "Very good, you know a lot about FIRST safety!", ""],
 		[maxScore * .95, "You are a safety guru!", ""],
@@ -241,6 +247,7 @@
 		if (id >= questions.length) {
 			$("#qanda,.question").fadeOut(2000);
 			
+			$("#spoiler")[0].src = "blank.png";
 			var hasSpecial = false;
 			
 			if (totalTyped.indexOf("SNAKE") !== -1) {
