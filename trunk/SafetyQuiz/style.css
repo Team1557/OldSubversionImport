@@ -2,6 +2,7 @@ body {
 	font-family:Helvetica,sans-serif;
 	background-color:#FBFBFB;
 	background-image:url('light_wool.png');
+	overflow:hidden;
 }
 
 .answer,.question {
