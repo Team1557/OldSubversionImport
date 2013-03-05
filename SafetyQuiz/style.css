@@ -2,7 +2,7 @@ body {
 	font-family:Helvetica,sans-serif;
 	background-color:#FBFBFB;
 	background-image:url('light_wool.png');
-	overflow:hidden;
+	overflow-x:hidden;
 }
 
 *{
@@ -106,7 +106,7 @@ td {
     position: relative;
     cursor: pointer;
 	
-	font-family:dimis !important;
+	font-family:dimis;
 }
 
   .small.button, .small.button:visited                    { font-size: 11px}

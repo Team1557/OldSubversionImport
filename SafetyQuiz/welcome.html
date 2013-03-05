@@ -5,8 +5,7 @@
 <title>1557 Safety Quiz</title>
 
 <link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.0.custom.min.css" />
-<script src="js/jquery-1.8.3.js"></script>
-<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script><script src="jquery-1.9.1.min.js"></script>
+<script src="jquery-1.9.1.min.js"></script>
 <link rel="stylesheet" href="style.css"/>
 
 <style>
@@ -24,7 +23,6 @@
 	background-image:url('subtlenet2.png');
 	border:2px solid #ddd;
 	position:absolute;
-	z-index:-1;
 }
 
 #safetyMantisImage {
@@ -42,6 +40,9 @@
 
 </head>
 <body>
+<img class="photo" src="safetyMantis3.jpg" onclick="this.src='safetyMantis4.jpg';" id="safetyMantisImage" width="30%"/>
+<img class="photo" src="volty.jpg" id="voltyImage" height="40%"/>
+
 <center><span id="welcomeText">Welcome to 12 Volt Bolt's Safety Quiz!</span></center>
 
 <div style="height:100px"></div>
@@ -49,12 +50,10 @@
 
 <script type="text/javascript" lang="JavaScript">
 	$("#startButton").bind("click", function() {
-		window.location = "index.html";
+		window.location = "instructions.html";
 	});
 </script>
 <a href="index.html">&nbsp;</a>
-<img class="photo" src="safetyMantis3.jpg" id="safetyMantisImage" width="30%"/>
-<img class="photo" src="volty.jpg" id="voltyImage" height="40%"/>
 
 </body>
 </html>
