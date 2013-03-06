@@ -65,13 +65,13 @@ var questions = [
 		answers:["Ignore him", 	"Tell him the rules", 	"Let him drive the robot in the next match", 		"B and C", 		""],
 		values:	[scoreWrong,	scoreCorrect,			scoreVeryWrong,										scoreVeryWrong,	0],
 		images:	[wrong,			correct,				veryWrong,											veryWrong,		""],
-	},
+	},/*
 	{
-		question:"<b>BONUS QUESTION</b><br/>Do you even lift?",
-		answers:["No", "No", "No", "No", "No"],
+		question:"<b>BONUS QUESTION</b><br/>",
+		answers:["", "", "", "", ""],
 		values:	[1,1,1,1,1],
 		images:	[correct,correct,correct,correct,correct],
-	},
+	},*/
 ];
 
 var maxScore = 0;
@@ -115,10 +115,10 @@ var scores = [
 	[maxScore * .1, "You almost got the worst score, you have a lot to learn", ""],
 	[maxScore * .2, "You must have been trying REALLY hard to get such a low score.", ""],
 	[maxScore * .3, "You are a hazard to everybody around you", ""],
-	[maxScore * .4, "You should take a saftey class", ""],
+	[maxScore * .4, "You should take a safety class.", ""],
 	[maxScore * .5, "You might consider taking a safety class.", ""],
 	[maxScore * .6, "You will probably want to read the safety manual again.", ""],
-	[maxScore * .7, "You should read the safety manual steadily", ""], 
+	[maxScore * .7, "You should read the safety manual", ""], 
 	[maxScore * .75, "You could do with another safety quiz", ""],
 	[maxScore * .8, "You are getting better.", ""],
 	[maxScore * .85, "You're pretty good, but you still have a little more to learn", ""],
