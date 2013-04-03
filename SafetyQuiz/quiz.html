@@ -1,0 +1,91 @@
+
+<!--acbbccdbb-->
+<html>
+	<head>
+		<title>1557 Safety Quiz</title>
+
+		<script>
+var totalTyped = "";
+function documentButtonPress(e) {
+	//console.debug(e);
+	
+	if (e.keyCode >= 65 && e.keyCode <= 69) {
+		pressButton(e.keyCode - 65);
+	}
+	
+	var firstLetter = String.fromCharCode(e.keyCode).toUpperCase();
+	if( firstLetter.toLowerCase() != String.fromCharCode(e.keyCode)) {
+		totalTyped += String.fromCharCode(e.keyCode);
+		console.debug(totalTyped);
+	}
+	
+	if (e.keyCode == 13) {
+		if (questionNumber >= questions.length) 
+		{
+			location.reload(true);
+		}
+	}		
+}
+		</script>
+
+		<link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.0.custom.min.css" />
+		<script src="jquery-1.9.1.min.js"></script>
+		<link rel="stylesheet" href="style.css"/>
+	</head>
+	<body onkeydown="documentButtonPress(event);">
+		<script src="quiz.js"></script>
+		
+		<div id="main">
+		<center><span class="question"></span></center>
+		<br/><br/><br/>
+		<div id="scoreContinue">
+			<center>
+				<div class="supersuperduper blue button" id="viewScore">View score</div>
+			</center><br/>
+			<center>
+				<div class="supersuperduper red button" onclick="window.location='index.html';" style="font-size:54px" id="continue">Exit</div>
+			</center>
+		</div>
+		<div id="scoreContainer"><center>Score: <span class="score">0</span></center></div>
+		<div id="scoreTextContainer"><center><div id="scoreText">404 Code Missing</div></center></div>
+		<img id="spoiler" src="" style="position:fixed;right:0px;bottom:0px;">
+		<table id="qanda">
+			<tr>
+				<td style="width:200px"><div class="supersuperduper red answerbutton button" id="buttonA">A</div></td>
+				<td class="answer" id="answerA">A</td>
+			</tr>
+			<tr>
+				<td><div class="supersuperduper orange answerbutton button" id="buttonB">B</div></td>
+				<td class="answer" id="answerB">B</td>
+			</tr>
+			<tr>
+				<td><div class="supersuperduper yellow answerbutton button" id="buttonC">C</div></td>
+				<td class="answer" id="answerC">C</td>
+			</tr>
+			<tr>
+				<td><div class="supersuperduper green answerbutton button" id="buttonD">D</div></td>
+				<td class="answer" id="answerD">D</td>
+			</tr>
+			<tr>
+				<td><div class="supersuperduper blue answerbutton button" id="buttonE">E</div></td>
+				<td class="answer" id="answerE">E</td>
+			</tr>
+		</table>
+		</div>
+
+		<div id="scoreReview">
+			<table id="scoreTable"></table>
+			<br/>
+			Your total score is <span class="score">0</span>
+			<br/><br/><br/>
+			<center><div class="supersuperduper red button" onclick="window.location='index.html';">Exit</div></center>
+		</div>
+		
+		<span id="videocontainer"></span>
+		
+
+		<script>
+
+		</script>
+	</body>
+</html>				
