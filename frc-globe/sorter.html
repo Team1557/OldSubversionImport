@@ -7,6 +7,7 @@ ROBOTICS={};
 <script>
 
 maxTeamId = 999;
+count = 0;
 
 lineStr = ""
 for (var i = 0; i < ROBOTICS.list.mapRS.length; i++) {
@@ -14,6 +15,8 @@ for (var i = 0; i < ROBOTICS.list.mapRS.length; i++) {
 		maxTeamId = ROBOTICS.list.mapRS[i].t;
 //		console.debug("Changing max to " + maxTeamId);
 	}
+	
+	count++;
 }
 
 for (var i = 0; i < ROBOTICS.list.mapRS.length; i++) {
@@ -22,6 +25,7 @@ for (var i = 0; i < ROBOTICS.list.mapRS.length; i++) {
 }
 
 console.debug("Largest team id: " + maxTeamId);
+console.debug("Count: " + count);
 console.debug(lineStr);
 
 </script>
