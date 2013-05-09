@@ -1,0 +1,27 @@
+<script>
+ROBOTICS={};
+</script>
+
+<script src="batchgeo.js"></script>
+
+<script>
+
+maxTeamId = 999;
+
+lineStr = ""
+for (var i = 0; i < ROBOTICS.list.mapRS.length; i++) {
+	if (ROBOTICS.list.mapRS[i].t > maxTeamId) {
+		maxTeamId = ROBOTICS.list.mapRS[i].t;
+//		console.debug("Changing max to " + maxTeamId);
+	}
+}
+
+for (var i = 0; i < ROBOTICS.list.mapRS.length; i++) {
+//	lineStr += ROBOTICS.list.mapRS[i].lt + "," + ROBOTICS.list.mapRS[i].ln + "," + ((maxTeamId - ROBOTICS.list.mapRS[i].t) / (maxTeamId * 4)) + ","
+	lineStr += ROBOTICS.list.mapRS[i].lt + "," + ROBOTICS.list.mapRS[i].ln + "," + ((ROBOTICS.list.mapRS[i].t) / (maxTeamId * 4)) + ","
+}
+
+console.debug("Largest team id: " + maxTeamId);
+console.debug(lineStr);
+
+</script>
