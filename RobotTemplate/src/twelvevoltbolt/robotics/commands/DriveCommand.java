@@ -3,6 +3,10 @@ package twelvevoltbolt.robotics.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import twelvevoltbolt.robotics.controls.AdvancedDrive;
 
+/**
+ * An abstract Drive command.
+ * Takes an AdvancedDrive, and implements a 'drive' command, which should handle the input and drive speed values.
+ */
 public abstract class DriveCommand extends SimpleCommand {
     private AdvancedDrive drive;
     
@@ -10,10 +14,16 @@ public abstract class DriveCommand extends SimpleCommand {
         this.drive = drive;
     }
     
+    /**
+     * Runs this drive command, using the given AdvancedDrive.
+     */
     public void initialize() {
         drive();
     }
     
+    /**
+     * This method should handle all input and drive output.
+     */
     public abstract void drive();
     
     public AdvancedDrive getDrive() {

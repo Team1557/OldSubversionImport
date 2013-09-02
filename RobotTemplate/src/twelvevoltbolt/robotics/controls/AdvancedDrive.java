@@ -5,6 +5,10 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import twelvevoltbolt.robotics.commands.DriveCommand;
 
+/**
+ * An advanced 4-motor drive.
+ * There are two motors per side.
+ */
 public class AdvancedDrive extends RobotDrive {
     private NumberModifier joystickModifier;
     private CANJaguar left1;
@@ -75,27 +79,29 @@ public class AdvancedDrive extends RobotDrive {
     public CANJaguar getBackRightJaguar() {
         return right2;
     }
-
+    
     public void setBackRightJaguar(CANJaguar right2) {
         this.right2 = right2;
     }
 
     /**
      * Gets whether the direction and side of the motors is reversed.
+     * Drive Commands should respect the return value of this method.
      */
     public boolean isReversed() {
         return reversed;
     }
 
     /**
-     * Sets whether the direction and side of the motors is reversed. If
-     * 'reversed' is true, then the left joystick controls the right motor, and
-     * vice versa.
+     * Sets whether the direction and side of the motors is reversed, essentially rotating the robot 180 degrees in terms of control.
      */
     public void setReversed(boolean reversed) {
         this.reversed = reversed;
     }
-
+    
+    /**
+     * Executes the given drive command.
+     */
     public void drive(DriveCommand driveCommand) {
         driveCommand.drive();
     }
@@ -120,10 +126,18 @@ public class AdvancedDrive extends RobotDrive {
         this.multiplier = multiplier;
     }
     
+    /**
+     * Gets the NumberModifier that modifies the input from the Joysticks.
+     * @return 
+     * The current NumberModifier.
+     */
     public NumberModifier getJoystickModifier() {
         return joystickModifier;
     }
-
+    
+    /**
+     * Sets the NumberModifier that modifies the input from the Joysticks.
+     */
     public void setJoystickModifier(NumberModifier joystickModifier) {
         this.joystickModifier = joystickModifier;
     }
@@ -145,7 +159,7 @@ public class AdvancedDrive extends RobotDrive {
             CANJaguar left2 = new CANJaguar(left2Id);
             CANJaguar right1 = new CANJaguar(right1Id);
             CANJaguar right2 = new CANJaguar(right2Id);
-
+            
             return new AdvancedDrive(left1, left2, right1, right2, modifier);
         } catch (CANTimeoutException ex) {
             System.out.println("CAN device did not respond while creating new AdvancedDrive.");
