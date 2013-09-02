@@ -15,7 +15,6 @@ public abstract class SimpleCommand extends Command {
     }
 
     protected void end() {
-        System.out.println("End");
     }
 
     protected void interrupted() {

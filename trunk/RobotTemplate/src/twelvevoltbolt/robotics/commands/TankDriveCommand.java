@@ -3,6 +3,9 @@ package twelvevoltbolt.robotics.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import twelvevoltbolt.robotics.controls.AdvancedDrive;
 
+/**
+ * Tank Drive, takes two joysticks, whose Y-axis values correspond to the motor output speeds.
+ */
 public class TankDriveCommand extends DriveCommand {
     private Joystick leftJoystick;
     private Joystick rightJoystick;
