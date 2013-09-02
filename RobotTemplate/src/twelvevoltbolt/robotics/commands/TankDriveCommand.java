@@ -20,12 +20,12 @@ public class TankDriveCommand extends DriveCommand {
     public void drive() {
         double mul = getDrive().getMultiplier() * (getDrive().isReversed() ? -1 : 1);
         
-        double leftJoyY = getJoystickAxis(leftJoystick, Joystick.AxisType.kY);
-        double rightJoyY = getJoystickAxis(rightJoystick, Joystick.AxisType.kY);
+        double leftJoyY = getJoystickAxis(getLeftJoystick(), Joystick.AxisType.kY);
+        double rightJoyY = getJoystickAxis(getRightJoystick(), Joystick.AxisType.kY);
         
         double leftMotor = (!getDrive().isReversed() ? leftJoyY : rightJoyY) * mul;
         double rightMotor = (!getDrive().isReversed() ? rightJoyY : leftJoyY) * mul;
-
+        
         this.getDrive().setLeftRightMotorOutputs(leftMotor, rightMotor);
     }
     
