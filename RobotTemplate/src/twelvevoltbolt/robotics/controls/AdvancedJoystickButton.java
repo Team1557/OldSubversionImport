@@ -37,4 +37,22 @@ public class AdvancedJoystickButton {
             wasPressedLastTime = false;
         }
     }
+    
+    public void whenReleased(SimpleCommand command) {
+        if (!this.isPressed()) {
+            if (wasPressedLastTime) {
+                wasPressedLastTime = false;
+                command.initialize();
+            }
+        }
+        else {
+            wasPressedLastTime = true;
+        }
+    }
+    
+    public void whilePressed(SimpleCommand command) {
+        if (this.isPressed()) {
+            command.initialize();
+        }
+    }
 }
