@@ -1,15 +1,4 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) FIRST 2008. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
 package twelvevoltbolt.robotics.robots.discbot;
-
-import edu.wpi.first.wpilibj.DigitalInput;
-import java.util.Vector;
-import twelvevoltbolt.robotics.controls.AdvancedDrive;
-import twelvevoltbolt.robotics.commands.SimpleCommand;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
@@ -17,24 +6,22 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import twelvevoltbolt.robotics.controls.AdvancedJoystickButton;
+import twelvevoltbolt.robotics.controls.AdvancedDrive;
+import twelvevoltbolt.robotics.commands.SimpleCommand;
 import twelvevoltbolt.robotics.controls.NumberModifier;
-import twelvevoltbolt.robotics.commands.ArcadeDriveCommand;
 import twelvevoltbolt.robotics.commands.TankDriveCommand;
 import twelvevoltbolt.robotics.dashboard.AdvancedDashboard;
+import twelvevoltbolt.robotics.mechanics.RegulatedCompressor;
 
 /**
  * <h1>Tasks:</h1>
  * <h3>General</h3>
  * <ul>
- * <li>No - Determine what the correct Class is for motor controls such as the
+ * <li>Yes - Determine what the correct Class is for motor controls such as the
  * arms and lifters, ie: Solenoid, Relay, CANJaguar.</li>
- * <li>No - Determine the correct channels for solenoids, lifters, buttons, etc,
+ * <li>Yes - Determine the correct channels for solenoids, lifters, buttons, etc,
  * then change their defined values in code.</li>
  * <li>Yes - Test whether robot loads the code without errors.</li>
  * <li>Yes - Determine if the robot outputs team information, etc on call to
@@ -50,13 +37,11 @@ import twelvevoltbolt.robotics.dashboard.AdvancedDashboard;
  * <li>Yes - Test whether the joysticks control the motors in a gradual increase
  * with the square function.</li>
  * <li>Yes - Test whether direction is correct by default.</li>
- * <li>No - Test arcade drive</li>
- * <li>No - Test sine drive</li>
  * </ul>
  *
  * <h3>Buttons</h3>
  * <ul>
- * <li>No - Test whether the "reverseButton" toggles the reverse, and confirm a
+ * <li>Yes - Test whether the "reverseButton" toggles the reverse, and confirm a
  * switch in both motor direction and motor side.</li>
  * <li>Yes - Test whether the "lifterButton" toggles lifterOn, by watching the
  * output upon pressing the button.</li>
@@ -83,245 +68,151 @@ import twelvevoltbolt.robotics.dashboard.AdvancedDashboard;
  * </ul>
  */
 public class DiscRobot extends IterativeRobot {
-    private AdvancedDashboard dashboard;
+    // ID Constants
+    public static int JOYSTICK_LEFT = 1;
+    public static int JOYSTICK_RIGHT = 2;
+    public static int JOYSTICK_ALTERNATE = 3;
     
-    AdvancedDrive robotDrive;
-    Joystick leftJoystick = new Joystick(1);
-    Joystick rightJoystick = new Joystick(2);
-    Joystick altJoystick = new Joystick(3); //Hi Taylor!
-    TankDriveCommand tankDriveCommand;
-    ArcadeDriveCommand arcadeDriveCommand;
-    Relay compressor = new Relay(1);
-    DigitalInput compressorShutoff = new DigitalInput(1);
-    /**
-     * A radio-button select for the autonomous mode Command.
-     */
-    SendableChooser autonomousSelect;
-    // TODO: Determine the channel and motor type the arm is on.
-    /**
-     * The motor that controls the arm that grabs onto the pyramid.
-     */
-    Victor armVictor = new Victor(7);
-    /**
-     * The button that, when pressed, allows the arm to move at the same speed
-     * as the altJoystick's Y axis.
-     */
-    AdvancedJoystickButton armButton = new AdvancedJoystickButton(altJoystick, 1);
-    DoubleSolenoid lifterSolenoid = new DoubleSolenoid(1, 2);
-    DoubleSolenoid shifterSolenoid = new DoubleSolenoid(3, 4);
-    /**
-     * The button that toggles the lifter.
-     */
-    AdvancedJoystickButton lifterButton = new AdvancedJoystickButton(altJoystick, 4);
-    SimpleCommand lifterButtonCommand = new SimpleCommand() {
-        public void initialize() {
-            lifterOn = !lifterOn;
-            System.out.println("Would have changed lifter to " + lifterOn);
-            // off, rev //
-            lifterSolenoid.set(lifterOn ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
-        }
-    };
+    public static int RELAY_COMPRESSOR = 1;
+    public static int DIGITAL_INPUT_COMPRESSOR_SHUTOFF = 1;
+    public static int VICTOR_ARM = 7;
     
-    AdvancedJoystickButton shifterButton = new AdvancedJoystickButton(altJoystick, 5);
-    SimpleCommand shifterButtonCommand = new SimpleCommand() {
-        public void initialize() {
-            shifterOn = !shifterOn;
-            System.out.println("Would have changed shifter to " + shifterOn);
-            
-            
-            
-            // off, rev //
-            shifterSolenoid.set(shifterOn ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
-        }
-    };
+    public static int SOLENOID_LIFTER_1 = 1;
+    public static int SOLENOID_LIFTER_2 = 2;
+    public static int SOLENOID_SHIFTER_1 = 3;
+    public static int SOLENOID_SHIFTER_2 = 4;
+    public static int SOLENOID_DUMPER_1 = 5;
+    public static int SOLENOID_DUMPER_2 = 6;
     
-    //Robot 1 & 2 lifter. Robot 3 & 4 Shifters.
-    /**
-     * Whether the lifter is up.
-     */
-    boolean lifterOn = false;
-    boolean shifterOn = false;
-    /**
-     * The button that, when pressed, reverses the direction and 'side' of the
-     * motors.
-     */
-    AdvancedJoystickButton reverseButton = new AdvancedJoystickButton(leftJoystick, 5);
-    SimpleCommand reverseButtonCommand = new SimpleCommand() {
-        public void initialize() {
-            System.out.println("Setting robot reversed to " + (!robotDrive.isReversed())); //Hi again Taylor!
-            robotDrive.setReversed(!robotDrive.isReversed());
-        }
-    };
-   // DoubleSolenoid dumper = new DoubleSolenoid(5, 6);
-    Solenoid dumperOn = new Solenoid(5);
-    Solenoid dumperOff = new Solenoid(6);
-    boolean dumperIsOn = false;
-    AdvancedJoystickButton dumperButton = new AdvancedJoystickButton(altJoystick, 2);
-    SimpleCommand dumperButtonCommand = new SimpleCommand() {
-        public void initialize() {
-            System.out.println(dumperIsOn);
-            dumperIsOn = !dumperIsOn;
-
-            dumperOn.set(dumperIsOn);
-            dumperOff.set(!dumperIsOn);
-            //dumper.set(dumperIsOn ? DoubleSolenoid.Value.kOff : DoubleSolenoid.Value.kReverse);
-            
-        }
-    };
+    public static int JAGUAR_MOTOR_LEFT_1 = 1;
+    public static int JAGUAR_MOTOR_LEFT_2 = 2;
+    public static int JAGUAR_MOTOR_RIGHT_1 = 3;
+    public static int JAGUAR_MOTOR_RIGHT_2 = 4;
+    
+    public static int BUTTON_LIFTER = 4;
+    public static int BUTTON_SHIFTER = 4;
+    public static int BUTTON_DUMPER = 4;
+    public static int BUTTON_REVERSE = 4;
+    public static int BUTTON_ARM = 1;
+    
+    // Drive System
+    public AdvancedDrive robotDrive;
+    public TankDriveCommand tankDriveCommand;
+    public DiscRobotHappyPistonAutonomous happyPistonAutonomous;
+    public DiscRobotTeleop teleop;
+    
+    // Joysticks
+    public Joystick leftJoystick = new Joystick(JOYSTICK_LEFT);
+    public Joystick rightJoystick = new Joystick(JOYSTICK_RIGHT);
+    public Joystick altJoystick = new Joystick(JOYSTICK_ALTERNATE);
+    
+    // UI
+    public AdvancedDashboard dashboard;
+    public SendableChooser autonomousSelect;
+    
+    // Mechanical
+    public RegulatedCompressor compressor = RegulatedCompressor.fromIds(RELAY_COMPRESSOR, DIGITAL_INPUT_COMPRESSOR_SHUTOFF);
+    public Victor armVictor = new Victor(VICTOR_ARM);
+    
+    public DoubleSolenoid lifterSolenoid = new DoubleSolenoid(SOLENOID_LIFTER_1, SOLENOID_LIFTER_2);
+    public DoubleSolenoid shifterSolenoid = new DoubleSolenoid(SOLENOID_SHIFTER_1, SOLENOID_SHIFTER_2);
+    public Solenoid dumperOnSolenoid = new Solenoid(SOLENOID_DUMPER_1);
+    public Solenoid dumperOffSolenoid = new Solenoid(SOLENOID_DUMPER_2);
+    
+    public boolean lifterOn = false;
+    public boolean shifterOn = false;
+    public boolean dumperOn = false;
+    
+    public DiscRobotButtons buttons;
 
     public DiscRobot() {
-        getWatchdog().setEnabled(true);
     }
-
-    public void regulateCompressor() {
-        compressor.set(compressorShutoff.get() ? Relay.Value.kOff : Relay.Value.kForward);
-    }
-
+    
     public void robotInit() {
+        System.out.println("Hello, world.");
+        
         dashboard = new AdvancedDashboard();
         
-        System.out.println("Entering robotInit()."); //Taylor!
-
-        robotDrive = AdvancedDrive.fromJaguarIds(1, 2, 3, 4, NumberModifier.SQUARED);
+        // Robot Drive
+        robotDrive = AdvancedDrive.fromJaguarIds(JAGUAR_MOTOR_LEFT_1, JAGUAR_MOTOR_LEFT_2, JAGUAR_MOTOR_RIGHT_1, JAGUAR_MOTOR_RIGHT_2, NumberModifier.SQUARED);
+        getWatchdog().setEnabled(true);
         robotDrive.setSafetyEnabled(true);
-
+        
         tankDriveCommand = new TankDriveCommand(robotDrive, leftJoystick, rightJoystick);
-        arcadeDriveCommand = new ArcadeDriveCommand(robotDrive, leftJoystick);
-
-        compressor.set(Relay.Value.kForward);
-
+        
+        // Create Control commands
+        happyPistonAutonomous = new DiscRobotHappyPistonAutonomous(this, robotDrive);
+        teleop = new DiscRobotTeleop(this, robotDrive);
+        
+        // Set up joystick buttons
+        buttons = new DiscRobotButtons(this);
+        
+        // Output stuffs
         System.out.println("Battery Voltage: " + DriverStation.getInstance().getBatteryVoltage());
         System.out.println("On a Field Management System: " + DriverStation.getInstance().isFMSAttached());
         System.out.println("Alliance name: " + DriverStation.getInstance().getAlliance().name);
         System.out.println("Station Number: " + DriverStation.getInstance().getLocation());
         System.out.println("Team Number: " + DriverStation.getInstance().getTeamNumber());
-
+        
+        // SmartDashboard stuffs
         SmartDashboard.putBoolean("Field Managed", DriverStation.getInstance().isFMSAttached());
         SmartDashboard.putInt("Team Number", DriverStation.getInstance().getTeamNumber());
-        SmartDashboard.putData("Test Function", new SimpleCommand() {
-            public void initialize() {
-                System.out.println("Ran test function!");
-            }
-        });
-
+        SmartDashboard.putData("Test Button", new SimpleCommand() {public void initialize() {System.out.println("Ran test function!");}});
+        
+        // Add the Autonomous modes.
         autonomousSelect = new SendableChooser();
-        autonomousSelect.addDefault("Default Autonomnous", new SimpleCommand() {
-            public void initialize() {
-                System.out.println("Running default autonomous!");
-
-                for (int i = 0; i < 4; i++) {
-                    robotDrive.drive(0.5, 0.0); // drive 50% forward with 0% turn
-                    getWatchdog().feed();
-                    Timer.delay(1.0); // wait 1 seconds
-                    getWatchdog().feed();
-                    robotDrive.drive(0.0, 0.75); // drive 0% forward and 75% turn
-                    getWatchdog().feed();
-                    Timer.delay(1.0); // wait 1 seconds
-                    getWatchdog().feed();
-                }
-                robotDrive.drive(0.0, 0.0); // drive 0% forward, 0% turn (stop)
-            }
-        });
-        autonomousSelect.addObject("Alternate 1", new SimpleCommand() {
-            public void initialize() {
-                System.out.println("Running the alternate 1!");
-            }
-        });
-        autonomousSelect.addObject("Alternate 2", new SimpleCommand() {
-            public void initialize() {
-                System.out.println("Running the alternate 2!");
-            }
-        }); //Taylor! Hi!
+        autonomousSelect.addDefault("Default Autonomnous", new DiscRobotAutonomous(this, robotDrive));
+        autonomousSelect.addObject("Happy Pistons", happyPistonAutonomous);
+        autonomousSelect.addObject("Alternate", new SimpleCommand() {public void initialize() {System.out.println("Running alternate!");}});
         SmartDashboard.putData("Autonomous Chooser", autonomousSelect);
-
-        Vector keys = edu.wpi.first.wpilibj.Preferences.getInstance().getKeys();
-        for (int i = 0; i < keys.size(); i++) {
-            String key = (String) keys.elementAt(i);
-            System.out.println("CRIO Preferences contains key: " + key);
-        }
     }
 
     // Disabled Functions
     public void disabledInit() {
-        System.out.println("Disabled.");
+        System.out.println("Disabled");
     }
 
     public void disabledPeriodic() {
-        regulateCompressor();
+        compressor.regulate();
     }
 
-    public void disabledContinuous() {
-    }
+    public void disabledContinuous() {}
 
     // Autonomous Functions
-    /**
-     * This function is called once each time the robot enters autonomous mode.
-     */
     public void autonomousInit() {
-        System.out.println("Enabling autonomous.");
+        System.out.println("Autonomous");
 
         //Command command = (Command) autonomousSelect.getSelected();
-        //command.start(); //Hi
-
+        //command.start();
         
-         for (int i = 0; i < 4; i++) {
-            /*robotDrive.drive(0.5, 0.0); // drive 50% forward with 0% turn
-            getWatchdog().feed();
-            Timer.delay(1.0); // wait 1 seconds
-            getWatchdog().feed();
-            robotDrive.drive(0.0, 0.75); // drive 0% forward and 75% turn
-            getWatchdog().feed();
-            Timer.delay(1.0); // wait 1 seconds
-            */
-            
-       
-            System.out.println(dumperIsOn);
-            dumperIsOn = !dumperIsOn;
-
-            dumperOn.set(dumperIsOn);
-            dumperOff.set(!dumperIsOn);
-            getWatchdog().feed();
-            Timer.delay(3.0);
-            
-            getWatchdog().feed();
-            
-         }
-         robotDrive.drive(0.0, 0.0); // drive 0% forward, 0% turn (stop)
+        getWatchdog().setEnabled(false);
+        robotDrive.setSafetyEnabled(false);
+        
+        happyPistonAutonomous.initialize();
+        robotDrive.drive(0.0, 0.0);
     }
 
     public void autonomousPeriodic() {
-        regulateCompressor();
+        compressor.regulate();
     }
+    
+    public void autonomousContinuous() {}
 
-    public void autonomousContinuous() {
-    }
-
-    // Tele-operated functions
-    /**
-     * This function is called once each time the robot enters operator control.
-     */
     public void teleopInit() {
-        System.out.println("Enabling Teleop.");
+        System.out.println("Teleoperated");
+        
+        getWatchdog().setEnabled(true);
+        robotDrive.setSafetyEnabled(true);
+        
+        teleop.initialize();
     }
 
     public void teleopPeriodic() {
+        compressor.regulate();
         dashboard.update();
-        regulateCompressor();
-        if (armButton.isPressed()) {
-            armVictor.set(altJoystick.getAxis(Joystick.AxisType.kY) / 2.5);
-        } else {
-            armVictor.set(0);
-        }
-
-
-        lifterButton.whenPressed(lifterButtonCommand);
-        shifterButton.whenPressed(shifterButtonCommand);
-        reverseButton.whenPressed(reverseButtonCommand);
-        dumperButton.whenPressed(dumperButtonCommand);
-
-        robotDrive.drive(tankDriveCommand); //Heyyyyyyyyy
+        
+        teleop.execute();
     }
-
-    public void teleopContinuous() {
-    }
-} //End
+    
+    public void teleopContinuous() {}
+}
