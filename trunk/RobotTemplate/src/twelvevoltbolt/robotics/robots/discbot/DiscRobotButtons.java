@@ -17,7 +17,7 @@ public class DiscRobotButtons {
         
         armButton = new AdvancedJoystickButton(robot.altJoystick, DiscRobot.BUTTON_ARM);
         lifterButton = new AdvancedJoystickButton(robot.altJoystick, DiscRobot.BUTTON_LIFTER);
-        shifterButton = new AdvancedJoystickButton(robot.altJoystick, DiscRobot.BUTTON_SHIFTER);
+        shifterButton = new AdvancedJoystickButton(robot.leftJoystick, DiscRobot.BUTTON_SHIFTER);
         reverseButton = new AdvancedJoystickButton(robot.leftJoystick, DiscRobot.BUTTON_REVERSE);
         dumperButton = new AdvancedJoystickButton(robot.altJoystick, DiscRobot.BUTTON_DUMPER);
     }
@@ -43,7 +43,7 @@ public class DiscRobotButtons {
             robot.shifterOn = !robot.shifterOn;
             System.out.println("Shifter: " + robot.shifterOn);
             
-            robot.shifterSolenoid.set(robot.shifterOn ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
+            robot.shifterSolenoid.set(robot.shifterOn ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
         }
     };
     
