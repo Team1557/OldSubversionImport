@@ -89,10 +89,10 @@ public class DiscRobot extends IterativeRobot {
     public static int JAGUAR_MOTOR_RIGHT_1 = 3;
     public static int JAGUAR_MOTOR_RIGHT_2 = 4;
     
-    public static int BUTTON_LIFTER = 4;
-    public static int BUTTON_SHIFTER = 4;
-    public static int BUTTON_DUMPER = 4;
-    public static int BUTTON_REVERSE = 4;
+    public static int BUTTON_LIFTER = 5;
+    public static int BUTTON_SHIFTER = 2;
+    public static int BUTTON_DUMPER = 2;
+    public static int BUTTON_REVERSE = 5;
     public static int BUTTON_ARM = 1;
     
     // Drive System
@@ -116,12 +116,12 @@ public class DiscRobot extends IterativeRobot {
     
     public DoubleSolenoid lifterSolenoid = new DoubleSolenoid(SOLENOID_LIFTER_1, SOLENOID_LIFTER_2);
     public DoubleSolenoid shifterSolenoid = new DoubleSolenoid(SOLENOID_SHIFTER_1, SOLENOID_SHIFTER_2);
-    public Solenoid dumperOnSolenoid = new Solenoid(SOLENOID_DUMPER_1);
-    public Solenoid dumperOffSolenoid = new Solenoid(SOLENOID_DUMPER_2);
+    public Solenoid dumperOffSolenoid = new Solenoid(SOLENOID_DUMPER_1);
+    public Solenoid dumperOnSolenoid = new Solenoid(SOLENOID_DUMPER_2);
     
     public boolean lifterOn = false;
     public boolean shifterOn = false;
-    public boolean dumperOn = false;
+    public boolean dumperOn = false; 
     
     public DiscRobotButtons buttons;
 

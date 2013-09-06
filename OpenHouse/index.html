@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>12VoltBolt</title>
+		<script src="jquery.min.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet"/>
+		
+		<style>
+		body {
+			margin: 0px;
+			padding: 0px;
+			overflow: hidden;
+		}
+		
+		.match {
+		margin-bottom: 3px;
+		}
+		</style>
+	</head>
+	<body>
+<!--
+Matches:
+	8 red
+	14 blue
+	23 blue
+	37 red
+	47 red
+	56 
+	62
+	73
+	90
+-->
+		<div id="player"></div>
+		<button id="actionButton2" style="z-index:1000;position:fixed;top:5px;right:95px;" id="toggleMenu" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-fire"></i></button>
+		<button id="buttonBack" style="z-index:1000;position:fixed;top:5px;right:65px;" id="toggleMenu" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-chevron-left"></i></button>
+		<button id="buttonForward" style="z-index:1000;position:fixed;top:5px;right:35px;" id="toggleMenu" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-chevron-right"></i></button>
+		<button style="z-index:1000;position:fixed;top:5px;right:5px;" id="toggleMenu" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-list"></i></button>
+		<h3 style="color:#EDEDED;text-align:center;z-index:999;position:fixed;top:0px;left:0px;width:100%;background-color:rgba(0,0,0,.5);padding:5px;margin-top:0px;">Team 1557, 12VoltBolt is <span id="teamColor">blue</span></h3>
+		
+		<div id="menu">
+			<div style="z-index:1000;position:fixed;top:5px;left:5px;width:70px" id="introButton" class="btn btn-xs btn-default">Intro</div>
+			<div style="z-index:1000;position:fixed;top:30px;left:5px;width:70px" id="actionButton" class="btn btn-xs btn-danger">Start Match</div>
+			<div style="z-index:1000;position:fixed;top:55px;left:5px;width:70px">
+				<div style="z-index:1000;" data-match="1" class="btn btn-xs btn-default match">1</div>
+				<div style="z-index:1000;" data-match="2" class="btn btn-xs btn-default match">2</div>
+				<div style="z-index:1000;" data-match="3" class="btn btn-xs btn-default match">3</div><br/>
+				<div style="z-index:1000;" data-match="4" class="btn btn-xs btn-default match">4</div>
+				<div style="z-index:1000;" data-match="5" class="btn btn-xs btn-default match">5</div>
+				<div style="z-index:1000;" data-match="6" class="btn btn-xs btn-default match">6</div><br/>
+				<div style="z-index:1000;" data-match="7" class="btn btn-xs btn-default match">7</div>
+				<div style="z-index:1000;" data-match="8" class="btn btn-xs btn-default match">8</div>
+				<!--<div style="z-index:1000;" data-match="9" class="btn btn-xs btn-default match">9</div><br/>-->
+			</div>
+		</div>
+		<!--<div style="z-index:999;position:fixed;top:0px;left:0px;width:110%;height:110%" id="cover" class=""></div>-->
+		
+		<script>
+var tag = document.createElement('script');tag.src = "https://www.youtube.com/iframe_api";var firstScriptTag = document.getElementsByTagName('script')[0];firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var videos = [
+	{"match": 8, "src": "Ra3GfdP0tgM", "color":"red", "start": 0, "action": 105},
+	//{"match": 14, "src": "", "color":"blue", "start": 0, "action": 8},
+	{"match": 23, "src": "ovMwzIHy1IE", "color":"blue", "start": 7-7, "action": 48},
+	{"match": 37, "src": "tqRFY9sdFqo", "color":"red", "start": 8-8, "action": 60},
+	{"match": 47, "src": "GUgi43GYa6M", "color":"red", "start": 8-8, "action": 86},	
+	{"match": 56, "src": "1_ww0ORwAZs", "color":"blue", "start": 7-7, "action": 16},
+	{"match": 62, "src": "Pl3hYvieCs0", "color":"blue", "start": 6-6, "action": 20},
+	{"match": 73, "src": "c31Y9X7zozE", "color":"red", "start": 6-6, "action": 18},
+	{"match": 90, "src": "veO-pNaNtaU", "color":"blue", "start": 6-6, "action": 51},
+];
+
+var current;
+var currentId;
+
+var player;
+
+function onYouTubeIframeAPIReady() {
+	console.log("Youtube loaded!");
+	player = new YT.Player('player', {
+		height: '390',
+		width: '640',
+		videoId: 'M7lc1UVf-VE',
+		controls: 0,
+		playerVars: {
+			autohide: 1,
+			modestbranding: 1,
+			showinfo: 0,
+			rel: 0,
+			loop: 1,
+			theme: "light",
+		},
+		events: {
+			'onReady': onPlayerReady,
+			'onStateChange': onPlayerStateChange
+		}
+	});
+}
+
+function onPlayerReady(event) {
+	player.setLoop(true);
+	
+	currentId = 0;
+	current = videos[currentId];
+	setVideo();
+	
+	resize();
+}
+
+function resize() {
+	player.setSize(1,1)
+	player.setSize($(document).width()-1, $(document).height()-1);
+}
+
+$(window).bind("resize", resize);
+
+function onPlayerStateChange(event) {
+	if (event.data == YT.PlayerState.ENDED)
+		buttonForward();
+}
+
+function stopVideo() {
+	player.stopVideo();
+}
+
+function setVideo() {
+	setTeamColor(current.color);
+	player.loadVideoById({"videoId":current.src,"startSeconds":current.start});
+}
+
+function setTeamColor(color) {
+	$("#teamColor").html(color);
+	$("#teamColor").css("color", (color=="red"?"#DE1818":"#1B94E0"));
+}
+
+$("#introButton").bind("click", function() {
+	if (player !== undefined)
+		player.seekTo(current.start)
+});
+
+$("#buttonBack").bind("click", function() {
+	currentId--;
+	if (currentId <= 0)
+		currentId = videos.length-1;
+	current = videos[currentId];
+	setVideo()
+});
+
+function buttonForward() {
+	currentId++;
+	if (currentId >= videos.length)
+		currentId = 0;
+	current = videos[currentId];
+	setVideo();
+}
+$("#buttonForward").bind("click", buttonForward);
+
+
+$("#actionButton,#actionButton2").bind("click", function() {
+	player.seekTo(current.action);
+});
+
+$(".match").bind("click", function() {
+	var number = $(this).data("match")*1;
+	currentId = number-1;
+	current = videos[currentId];
+	setVideo();
+});
+
+var hidden = false;
+
+function toggleMenu() {
+	hidden = !hidden;
+	$("#menu").css("display", hidden?"none":"block");
+}
+toggleMenu();
+$("#toggleMenu").bind("click", toggleMenu);
+
+//player.loadVideoById("GUgi43GYa6M")
+//player.seekTo(100)
+		</script>
+	</body>
+</html>
