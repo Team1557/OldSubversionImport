@@ -96,9 +96,10 @@ public class DiscRobot extends IterativeRobot {
     public static int BUTTON_ARM = 1;
     
     // Drive System
-    public AdvancedDrive robotDrive;
+    public static AdvancedDrive robotDrive;
     public TankDriveCommand tankDriveCommand;
     public DiscRobotHappyPistonAutonomous happyPistonAutonomous;
+    public DiscRobotAutonomous defaultAutonomous;
     public DiscRobotTeleop teleop;
     
     // Joysticks
@@ -129,7 +130,7 @@ public class DiscRobot extends IterativeRobot {
     }
     
     public void robotInit() {
-        System.out.println("Hello, world.");
+        System.out.println("Hello, persons.");
         
         dashboard = new AdvancedDashboard();
         
@@ -142,6 +143,7 @@ public class DiscRobot extends IterativeRobot {
         
         // Create Control commands
         happyPistonAutonomous = new DiscRobotHappyPistonAutonomous(this, robotDrive);
+        defaultAutonomous = new DiscRobotAutonomous(this, robotDrive);
         teleop = new DiscRobotTeleop(this, robotDrive);
         
         // Set up joystick buttons
@@ -161,7 +163,7 @@ public class DiscRobot extends IterativeRobot {
         
         // Add the Autonomous modes.
         autonomousSelect = new SendableChooser();
-        autonomousSelect.addDefault("Default Autonomnous", new DiscRobotAutonomous(this, robotDrive));
+        autonomousSelect.addDefault("Default Autonomnous", defaultAutonomous);
         autonomousSelect.addObject("Happy Pistons", happyPistonAutonomous);
         autonomousSelect.addObject("Alternate", new SimpleCommand() {public void initialize() {System.out.println("Running alternate!");}});
         SmartDashboard.putData("Autonomous Chooser", autonomousSelect);
@@ -184,19 +186,24 @@ public class DiscRobot extends IterativeRobot {
 
         //Command command = (Command) autonomousSelect.getSelected();
         //command.start();
-        
+      
         getWatchdog().setEnabled(false);
         robotDrive.setSafetyEnabled(false);
-        
-        happyPistonAutonomous.initialize();
+
+        defaultAutonomous.initialize();
+        //happyPistonAutonomous.initialize();
+
         robotDrive.drive(0.0, 0.0);
     }
 
     public void autonomousPeriodic() {
         compressor.regulate();
+        getWatchdog().feed();
     }
     
-    public void autonomousContinuous() {}
+    public void autonomousContinuous() {
+        
+    }
 
     public void teleopInit() {
         System.out.println("Teleoperated");
