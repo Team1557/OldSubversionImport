@@ -217,8 +217,9 @@ public class DiscRobot extends IterativeRobot {
     public void teleopPeriodic() {
         compressor.regulate();
         dashboard.update();
-        
+        getWatchdog().feed();
         teleop.execute();
+        getWatchdog().feed();
     }
     
     public void teleopContinuous() {}
