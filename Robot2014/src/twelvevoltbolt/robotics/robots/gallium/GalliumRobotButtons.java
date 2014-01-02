@@ -49,7 +49,7 @@ public class GalliumRobotButtons {
     
     public SimpleCommand reverseButtonCommand = new SimpleCommand() {
         public void initialize() {
-            robot.robotDrive.setReversed(!robot.robotDrive.isReversed());
+            GalliumMain.robotDrive.setReversed(!GalliumMain.robotDrive.isReversed());
         }
     };
     

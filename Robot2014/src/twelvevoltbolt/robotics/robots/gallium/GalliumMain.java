@@ -16,35 +16,8 @@ import twelvevoltbolt.robotics.dashboard.AdvancedDashboard;
 import twelvevoltbolt.robotics.mechanics.RegulatedCompressor;
 
 /**
- * <h1>Tasks:</h1>
- * <h3>General</h3>
- * <ul>
- * <li>Yes - Determine what the correct Class is for motor controls such as the
- * arms and lifters, ie: Solenoid, Relay, CANJaguar.</li>
- * <li>Yes - Determine the correct channels for solenoids, lifters, buttons, etc,
- * then change their defined values in code.</li>
- * <li>Yes - Test whether robot loads the code without errors.</li>
- * <li>Yes - Determine if the robot outputs team information, etc on call to
- * robotInit(), and note the information when loading code, and when enabling
- * from driver station.</li>
- * <li>No - Try re-enabling safety on the robotDrive, and see if safety checks
- * kick in.</li>
- * </ul>
- *
- * <h3>AdvancedDrive</h3>
- * <ul>
- * <li>Yes - Test whether the joysticks control the robot.</li>
- * <li>Yes - Test whether the joysticks control the motors in a gradual increase
- * with the square function.</li>
- * <li>Yes - Test whether direction is correct by default.</li>
- * </ul>
- *
  * <h3>Buttons</h3>
  * <ul>
- * <li>Yes - Test whether the "reverseButton" toggles the reverse, and confirm a
- * switch in both motor direction and motor side.</li>
- * <li>Yes - Test whether the "lifterButton" toggles lifterOn, by watching the
- * output upon pressing the button.</li>
  * <li>No - Test whether having the "reverseButton" on from a previous TeleOp
  * period leaves the system reversed while in Autonomous, by first testing
  * autonomous, observing the direction of the wheels, then reversing the
@@ -129,7 +102,7 @@ public class GalliumMain extends IterativeRobot {
     }
     
     public void robotInit() {
-        System.out.println("Hello, persons.");
+        System.out.println("Hello, World.");
         
         dashboard = new AdvancedDashboard();
         
@@ -188,8 +161,7 @@ public class GalliumMain extends IterativeRobot {
         robotDrive.setSafetyEnabled(false);
 
         defaultAutonomous.initialize();
-        //happyPistonAutonomous.initialize();
-
+        
         robotDrive.drive(0.0, 0.0);
     }
 
