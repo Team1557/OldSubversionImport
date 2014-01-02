@@ -22,7 +22,9 @@ public class GalliumRobotTeleop extends RobotControlCommand {
             robot.armVictor.set(0);
         }
         
+        
+        
         robot.buttons.update();
-        robot.robotDrive.drive(robot.tankDriveCommand);
+        GalliumMain.robotDrive.drive(robot.tankDriveCommand);
     }
 }
