@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import com.twelvevoltbolt.gallium.commands.CommandBase;
 import com.twelvevoltbolt.gallium.commands.AutonomousCommand;
+import com.twelvevoltbolt.gallium.commands.TeleopCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,19 +24,22 @@ import com.twelvevoltbolt.gallium.commands.AutonomousCommand;
  * directory.
  */
 public class RobotGallium extends IterativeRobot {
+    public static RobotGallium robot;
+    
+    public Command autonomousCommand;
+    public Command teleopCommand;
 
-    Command autonomousCommand;
-    Command teleopCommand;
-
+    public RobotGallium() {
+    }
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-        // instantiate the command used for the autonomous period
         autonomousCommand = new AutonomousCommand();
+        teleopCommand = new TeleopCommand();
         
-        // Initialize all subsystems
         CommandBase.init();
     }
 
