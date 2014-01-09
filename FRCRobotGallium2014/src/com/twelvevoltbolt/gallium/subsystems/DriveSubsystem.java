@@ -3,6 +3,7 @@ package com.twelvevoltbolt.gallium.subsystems;
 import com.twelvevoltbolt.gallium.RobotMap;
 import com.twelvevoltbolt.gallium.commands.TankDriveCommand;
 import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,13 +16,15 @@ public class DriveSubsystem extends Subsystem {
     CANJaguar leftMotor2;
     CANJaguar rightMotor1;
     CANJaguar rightMotor2;
-
+    RobotDrive drive;
+    
     public DriveSubsystem() {
         try {
             leftMotor1 = new CANJaguar(RobotMap.leftMotor1);
             leftMotor2 = new CANJaguar(RobotMap.leftMotor2);
             rightMotor1 = new CANJaguar(RobotMap.rightMotor1);
             rightMotor2 = new CANJaguar(RobotMap.rightMotor2);
+            drive = new RobotDrive(leftMotor1, leftMotor2, rightMotor1, rightMotor2);
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
@@ -36,10 +39,11 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void drive(double left, double right) {
-        leftMotor1.set(left);
-        leftMotor2.set(left);
-        rightMotor1.set(right);
-        rightMotor2.set(right);
+        drive.tankDrive(-(reversed ? right : left), -(reversed ? left : right));
+    }
+    
+    public void arcadeDrive(double magnitude, double angle) {
+        drive.arcadeDrive(magnitude * (reversed ? -1 : 1), angle);
     }
     
     private boolean reversed;
