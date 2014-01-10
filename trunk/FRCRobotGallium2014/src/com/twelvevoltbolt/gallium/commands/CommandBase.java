@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.twelvevoltbolt.gallium.OI;
 import com.twelvevoltbolt.gallium.subsystems.DriveSubsystem;
+import com.twelvevoltbolt.gallium.subsystems.FiringSubsystem;
 import com.twelvevoltbolt.gallium.subsystems.VacuumSubsystem;
 
 /**
@@ -20,6 +21,7 @@ public abstract class CommandBase extends Command {
 
     public static DriveSubsystem drive = new DriveSubsystem();
     public static VacuumSubsystem vacuum = new VacuumSubsystem();
+    public static FiringSubsystem firing = new FiringSubsystem();
     
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely

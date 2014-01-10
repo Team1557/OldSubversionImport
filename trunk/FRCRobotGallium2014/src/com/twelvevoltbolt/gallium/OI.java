@@ -1,8 +1,10 @@
 
 package com.twelvevoltbolt.gallium;
 
+import com.twelvevoltbolt.gallium.commands.DirectionalFireCommand;
 import com.twelvevoltbolt.gallium.commands.ReverseCommand;
 import com.twelvevoltbolt.gallium.commands.TestCommand;
+import com.twelvevoltbolt.gallium.commands.TriggerFireCommand;
 import com.twelvevoltbolt.gallium.commands.VacuumSuckCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -13,13 +15,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    //// CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
-    
     // Another type of button you can create is a DigitalIOButton, which is
     // a button or switch hooked up to the cypress module. These are useful if
     // you want to build a customized operator interface.
@@ -31,13 +26,27 @@ public class OI {
     
     Button reverse = new JoystickButton(left, 1);
     Button suckButton = new JoystickButton(alt, 2);
-    Button testButton = new JoystickButton(alt, 1);
+    Button testButton = new JoystickButton(alt, 6);
+    
+    Button fireTriggerButton = new JoystickButton(alt, 1);
+    Button fireLeftButton = new JoystickButton(alt, 4);
+    Button fireCenterButton = new JoystickButton(alt, 3);
+    Button fireRightButton = new JoystickButton(alt, 5);
 
     public OI() {
         reverse.whenPressed(new ReverseCommand());
         
         testButton.whileHeld(new TestCommand());
+        
         suckButton.whileHeld(new VacuumSuckCommand());
+        
+        // Fire based on joystick input
+        fireTriggerButton.whenPressed(new TriggerFireCommand());
+        
+        // Directional
+        fireLeftButton.whenPressed(new DirectionalFireCommand(-1));
+        fireCenterButton.whenPressed(new DirectionalFireCommand(0));
+        fireRightButton.whenPressed(new DirectionalFireCommand(1));
     }
     
     public double getLeftJoystick() {
@@ -46,6 +55,14 @@ public class OI {
     
     public double getRightJoystick() {
         return right.getAxis(Joystick.AxisType.kY);
+    }
+    
+    /**
+     * Gets the angle to fire at, from -1 to 1
+     * @return 
+     */
+    public double getFiringAngle() {
+        return alt.getAxis(Joystick.AxisType.kX);
     }
 }
 
