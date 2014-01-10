@@ -1,18 +1,25 @@
 package com.twelvevoltbolt.gallium.subsystems;
 
 import com.twelvevoltbolt.gallium.RobotMap;
+import com.twelvevoltbolt.gallium.commands.DirectionalFireCommand;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class FiringSubsystem extends Subsystem {
 
-    Solenoid leftFireArm;
-    Solenoid rightFireArm;
+    private Solenoid leftFireShoulder;
+    private Solenoid rightFireShoulder;
+
+    private Solenoid leftFireElbow;
+    private Solenoid rightFireElbow;
 
     public FiringSubsystem() {
-        leftFireArm = new Solenoid(RobotMap.leftLauncher);
-        rightFireArm = new Solenoid(RobotMap.rightLauncher);
+        leftFireShoulder = new Solenoid(RobotMap.leftLauncherShoulder);
+        rightFireShoulder = new Solenoid(RobotMap.rightLauncherShoulder);
+        
+        leftFireElbow = new Solenoid(RobotMap.leftLauncherElbow);
+        rightFireElbow = new Solenoid(RobotMap.rightLauncherElbow);
     }
 
     protected void initDefaultCommand() {
@@ -25,10 +32,6 @@ public class FiringSubsystem extends Subsystem {
         shoot(0, 1);
     }
     
-    /**
-     * The maximum delay is determined by the multiplier, where an input of 1 with a multiplier of 1/3 gives a delay of 1/3rd seconds
-     */
-    public static double FIRING_DELAY_MULTIPLIER = 1 / 3;
     
     /**
      * Shoots a shot, with the given angle, and power.
@@ -38,16 +41,22 @@ public class FiringSubsystem extends Subsystem {
      * How much power to give to the shot.  Currently unused.
      */
     public void shoot(double angle, double power) {
-        Solenoid firstToFire;
-        Solenoid secondToFire;
+        Solenoid firstToFireShoulder,
+            secondToFireShoulder,
+            firstToFireElbow,
+            secondToFireElbow;
         
         // Joystick input to the left means the right arm fires first, and vice versa
         if (angle < 0) {
-            firstToFire = rightFireArm;
-            secondToFire = leftFireArm;
+            firstToFireShoulder = rightFireShoulder;
+            secondToFireShoulder = leftFireShoulder;
+            firstToFireElbow = rightFireElbow;
+            secondToFireElbow = leftFireElbow;
         } else {
-            firstToFire = leftFireArm;
-            secondToFire = rightFireArm;
+            firstToFireShoulder = leftFireShoulder;
+            secondToFireShoulder = rightFireShoulder;
+            firstToFireElbow = leftFireElbow;
+            secondToFireElbow = rightFireElbow;
         }
         
         // Deadzone
@@ -55,18 +64,38 @@ public class FiringSubsystem extends Subsystem {
             angle = 0;
         }
         
-        double wait = Math.abs(angle) * FIRING_DELAY_MULTIPLIER;
+        double wait = Math.abs(angle) * DirectionalFireCommand.FIRING_AIM_DELAY_MULTIPLIER;
         
         // Fires the arms
-        firstToFire.set(true);
+        firstToFireShoulder.set(true);
+        
         Timer.delay(wait);
-        secondToFire.set(true);
+        
+        secondToFireShoulder.set(true);
         
         // Wait for full shooty action
         Timer.delay(1);
         
         // Retract both
-        firstToFire.set(false);
-        secondToFire.set(false);
+        firstToFireShoulder.set(false);
+        firstToFireElbow.set(false);
+        secondToFireShoulder.set(false);
+        secondToFireElbow.set(false);
+    }
+
+    public Solenoid getLeftFireShoulder() {
+        return leftFireShoulder;
+    }
+
+    public Solenoid getRightFireShoulder() {
+        return rightFireShoulder;
+    }
+
+    public Solenoid getLeftFireElbow() {
+        return leftFireElbow;
+    }
+
+    public Solenoid getRightFireElbow() {
+        return rightFireElbow;
     }
 }

@@ -27,7 +27,7 @@ public class OI {
     Button reverse = new JoystickButton(left, 1);
     Button suckButton = new JoystickButton(alt, 2);
     Button testButton = new JoystickButton(alt, 6);
-    
+
     Button fireTriggerButton = new JoystickButton(alt, 1);
     Button fireLeftButton = new JoystickButton(alt, 4);
     Button fireCenterButton = new JoystickButton(alt, 3);
