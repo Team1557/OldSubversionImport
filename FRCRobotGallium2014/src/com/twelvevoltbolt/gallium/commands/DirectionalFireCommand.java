@@ -38,7 +38,7 @@ public class DirectionalFireCommand extends CommandGroup {
             this.elbow = isLeftSide ? firing.getLeftFireElbow() : firing.getRightFireElbow();
         }
         
-        public double getDelay() { //Lol hi taylor
+        public double getDelay() {
             double direction = ((DirectionalFireCommand) getGroup()).getDirection();
             
             // Deadzone
