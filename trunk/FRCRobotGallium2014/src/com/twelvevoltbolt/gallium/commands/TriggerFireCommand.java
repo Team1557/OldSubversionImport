@@ -14,6 +14,7 @@ public class TriggerFireCommand extends DirectionalFireCommand {
         super(0);
     }
 
+    // @Override
     public double getDirection() {
         return CommandBase.oi.getFiringAngle();
     }
