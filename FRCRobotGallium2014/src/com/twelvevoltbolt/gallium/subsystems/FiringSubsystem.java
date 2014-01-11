@@ -9,15 +9,15 @@ public class FiringSubsystem extends Subsystem {
     private Solenoid leftFireShoulder;
     private Solenoid rightFireShoulder;
 
-    private Solenoid leftFireElbow;
-    private Solenoid rightFireElbow;
+    //private Solenoid leftFireElbow;
+    //private Solenoid rightFireElbow;
 
     public FiringSubsystem() {
         leftFireShoulder = new Solenoid(RobotMap.leftLauncherShoulder);
         rightFireShoulder = new Solenoid(RobotMap.rightLauncherShoulder);
         
-        leftFireElbow = new Solenoid(RobotMap.leftLauncherElbow);
-        rightFireElbow = new Solenoid(RobotMap.rightLauncherElbow);
+        //leftFireElbow = new Solenoid(RobotMap.leftLauncherElbow);
+        //rightFireElbow = new Solenoid(RobotMap.rightLauncherElbow);
     }
 
     protected void initDefaultCommand() {
@@ -31,11 +31,11 @@ public class FiringSubsystem extends Subsystem {
         return rightFireShoulder;
     }
 
-    public Solenoid getLeftFireElbow() {
+    /*public Solenoid getLeftFireElbow() {
         return leftFireElbow;
     }
 
     public Solenoid getRightFireElbow() {
         return rightFireElbow;
-    }
+    }*/
 }

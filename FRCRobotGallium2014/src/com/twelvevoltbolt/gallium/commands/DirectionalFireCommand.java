@@ -27,20 +27,22 @@ public class DirectionalFireCommand extends CommandGroup {
     public static class MoveFireArmCommand extends CommandBase {
 
         Solenoid shoulder;
-        Solenoid elbow;
+        //Solenoid elbow;
 
         public MoveFireArmCommand(boolean isLeftSide) {
             requires(firing);
-            
-            
-            
+
             this.shoulder = isLeftSide ? firing.getLeftFireShoulder() : firing.getRightFireShoulder();
-            this.elbow = isLeftSide ? firing.getLeftFireElbow() : firing.getRightFireElbow();
+            // this.elbow = isLeftSide ? firing.getLeftFireElbow() : firing.getRightFireElbow();
         }
-        
+
+        /**
+         * Gets the delay between firing each side of the arm pair
+         * @return 
+         */
         public double getDelay() {
             double direction = ((DirectionalFireCommand) getGroup()).getDirection();
-            
+
             // Deadzone
             if (Math.abs(direction) < 0.1) {
                 direction = 0;
@@ -52,12 +54,12 @@ public class DirectionalFireCommand extends CommandGroup {
         public void fire() {
             shoulder.set(true);
             setTimeout(getDelay());
-            elbow.set(true);
+            //elbow.set(true);
         }
 
         public void retract() {
-            elbow.set(false);
-            setTimeout(getDelay());
+            //elbow.set(false);
+            //setTimeout(getDelay());
             shoulder.set(false);
         }
 
@@ -86,11 +88,12 @@ public class DirectionalFireCommand extends CommandGroup {
             retract();
         }
     }
+
     private double direction;
 
     public DirectionalFireCommand(float direction) {
         this.direction = direction;
-        
+
         addParallel(new MoveFireArmCommand(true));
         addParallel(new MoveFireArmCommand(false));
     }
