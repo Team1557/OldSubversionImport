@@ -20,7 +20,7 @@ public class CompressorRegulateCommand extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        compressor.setCompressing(!compressor.getShutoff().get());
+        compressor.setCompressing(true);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -30,6 +30,7 @@ public class CompressorRegulateCommand extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
+        compressor.setCompressing(false);
     }
 
     // Called when another command which requires one or more of the same
