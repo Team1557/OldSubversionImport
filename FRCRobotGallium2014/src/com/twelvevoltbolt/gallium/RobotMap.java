@@ -7,23 +7,18 @@ package com.twelvevoltbolt.gallium;
  * floating around.
  */
 public class RobotMap {
-    // For example to map the left and right motors, you could define the
-    // following variables to use with your drivetrain subsystem.
+
+    // Pair of left side motors
     public static final int leftMotor1 = 1;
     public static final int leftMotor2 = 2;
+    
+    // Pair of right side motors
     public static final int rightMotor1 = 3;
     public static final int rightMotor2 = 4;
     
+    // Arms
     public static final int leftLauncherShoulder = 5;
     public static final int rightLauncherShoulder = 6;
-    
-    //public static final int leftLauncherElbow = 7;
-    //public static final int rightLauncherElbow = 8;
-    
-    // If you are using multiple modules, make sure to define both the port
-    // number and the module. For example you with a rangefinder:
-    // public static final int rangefinderPort = 1;
-    // public static final int rangefinderModule = 1;
     
     // Port of relay for compressor
     public static final int compressorRelay = 7;

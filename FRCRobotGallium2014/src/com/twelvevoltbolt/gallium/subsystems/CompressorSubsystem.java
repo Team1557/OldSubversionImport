@@ -27,7 +27,7 @@ public class CompressorSubsystem extends Subsystem {
     }
 
     public void setCompressing(boolean compress) {
-        compressor.set(compress ? Relay.Value.kOn : Relay.Value.kOff);
+        compressor.set(compress ? Relay.Value.kForward : Relay.Value.kOff);
     }
     
     public Relay getCompressor() {

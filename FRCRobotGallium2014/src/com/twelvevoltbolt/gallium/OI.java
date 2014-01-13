@@ -49,12 +49,18 @@ public class OI {
         fireRightButton.whenPressed(new DirectionalFireCommand(1));
     }
     
-    public double getLeftJoystick() {
-        return left.getAxis(Joystick.AxisType.kY);
+    public double getLeftInput() {
+        double value = left.getAxis(Joystick.AxisType.kY);
+        
+        // Square the input
+        return value * value;
     }
     
-    public double getRightJoystick() {
-        return right.getAxis(Joystick.AxisType.kY);
+    public double getRightInput() {
+        double value = right.getAxis(Joystick.AxisType.kY);
+        
+        // Square the input
+        return value * value;
     }
     
     /**
