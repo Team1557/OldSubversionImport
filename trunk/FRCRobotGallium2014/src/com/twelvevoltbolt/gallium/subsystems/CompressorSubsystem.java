@@ -7,19 +7,16 @@ package com.twelvevoltbolt.gallium.subsystems;
 
 import com.twelvevoltbolt.gallium.RobotMap;
 import com.twelvevoltbolt.gallium.commands.CompressorRegulateCommand;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
 public class CompressorSubsystem extends Subsystem {
 
-    private Relay compressor;
-    private DigitalInput shutoff;
-
+    private Compressor compressor;
+    
     public CompressorSubsystem() {
-        compressor = new Relay(RobotMap.compressorRelay);
-        shutoff = new DigitalInput(RobotMap.compressorShutoffDigitalInput);
+        compressor = new Compressor(RobotMap.compressorShutoffDigitalInput, RobotMap.compressorRelay);
     }
     
     protected void initDefaultCommand() {
@@ -27,22 +24,14 @@ public class CompressorSubsystem extends Subsystem {
     }
 
     public void setCompressing(boolean compress) {
-        compressor.set(compress ? Relay.Value.kForward : Relay.Value.kOff);
+        if (compress) {
+            compressor.start();
+        } else {
+            compressor.stop();
+        }
     }
     
-    public Relay getCompressor() {
+    public Compressor getCompressor() {
         return compressor;
-    }
-
-    public void setCompressor(Relay compressor) {
-        this.compressor = compressor;
-    }
-
-    public DigitalInput getShutoff() {
-        return shutoff;
-    }
-
-    public void setShutoff(DigitalInput shutoff) {
-        this.shutoff = shutoff;
     }
 }
