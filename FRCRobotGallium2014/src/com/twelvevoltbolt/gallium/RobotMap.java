@@ -17,8 +17,10 @@ public class RobotMap {
     public static final int rightMotor2 = 4;
     
     // Arms
-    public static final int leftLauncherShoulder = 5;
-    public static final int rightLauncherShoulder = 6;
+//    public static final int leftLauncherShoulder = 5;
+//    public static final int rightLauncherShoulder = 6;
+    
+    public static final int armLauncher = 5;
     
     // Port of relay for compressor
     public static final int compressorRelay = 7;
