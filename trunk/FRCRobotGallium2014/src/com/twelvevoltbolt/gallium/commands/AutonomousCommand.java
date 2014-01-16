@@ -14,6 +14,7 @@ public class AutonomousCommand extends CommandGroup {
         addSequential(new DriveForwardCommand(0.5, 2));
         addSequential(new WaitCommand(1));
         addSequential(new DirectionalFireCommand(0));
+        addSequential(new WaitCommand(1));
+        addSequential(new DriveForwardCommand(0.5, 2));
     }
-    
 }
