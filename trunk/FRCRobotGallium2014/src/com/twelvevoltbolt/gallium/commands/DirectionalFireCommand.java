@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  * @author code
  */
-public class DirectionalFireCommand extends CommandGroup {
+public class DirectionalFireCommand extends CommandBase { // CommandGroup {
 
     /**
      * The maximum delay is determined by the multiplier, where an input of 1
@@ -94,16 +94,29 @@ public class DirectionalFireCommand extends CommandGroup {
 
     public DirectionalFireCommand(float direction) {
         this.direction = direction;
-
-        CommandBase.firing.getArm().set(true);
-        Timer.delay(2000);
-        CommandBase.firing.getArm().set(false);
         
 //      addParallel(new MoveFireArmCommand(true));
 //      addParallel(new MoveFireArmCommand(false));
     }
 
+    protected void execute() {
+        CommandBase.firing.fire();
+    }
+
     public double getDirection() {
         return direction;
+    }
+
+    protected void initialize() {
+    }
+
+    protected boolean isFinished() {
+        return isTimedOut();
+    }
+
+    protected void end() {
+    }
+
+    protected void interrupted() {
     }
 }
