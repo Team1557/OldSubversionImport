@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class AutonomousCommand extends CommandGroup {
 
     public AutonomousCommand() {
-        addSequential(new DriveForwardCommand(0.5, 2));
+        addSequential(new DriveCommand(0.5, 0.5, 1));
         addSequential(new WaitCommand(1));
-        addSequential(new DirectionalFireCommand(0));
+        addSequential(new FireCommand());
         addSequential(new WaitCommand(1));
-        addSequential(new DriveForwardCommand(0.5, 2));
+        addSequential(new DriveCommand(0.5, 0.5, 1));
     }
 }

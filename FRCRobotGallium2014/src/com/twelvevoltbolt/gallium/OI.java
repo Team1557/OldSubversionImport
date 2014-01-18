@@ -1,10 +1,10 @@
 
 package com.twelvevoltbolt.gallium;
 
-import com.twelvevoltbolt.gallium.commands.DirectionalFireCommand;
+import com.twelvevoltbolt.gallium.commands.FireCommand;
 import com.twelvevoltbolt.gallium.commands.ReverseCommand;
 import com.twelvevoltbolt.gallium.commands.TestCommand;
-import com.twelvevoltbolt.gallium.commands.TriggerFireCommand;
+import com.twelvevoltbolt.gallium.commands.TurnAndAimCommand;
 import com.twelvevoltbolt.gallium.commands.VacuumSuckCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -41,12 +41,12 @@ public class OI {
         suckButton.whileHeld(new VacuumSuckCommand());
         
         // Fire based on joystick input
-        fireTriggerButton.whenPressed(new TriggerFireCommand());
+        fireTriggerButton.whenPressed(new FireCommand());
         
         // Directional
-        fireLeftButton.whenPressed(new DirectionalFireCommand(-1));
-        fireCenterButton.whenPressed(new DirectionalFireCommand(0));
-        fireRightButton.whenPressed(new DirectionalFireCommand(1));
+        fireLeftButton.whenPressed(new TurnAndAimCommand(-1));
+        fireCenterButton.whenPressed(new TurnAndAimCommand(0));
+        fireRightButton.whenPressed(new TurnAndAimCommand(+1));
     }
     
     public double getLeftInput() {

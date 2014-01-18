@@ -7,14 +7,16 @@ package com.twelvevoltbolt.gallium.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 
-class DriveForwardCommand extends CommandBase {
+class DriveCommand extends CommandBase {
 
-    private double speed;
     private double time;
+    private double left = 0;
+    private double right = 0;
 
-    public DriveForwardCommand(double speed, double time) {
-        this.speed = speed;
+    public DriveCommand(double left, double right, double time) {
         this.time = time;
+        this.left = left;
+        this.right = right;
         
         requires(drive);
         requires(firing);
@@ -24,9 +26,9 @@ class DriveForwardCommand extends CommandBase {
     }
 
     protected void execute() {
-        drive.drive(speed, speed);
+        drive.drive(left, right);
         Timer.delay(time);
-        drive.drive(0.0, 0.0);
+        drive.drive(0, 0);
     }
 
     protected boolean isFinished() {

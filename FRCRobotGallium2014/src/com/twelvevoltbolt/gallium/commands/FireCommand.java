@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  * @author code
  */
-public class DirectionalFireCommand extends CommandBase { // CommandGroup {
+public class FireCommand extends CommandBase { // CommandGroup {
 
     /**
      * The maximum delay is determined by the multiplier, where an input of 1
@@ -42,14 +42,14 @@ public class DirectionalFireCommand extends CommandBase { // CommandGroup {
 //         * @return 
 //         */
 //        public double getDelay() {
-//            double direction = ((DirectionalFireCommand) getGroup()).getDirection();
+//            double direction = ((FireCommand) getGroup()).getDirection();
 //
 //            // Deadzone
 //            if (Math.abs(direction) < 0.1) {
 //                direction = 0;
 //            }
 //
-//            return Math.abs(direction) * DirectionalFireCommand.FIRING_AIM_DELAY_MULTIPLIER;
+//            return Math.abs(direction) * FireCommand.FIRING_AIM_DELAY_MULTIPLIER;
 //        }
 //
 //        public void fire() {
@@ -90,21 +90,8 @@ public class DirectionalFireCommand extends CommandBase { // CommandGroup {
 //        }
 //    }
 
-    private double direction;
-
-    public DirectionalFireCommand(float direction) {
-        this.direction = direction;
-        
-//      addParallel(new MoveFireArmCommand(true));
-//      addParallel(new MoveFireArmCommand(false));
-    }
-
     protected void execute() {
         CommandBase.firing.fire();
-    }
-
-    public double getDirection() {
-        return direction;
     }
 
     protected void initialize() {
