@@ -30,9 +30,8 @@ public class Gallium67 {
         
         System.out.println(table);
         
-        int id = table.getInt("id");
+        int id = (int) table.getNumber("id");
         table.putNumber("id", id + 1);
-        
         table.putNumber("time" + id, 500);
         
         int i = 0;
