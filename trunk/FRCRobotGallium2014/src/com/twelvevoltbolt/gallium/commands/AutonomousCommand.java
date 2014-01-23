@@ -4,10 +4,6 @@ package com.twelvevoltbolt.gallium.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-/**
- *
- * @author bradmiller
- */
 public class AutonomousCommand extends CommandGroup {
 
     public AutonomousCommand() {

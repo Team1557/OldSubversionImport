@@ -10,16 +10,16 @@ public class Gallium67 {
     public static void main(String[] args) throws InterruptedException {
         NetworkTable.setClientMode();
         NetworkTable.setIPAddress("localhost");
-        
+
         NetworkTable table = NetworkTable.getTable("SmartDashboard");
-        
+
         if (!table.containsKey("id")) {
             table.putNumber("id", 0);
         }
         if (!table.containsKey("Hello")) {
             table.putNumber("Hello", 0);
         }
-        
+
         int id = (int) table.getNumber("id");
         table.putNumber("id", id + 1);
         table.putNumber("time" + id, 500);
