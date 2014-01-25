@@ -32,7 +32,6 @@ public class TurnAndAimCommand extends CommandGroup {
             addSequential(new DriveCommand(0, speed, getTurnAngle() * timeMultiplier));
         }
         
-        addSequential(new DriveCommand(1, 1, 0.5));
         addSequential(new WaitCommand(1));
         addSequential(new FireCommand());        
     }
