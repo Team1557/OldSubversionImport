@@ -2,8 +2,8 @@
 package com.twelvevoltbolt.gallium;
 
 import com.twelvevoltbolt.gallium.commands.FireCommand;
-import com.twelvevoltbolt.gallium.commands.TestCommand;
 import com.twelvevoltbolt.gallium.commands.TurnAndAimCommand;
+import com.twelvevoltbolt.gallium.commands.VacuumArmLiftCommand;
 import com.twelvevoltbolt.gallium.commands.VacuumSuckCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -19,13 +19,13 @@ public class OI {
     // you want to build a customized operator interface.
     // Button button = new DigitalIOButton(1);
     
-    Joystick left = new Joystick(1);
-    Joystick right = new Joystick(2);
-    Joystick alt = new Joystick(3);
+    public Joystick left = new Joystick(1);
+    public Joystick right = new Joystick(2);
+    public Joystick alt = new Joystick(3);
     
     //Button reverse = new JoystickButton(left, 1);
     Button suckButton = new JoystickButton(alt, 2);
-    Button testButton = new JoystickButton(alt, 6);
+    Button armControl = new JoystickButton(alt, 6);          
 
     Button fireTriggerButton = new JoystickButton(alt, 1);
     Button fireLeftButton = new JoystickButton(alt, 4);
@@ -35,7 +35,7 @@ public class OI {
     public OI() {
         //reverse.whenPressed(new ReverseCommand());
         
-        testButton.whileHeld(new TestCommand());
+        armControl.whileHeld(new VacuumArmLiftCommand());
         
         suckButton.whileHeld(new VacuumSuckCommand());
         
