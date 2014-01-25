@@ -2,7 +2,6 @@
 package com.twelvevoltbolt.gallium;
 
 import com.twelvevoltbolt.gallium.commands.FireCommand;
-import com.twelvevoltbolt.gallium.commands.ReverseCommand;
 import com.twelvevoltbolt.gallium.commands.TestCommand;
 import com.twelvevoltbolt.gallium.commands.TurnAndAimCommand;
 import com.twelvevoltbolt.gallium.commands.VacuumSuckCommand;
@@ -24,7 +23,7 @@ public class OI {
     Joystick right = new Joystick(2);
     Joystick alt = new Joystick(3);
     
-    Button reverse = new JoystickButton(left, 1);
+    //Button reverse = new JoystickButton(left, 1);
     Button suckButton = new JoystickButton(alt, 2);
     Button testButton = new JoystickButton(alt, 6);
 
@@ -34,7 +33,7 @@ public class OI {
     Button fireRightButton = new JoystickButton(alt, 5);
 
     public OI() {
-        reverse.whenPressed(new ReverseCommand());
+        //reverse.whenPressed(new ReverseCommand());
         
         testButton.whileHeld(new TestCommand());
         
