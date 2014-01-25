@@ -6,7 +6,9 @@ import com.twelvevoltbolt.gallium.OI;
 import com.twelvevoltbolt.gallium.subsystems.CompressorSubsystem;
 import com.twelvevoltbolt.gallium.subsystems.DriveSubsystem;
 import com.twelvevoltbolt.gallium.subsystems.FiringSubsystem;
+import com.twelvevoltbolt.gallium.subsystems.VacuumArmSubsystem;
 import com.twelvevoltbolt.gallium.subsystems.VacuumSubsystem;
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -17,13 +19,13 @@ import com.twelvevoltbolt.gallium.subsystems.VacuumSubsystem;
 public abstract class CommandBase extends Command {
 
     public static OI oi;
+    
     // Create a single static instance of all of your subsystems
-    public static DriveSubsystem exampleSubsystem = new DriveSubsystem();
-
-    public static DriveSubsystem drive = new DriveSubsystem();
-    public static VacuumSubsystem vacuum = new VacuumSubsystem();
+    public static DriveSubsystem drive;
+    public static VacuumSubsystem vacuum;
     public static FiringSubsystem firing = new FiringSubsystem();
     public static CompressorSubsystem compressor = new CompressorSubsystem();
+    public static VacuumArmSubsystem arms;
     
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
@@ -32,9 +34,20 @@ public abstract class CommandBase extends Command {
         // yet. Thus, their requires() statements may grab null pointers. Bad
         // news. Don't move it.
         oi = new OI();
+        try {
+            drive = new DriveSubsystem();
+            vacuum = new VacuumSubsystem();
+            arms = new VacuumArmSubsystem();
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
+        }
 
         // Show what command your subsystem is running on the SmartDashboard
-        SmartDashboard.putData(exampleSubsystem);
+        SmartDashboard.putData(drive);
+        SmartDashboard.putData(vacuum);
+        SmartDashboard.putData(firing);
+        SmartDashboard.putData(compressor);
+        SmartDashboard.putData(arms);
     }
 
     public CommandBase(String name) {

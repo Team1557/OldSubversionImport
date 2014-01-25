@@ -1,7 +1,6 @@
 package com.twelvevoltbolt.gallium.subsystems;
 
 import com.twelvevoltbolt.gallium.RobotMap;
-import com.twelvevoltbolt.gallium.commands.CommandBase;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -12,6 +11,7 @@ public class FiringSubsystem extends Subsystem {
 //  private Solenoid rightFireShoulder;
 
     private Solenoid arm;
+    private Solenoid arm2;
     
     //private Solenoid leftFireElbow;
     //private Solenoid rightFireElbow;
@@ -24,6 +24,7 @@ public class FiringSubsystem extends Subsystem {
         //rightFireElbow = new Solenoid(RobotMap.rightLauncherElbow);
         
         arm = new Solenoid(RobotMap.armLauncher);
+        arm2 = new Solenoid(RobotMap.armLauncher2);
     }
 
     protected void initDefaultCommand() {
@@ -49,13 +50,19 @@ public class FiringSubsystem extends Subsystem {
         return arm;
     }
     
+    public Solenoid getArm2() {
+        return arm2;
+    }
+    
     public void fire() {
         fire(2000);
     }
     
     public void fire(int millis) {
-        CommandBase.firing.getArm().set(true);
+        getArm().set(true);
+        getArm2().set(true);
         Timer.delay(millis);
-        CommandBase.firing.getArm().set(false);
+        getArm().set(false);
+        getArm2().set(false);
     }
 }
