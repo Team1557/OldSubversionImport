@@ -1,5 +1,8 @@
 package com.twelvevoltbolt.gallium.commands;
 
+import com.twelvevoltbolt.gallium.MathUtils;
+import com.twelvevoltbolt.gallium.RobotMap;
+
 /**
  * A tank drive command that takes input from two joysticks and outputs to the
  * drive.
@@ -7,7 +10,10 @@ package com.twelvevoltbolt.gallium.commands;
  * @author code
  */
 public class TankDriveCommand extends CommandBase {
-
+    
+    double motorLeft = 0;
+    double motorRight = 0;
+    
     public TankDriveCommand() {
         requires(drive);
     }
@@ -16,9 +22,20 @@ public class TankDriveCommand extends CommandBase {
     protected void initialize() {
     }
 
+    public double normalize(double joystick, double motor) {
+        if (Math.abs(joystick) < Math.abs(motor) || Math.abs(joystick)< RobotMap.motorRampStart) {
+            return joystick;
+        } else {
+            return motor + MathUtils.sign(joystick) * Math.min(RobotMap.motorRampStep, Math.abs(joystick) - Math.abs(motor));
+        }
+    }
+    
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        drive.drive(oi.getLeftInput(), oi.getRightInput());
+        motorLeft = normalize(oi.getLeftInput(), motorLeft);
+        motorRight = normalize(oi.getRightInput(), motorRight);
+        
+        drive.drive(motorLeft, motorRight);
     }
 
     // Make this return true when this Command no longer needs to run execute()
