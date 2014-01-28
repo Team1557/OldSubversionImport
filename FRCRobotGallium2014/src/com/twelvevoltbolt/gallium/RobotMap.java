@@ -50,4 +50,7 @@ public class RobotMap {
      */
     public static int vacuumArmUpSlowSpeed = 20;
     
+    
+    public static double motorRampStart = 0.6;
+    public static double motorRampStep = 0.005;
 }
