@@ -4,6 +4,7 @@ import com.twelvevoltbolt.gallium.RobotMap;
 import com.twelvevoltbolt.gallium.commands.TankDriveCommand;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -12,13 +13,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveSubsystem extends Subsystem {
 
+    Solenoid SuperShifter;
     CANJaguar leftMotor1;
     CANJaguar leftMotor2;
     CANJaguar rightMotor1;
     CANJaguar rightMotor2;
     RobotDrive drive;
-
+    
+    
     public DriveSubsystem() throws CANTimeoutException {
+        SuperShifter = new Solenoid(RobotMap. SuperShifter);
         leftMotor1 = new CANJaguar(RobotMap.leftMotor1);
         leftMotor2 = new CANJaguar(RobotMap.leftMotor2);
         rightMotor1 = new CANJaguar(RobotMap.rightMotor1);
@@ -54,5 +58,26 @@ public class DriveSubsystem extends Subsystem {
     
     public void toggleReversed() {
         setReversed(!getReversed());
+    }
+        private boolean gear;
+    
+    public void setGear(boolean gear) {
+        this.gear = gear;
+    }
+    
+    public boolean getGear() {
+        return this.reversed;
+    }
+    
+    public void toggleGear() {
+        setGear(!getGear());
+    }
+    
+    public void shiftGear(boolean gear) {
+        SuperShifter.set(gear);
+    }
+    
+    public void shiftGearAuto() {
+        
     }
 }
