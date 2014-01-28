@@ -45,9 +45,9 @@ public class Calculation {
 
     public double resolveAngle(double mapX, double mapY,boolean goalTarget) {
         if (goalTarget == true) {
-            1
+            return fireAngle;
         } else {
-            1
+            return fireAngle;
         }
     }
     
