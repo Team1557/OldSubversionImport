@@ -2,6 +2,7 @@
 package com.twelvevoltbolt.gallium;
 
 import com.twelvevoltbolt.gallium.commands.FireCommand;
+import com.twelvevoltbolt.gallium.commands.JoystickArmCommand;
 import com.twelvevoltbolt.gallium.commands.TurnAndAimCommand;
 import com.twelvevoltbolt.gallium.commands.VacuumArmLiftCommand;
 import com.twelvevoltbolt.gallium.commands.VacuumSuckCommand;
@@ -35,7 +36,7 @@ public class OI {
     public OI() {
         //reverse.whenPressed(new ReverseCommand());
         
-        armControl.whileHeld(new VacuumArmLiftCommand());
+        armControl.whileHeld(new JoystickArmCommand());
         
         suckButton.whileHeld(new VacuumSuckCommand());
         
