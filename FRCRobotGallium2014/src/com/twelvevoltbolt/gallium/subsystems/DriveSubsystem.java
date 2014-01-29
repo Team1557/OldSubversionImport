@@ -13,17 +13,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveSubsystem extends Subsystem {
 
-    int speedShiftUp;
-    int speedShiftDown;
-    Solenoid SuperShifter;
-    CANJaguar leftMotor1;
-    CANJaguar leftMotor2;
-    CANJaguar rightMotor1;
-    CANJaguar rightMotor2;
+    int speedShiftUp = 1000;
+    int speedShiftDown = 500;
+    Solenoid superShifter;
+    public CANJaguar leftMotor1;
+    public CANJaguar leftMotor2;
+    public CANJaguar rightMotor1;
+    public CANJaguar rightMotor2;
     RobotDrive drive;
     
     public DriveSubsystem() throws CANTimeoutException {
-        SuperShifter = new Solenoid(RobotMap. SuperShifter);
+        superShifter = new Solenoid(RobotMap. SuperShifter);
         leftMotor1 = new CANJaguar(RobotMap.leftMotor1);
         leftMotor2 = new CANJaguar(RobotMap.leftMotor2);
         rightMotor1 = new CANJaguar(RobotMap.rightMotor1);
@@ -61,9 +61,8 @@ public class DriveSubsystem extends Subsystem {
         setReversed(!getReversed());
     }
     
-// Gear Shifting System
-    
-        private boolean gear;
+    // Gear Shifting System state fo the gear
+    private boolean gear;
     
     public void setGear(boolean gear) {
         this.gear = gear;
@@ -78,17 +77,21 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void shiftGear(boolean gear) {
-        SuperShifter.set(gear);
+        superShifter.set(gear);
     }
-    
-    public void shiftGearAuto() throws CANTimeoutException {
-        if((leftMotor1.getSpeed() < speedShiftUp) && (gear != true)) {
+
+    public void updateGears() {
+        try {
+        if ((leftMotor1.getSpeed() < speedShiftUp) && (gear != true)) {
             setGear(true);
             shiftGear(gear);
         }
-        if((leftMotor1.getSpeed() > speedShiftDown) && (gear != false)) {
+        if ((leftMotor1.getSpeed() > speedShiftDown) && (gear != false)) {
             setGear(false);
             shiftGear(gear);
+        }
+        } catch (CANTimeoutException e) {
+            e.printStackTrace();
         }
     }
 }

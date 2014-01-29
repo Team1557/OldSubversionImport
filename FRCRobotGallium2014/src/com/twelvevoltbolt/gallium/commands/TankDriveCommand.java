@@ -35,6 +35,8 @@ public class TankDriveCommand extends CommandBase {
         motorLeft = normalize(oi.getLeftInput(), motorLeft);
         motorRight = normalize(oi.getRightInput(), motorRight);
         
+        drive.updateGears();
+        
         drive.drive(motorLeft, motorRight);
     }
 
