@@ -56,4 +56,8 @@ public class RobotMap {
     
     public static double motorRampStart = 0.6;
     public static double motorRampStep = 0.005;
+    
+    // Motor Shift Speeds
+    public static int speedShiftUp;
+    public static int speedShiftDown;
 }

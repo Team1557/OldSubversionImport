@@ -19,6 +19,8 @@ public class DriveSubsystem extends Subsystem {
     CANJaguar rightMotor1;
     CANJaguar rightMotor2;
     RobotDrive drive;
+    int speedShiftUp;
+    private double speedShiftDown;
     
     
     public DriveSubsystem() throws CANTimeoutException {
@@ -77,7 +79,13 @@ public class DriveSubsystem extends Subsystem {
         SuperShifter.set(gear);
     }
     
-    public void shiftGearAuto() {
-        
+    public void shiftGearAuto() throws CANTimeoutException {
+        if((leftMotor1.getSpeed() < speedShiftUp) && (gear != true)) {
+            setGear(true);
+            shiftGear(gear);
+        }
+        if((leftMotor1.getSpeed() > speedShiftDown) && (gear != false)) {
+            
+        }
     }
 }
