@@ -40,7 +40,7 @@ public abstract class CommandBase extends Command {
             arms = new VacuumArmSubsystem();
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
-            System.out.println("Can exception while creating subsystems");
+            System.out.println("CAN exception while creating subsystems");
         }
 
         // Show what command your subsystem is running on the SmartDashboard
