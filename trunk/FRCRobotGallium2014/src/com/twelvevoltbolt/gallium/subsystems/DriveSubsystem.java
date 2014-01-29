@@ -82,14 +82,14 @@ public class DriveSubsystem extends Subsystem {
 
     public void updateGears() {
         try {
-        if ((leftMotor1.getSpeed() < speedShiftUp) && (gear != true)) {
-            setGear(true);
-            shiftGear(gear);
-        }
-        if ((leftMotor1.getSpeed() > speedShiftDown) && (gear != false)) {
-            setGear(false);
-            shiftGear(gear);
-        }
+            if ((leftMotor1.getSpeed() < speedShiftUp) && (gear != true)) {
+                setGear(true);
+                shiftGear(gear);
+            }
+            if ((leftMotor1.getSpeed() > speedShiftDown) && (gear != false)) {
+                setGear(false);
+                shiftGear(gear);
+            }
         } catch (CANTimeoutException e) {
             e.printStackTrace();
         }
