@@ -22,9 +22,13 @@ public class Calculation {
     public double fireRange;
     public boolean inRange;
     
+    public static double getDistanceSquared(double x, double y, double x2, double y2) {
+        return Math.pow(x - x2, 2) + Math.pow(y - y2, 2);
+    }
+    
     public boolean inRange(double mapX, double mapY, boolean goalTarget) {
         if (goalTarget == true) {
-            if ((Math.sqrt(Math.pow((goalRightNearX - mapX), 2) + Math.pow((goalRightNearY - mapY), 2)) > fireRange)
+            if (getDistanceSquared(goalRightNearX, goalRightNearY, mapX, mapY) > fireRange * fireRange
                     || (Math.sqrt(Math.pow((goalRightMidX - mapX), 2) + Math.pow((goalRightMidY - mapY), 2)) > fireRange)
                     || (Math.sqrt(Math.pow((goalRightFarX - mapX), 2) + Math.pow((goalRightFarY - mapY), 2)) > fireRange)) {
                 return inRange = true;
