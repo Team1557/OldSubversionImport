@@ -66,7 +66,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public boolean getGear() {
-        return this.reversed;
+        return this.gear;
     }
     
     public void toggleGear() {
