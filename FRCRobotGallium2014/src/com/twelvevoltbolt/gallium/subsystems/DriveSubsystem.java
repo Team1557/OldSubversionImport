@@ -13,15 +13,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveSubsystem extends Subsystem {
 
+    int speedShiftUp;
+    int speedShiftDown;
     Solenoid SuperShifter;
     CANJaguar leftMotor1;
     CANJaguar leftMotor2;
     CANJaguar rightMotor1;
     CANJaguar rightMotor2;
     RobotDrive drive;
-    int speedShiftUp;
-    private double speedShiftDown;
-    
     
     public DriveSubsystem() throws CANTimeoutException {
         SuperShifter = new Solenoid(RobotMap. SuperShifter);
@@ -61,6 +60,9 @@ public class DriveSubsystem extends Subsystem {
     public void toggleReversed() {
         setReversed(!getReversed());
     }
+    
+// Gear Shifting System
+    
         private boolean gear;
     
     public void setGear(boolean gear) {
@@ -85,7 +87,8 @@ public class DriveSubsystem extends Subsystem {
             shiftGear(gear);
         }
         if((leftMotor1.getSpeed() > speedShiftDown) && (gear != false)) {
-            
+            setGear(false);
+            shiftGear(gear);
         }
     }
 }
