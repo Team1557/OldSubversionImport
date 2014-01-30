@@ -54,7 +54,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public boolean getReversed() {
-        return this.reversed;
+        return reversed;
     }
     
     public void toggleReversed() {
@@ -69,7 +69,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public boolean getGear() {
-        return this.gear;
+        return gear;
     }
     
     public void toggleGear() {
@@ -83,11 +83,11 @@ public class DriveSubsystem extends Subsystem {
     public void updateGears() {
         try {
             double avg = (leftMotor1.getSpeed() + rightMotor1.getSpeed()) / 2;
-            if ((avg < speedShiftUp) && (gear != true)) {
+            if ((avg < speedShiftUp) && !getGear()) {
                 setGear(true);
                 shiftGear(gear);
             }
-            if ((avg > speedShiftDown) && (gear != false)) {
+            if ((avg > speedShiftDown) && getGear()) {
                 setGear(false);
                 shiftGear(gear);
             }

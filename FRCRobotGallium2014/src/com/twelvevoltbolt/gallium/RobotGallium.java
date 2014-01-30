@@ -40,6 +40,7 @@ public class RobotGallium extends IterativeRobot {
         autonomousCommand = new AutonomousCommand();
         teleopCommand = new TeleopCommand();
         
+        RoboRealm.init();
         CommandBase.init();
     }
 
