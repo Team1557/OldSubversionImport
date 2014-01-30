@@ -61,7 +61,7 @@ public class DriveSubsystem extends Subsystem {
         setReversed(!getReversed());
     }
     
-    // Gear Shifting System state fo the gear
+    // Gear Shifting System, state fo the gear
     private boolean gear;
     
     public void setGear(boolean gear) {
@@ -82,11 +82,12 @@ public class DriveSubsystem extends Subsystem {
 
     public void updateGears() {
         try {
-            if ((leftMotor1.getSpeed() < speedShiftUp) && (gear != true)) {
+            double avg = (leftMotor1.getSpeed() + rightMotor1.getSpeed()) / 2;
+            if ((avg < speedShiftUp) && (gear != true)) {
                 setGear(true);
                 shiftGear(gear);
             }
-            if ((leftMotor1.getSpeed() > speedShiftDown) && (gear != false)) {
+            if ((avg > speedShiftDown) && (gear != false)) {
                 setGear(false);
                 shiftGear(gear);
             }
