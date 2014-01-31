@@ -28,9 +28,6 @@ public class OI {
     Button armControl = new JoystickButton(alt, 6);          
 
     Button fireTriggerButton = new JoystickButton(alt, 1);
-    Button fireLeftButton = new JoystickButton(alt, 4);
-    Button fireCenterButton = new JoystickButton(alt, 3);
-    Button fireRightButton = new JoystickButton(alt, 5);
 
     public OI() {
         armControl.whileHeld(new JoystickArmCommand());
@@ -38,11 +35,6 @@ public class OI {
         
         // Fire based on joystick input
         fireTriggerButton.whenPressed(new FireCommand());
-        
-        // Directional
-        fireLeftButton.whenPressed(new TurnAndAimCommand(-1));
-        fireCenterButton.whenPressed(new TurnAndAimCommand(0));
-        fireRightButton.whenPressed(new TurnAndAimCommand(+1));
     }
     
     public double getLeftInput() {

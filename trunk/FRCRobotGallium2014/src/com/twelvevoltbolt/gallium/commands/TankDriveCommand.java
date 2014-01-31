@@ -7,6 +7,12 @@ import com.twelvevoltbolt.gallium.RobotMap;
  * A tank drive command that takes input from two joysticks and outputs to the
  * drive.
  *
+ * The Driver (Left) Joysticks always override the alternate joysticks.
+ * The Alternate (Right) Joysticks control the turning motion with the horizontal axis, when the Driver joysticks are not active.
+ * When the Trigger on the Alternate (Right) Joystick is held, the vertical axis on the Alternate (Right) Joystick controls the ball pickup arm.
+ * 
+ * 
+ * 
  * @author code
  */
 public class TankDriveCommand extends CommandBase {
@@ -32,12 +38,20 @@ public class TankDriveCommand extends CommandBase {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        drive.updateGears();
+        
         motorLeft = normalize(oi.getLeftInput(), motorLeft);
         motorRight = normalize(oi.getRightInput(), motorRight);
         
-        drive.updateGears();
-        
-        drive.drive(motorLeft, motorRight);
+        if (oi.getLeftInput() != 0 || oi.getRightInput() != 0) {
+            drive.drive(motorLeft, motorRight);
+        } else {
+            double angle = oi.getFiringAngle();
+            
+            if (Math.abs(angle) > 0.3) {
+                drive.drive(angle / 2, -angle / 2);
+            }
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
