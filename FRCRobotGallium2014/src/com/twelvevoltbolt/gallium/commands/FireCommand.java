@@ -91,7 +91,7 @@ public class FireCommand extends CommandBase { // CommandGroup {
 //    }
 
     protected void execute() {
-        CommandBase.firing.fire(2000);
+        CommandBase.firing.fire(2);
     }
 
     protected void initialize() {
