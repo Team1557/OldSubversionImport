@@ -27,13 +27,13 @@ public class FiringSubsystem extends Subsystem {
     }
 
     public void fire() {
-        fire(2000);
+        fire(2);
     }
 
-    public void fire(int millis) {
+    public void fire(int seconds) {
         getArm().set(true);
         getArm2().set(true);
-        Timer.delay(millis);
+        Timer.delay(seconds);
         getArm().set(false);
         getArm2().set(false);
     }
