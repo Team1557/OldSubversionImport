@@ -33,7 +33,7 @@ public class OI {
     
     public OI() {
         armControl.whileHeld(new JoystickArmCommand());
-        suckButton.whileHeld(new VacuumSuckCommand());
+        suckButton.toggleWhenPressed(new VacuumSuckCommand());
         
         // Fire based on joystick input
         fireTriggerButton.whenPressed(new FireCommand());

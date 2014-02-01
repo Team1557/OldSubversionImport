@@ -23,8 +23,8 @@ public abstract class CommandBase extends Command {
     // Create a single static instance of all of your subsystems
     public static DriveSubsystem drive;
     public static VacuumSubsystem vacuum;
-    public static FiringSubsystem firing = new FiringSubsystem();
-    public static CompressorSubsystem compressor = new CompressorSubsystem();
+    public static FiringSubsystem firing;
+    public static CompressorSubsystem compressor;
     public static VacuumArmSubsystem arms;
     
     public static void init() {
@@ -37,10 +37,12 @@ public abstract class CommandBase extends Command {
         try {
             drive = new DriveSubsystem();
             vacuum = new VacuumSubsystem();
+            firing = new FiringSubsystem();
+            compressor = new CompressorSubsystem();
             arms = new VacuumArmSubsystem();
         } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
             System.out.println("CAN exception while creating subsystems");
+            ex.printStackTrace();
         }
 
         // Show what command your subsystem is running on the SmartDashboard
