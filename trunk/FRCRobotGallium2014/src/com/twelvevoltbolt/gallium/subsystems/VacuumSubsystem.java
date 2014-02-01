@@ -13,7 +13,7 @@ public class VacuumSubsystem extends Subsystem {
     public CANJaguar vacuum2;
     
     public VacuumSubsystem() throws CANTimeoutException {
-        vacuum = new DigitalOutput(1);
+        vacuum = new DigitalOutput(RobotMap.vacuum);
         vacuum1 = new CANJaguar(RobotMap.vacuumMotor1);
         vacuum2 = new CANJaguar(RobotMap.vacuumMotor2);
     }
