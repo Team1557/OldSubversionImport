@@ -83,7 +83,7 @@ public class DriveSubsystem extends Subsystem {
 
     public void updateGears() {
         try {
-            double avg = (leftMotor1.getSpeed() + rightMotor1.getSpeed()) / 2;
+            double avg = (leftMotor1.getSpeed()); // + rightMotor1.getSpeed()) / 2;
             if ((avg < speedShiftUp) && !getGear()) {
                 setGear(true);
                 shiftGear(gear);

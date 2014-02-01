@@ -34,7 +34,7 @@ public class RobotMap {
     public static final int compressorRelay = 7;
     
     // Port of digital input compressor shutoff
-    public static final int compressorShutoffDigitalInput = 7;
+    public static final int compressorShutoffDigitalInput = 1;
     
     
     
