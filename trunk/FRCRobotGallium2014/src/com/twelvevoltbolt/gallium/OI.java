@@ -29,6 +29,8 @@ public class OI {
 
     Button fireTriggerButton = new JoystickButton(alt, 3);
 
+    Button debugButton = new JoystickButton(alt, 10);
+    
     public OI() {
         armControl.whileHeld(new JoystickArmCommand());
         suckButton.whileHeld(new VacuumSuckCommand());
@@ -57,6 +59,10 @@ public class OI {
      */
     public double getFiringAngle() {
         return alt.getAxis(Joystick.AxisType.kX);
+    }
+    
+    public boolean isDebug() {
+        return debugButton.get();
     }
 }
 
