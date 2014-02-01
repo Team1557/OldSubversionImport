@@ -25,9 +25,9 @@ public class OI {
     
     //Button reverse = new JoystickButton(left, 1);
     Button suckButton = new JoystickButton(alt, 2);
-    Button armControl = new JoystickButton(alt, 6);          
+    Button armControl = new JoystickButton(alt, 1);          
 
-    Button fireTriggerButton = new JoystickButton(alt, 1);
+    Button fireTriggerButton = new JoystickButton(alt, 3);
 
     public OI() {
         armControl.whileHeld(new JoystickArmCommand());

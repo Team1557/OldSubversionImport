@@ -20,6 +20,8 @@ public class RobotMap {
     public static final int SuperShifter = 9;
     
     // Vacuum
+    public static int vacuum = 1;
+    
     public static int vacuumMotor1 = 6;
     public static int vacuumMotor2 = 7;
     public static int vacuumArmMotor = 8;
