@@ -1,6 +1,6 @@
 var ctx = $("#canvas")[0].getContext("2d");
 
-var img = new Image(); img.src="brantici.png";
+var img = new Image(); img.src="stickman.png";
 
 var sticks = [];
 
