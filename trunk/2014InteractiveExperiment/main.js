@@ -25,7 +25,13 @@ function update() {
 }
 
 function render() {
+	ctx.clearRect(0, 0, ctx.width, ctx.height);
 	
+	for (var x = 0; x < width; x++) {
+		for (var y = 0; y < width; x++) {
+			
+		}
+	}
 }
 
 setInterval(update, 100);
