@@ -37,11 +37,11 @@ public class RobotGallium extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+        CommandBase.init();
+        RoboRealm.init();
+        
         autonomousCommand = new AutonomousCommand();
         teleopCommand = new TeleopCommand();
-        
-        RoboRealm.init();
-        CommandBase.init();
     }
 
     public void autonomousInit() {
