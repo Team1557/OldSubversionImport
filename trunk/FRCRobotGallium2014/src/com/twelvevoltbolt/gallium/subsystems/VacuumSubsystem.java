@@ -19,17 +19,27 @@ public class VacuumSubsystem extends Subsystem {
     protected void initDefaultCommand() {
     }
     
-    public void setSuck(boolean sucks) {
+    private boolean sucks = false;
+    
+    public boolean isSucks() {
+        return sucks;
+    }
+    
+    public void setSuck(boolean suck) {
         try {
-            if (sucks) {
+            if (suck) {
                 vacuum1.setX(+1);
                 vacuum2.setX(-1);
             } else {
                 vacuum1.setX(0);
                 vacuum2.setX(0);
             }
+            
+            this.sucks = suck;
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
+            
+            this.sucks = false;
         }
     }
 }
