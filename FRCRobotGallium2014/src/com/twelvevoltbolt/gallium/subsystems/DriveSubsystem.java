@@ -1,6 +1,7 @@
 package com.twelvevoltbolt.gallium.subsystems;
 
 import com.twelvevoltbolt.gallium.RobotMap;
+import com.twelvevoltbolt.gallium.commands.CommandBase;
 import com.twelvevoltbolt.gallium.commands.TankDriveCommand;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -86,10 +87,15 @@ public class DriveSubsystem extends Subsystem {
             if ((avg < speedShiftUp) && !getGear()) {
                 setGear(true);
                 shiftGear(gear);
-            }
-            if ((avg > speedShiftDown) && getGear()) {
+                System.out.println("Shifting up " + avg);
+            } else if ((avg > speedShiftDown) && getGear()) {
                 setGear(false);
                 shiftGear(gear);
+                System.out.println("Shifting down " + avg);
+            }
+            
+            if (CommandBase.oi.isDebug()) {
+                System.out.println("MotorSpeed: " + avg);
             }
         } catch (CANTimeoutException e) {
             e.printStackTrace();
