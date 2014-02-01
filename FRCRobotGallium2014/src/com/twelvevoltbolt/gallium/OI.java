@@ -3,7 +3,6 @@ package com.twelvevoltbolt.gallium;
 
 import com.twelvevoltbolt.gallium.commands.FireCommand;
 import com.twelvevoltbolt.gallium.commands.JoystickArmCommand;
-import com.twelvevoltbolt.gallium.commands.TurnAndAimCommand;
 import com.twelvevoltbolt.gallium.commands.VacuumSuckCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -33,7 +32,7 @@ public class OI {
     
     public OI() {
         armControl.whileHeld(new JoystickArmCommand());
-        suckButton.toggleWhenPressed(new VacuumSuckCommand());
+        suckButton.whileHeld(new VacuumSuckCommand());
         
         // Fire based on joystick input
         fireTriggerButton.whenPressed(new FireCommand());

@@ -11,8 +11,8 @@ public class FiringSubsystem extends Subsystem {
     private Solenoid arm2;
 
     public FiringSubsystem() {
-        arm = new Solenoid(RobotMap.armLauncher);
-        arm2 = new Solenoid(RobotMap.armLauncher2);
+        //arm = new Solenoid(RobotMap.armLauncher);
+        //arm2 = new Solenoid(RobotMap.armLauncher2);
     }
 
     protected void initDefaultCommand() {

@@ -23,12 +23,17 @@ public class DriveSubsystem extends Subsystem {
     public CANJaguar rightMotor2;
     RobotDrive drive;
     
-    public DriveSubsystem() throws CANTimeoutException {
+    public DriveSubsystem() {
         superShifter = new Solenoid(RobotMap. SuperShifter);
-        leftMotor1 = new CANJaguar(RobotMap.leftMotor1);
-        leftMotor2 = new CANJaguar(RobotMap.leftMotor2);
-        rightMotor1 = new CANJaguar(RobotMap.rightMotor1);
-        rightMotor2 = new CANJaguar(RobotMap.rightMotor2);
+        try {
+            leftMotor1 = new CANJaguar(RobotMap.leftMotor1);
+            leftMotor2 = new CANJaguar(RobotMap.leftMotor2);
+            rightMotor1 = new CANJaguar(RobotMap.rightMotor1);
+            rightMotor2 = new CANJaguar(RobotMap.rightMotor2);
+        } catch (CANTimeoutException ex) {
+            System.out.println("Drive subsystem error");
+            ex.printStackTrace();
+        }
         drive = new RobotDrive(leftMotor1, leftMotor2, rightMotor1, rightMotor2);
     }
 

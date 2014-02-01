@@ -31,7 +31,7 @@ public class RobotMap {
     public static final int armLauncher2 = 6;
     
     // Port of relay for compressor
-    public static final int compressorRelay = 7;
+    public static final int compressorRelay = 1;
     
     // Port of digital input compressor shutoff
     public static final int compressorShutoffDigitalInput = 1;

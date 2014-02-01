@@ -33,18 +33,24 @@ public abstract class CommandBase extends Command {
         // which commands extend), subsystems are not guaranteed to be
         // yet. Thus, their requires() statements may grab null pointers. Bad
         // news. Don't move it.
-        oi = new OI();
         try {
+            System.out.println("Creating drive");
             drive = new DriveSubsystem();
+            System.out.println("Creating vacuum");
             vacuum = new VacuumSubsystem();
+            System.out.println("Creating firing");
             firing = new FiringSubsystem();
+            System.out.println("Creating compressor");
             compressor = new CompressorSubsystem();
+            System.out.println("Creating arms");
             arms = new VacuumArmSubsystem();
         } catch (CANTimeoutException ex) {
             System.out.println("CAN exception while creating subsystems");
             ex.printStackTrace();
         }
 
+        oi = new OI();
+        
         // Show what command your subsystem is running on the SmartDashboard
         SmartDashboard.putData(drive);
         SmartDashboard.putData(vacuum);
