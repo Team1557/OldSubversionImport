@@ -42,14 +42,22 @@ public class OI {
         double value = left.getAxis(Joystick.AxisType.kY);
         
         // Square the input
-        return value * value;
+        if (value >= 0) {
+			return value * value;
+		} else {
+			return -(value * value);
+		}
     }
     
     public double getRightInput() {
         double value = right.getAxis(Joystick.AxisType.kY);
         
         // Square the input
-        return value * value;
+        if (value >= 0) {
+			return value * value;
+		} else {
+			return -(value * value);
+		}
     }
     
     /**
