@@ -1,6 +1,7 @@
 package com.twelvevoltbolt.gallium.subsystems;
 
 import com.twelvevoltbolt.gallium.RobotMap;
+import com.twelvevoltbolt.gallium.commands.CommandBase;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -26,6 +27,9 @@ public class VacuumSubsystem extends Subsystem {
     }
     
     public void setSuck(boolean suck) {
+        if (CommandBase.oi.isDebug()) {
+            System.out.println("This sucks: " + suck);
+        }
         try {
             if (suck) {
                 vacuum1.setX(+1);
