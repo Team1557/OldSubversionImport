@@ -1,30 +1,20 @@
 /**
  *  Creates a ring of alternating teams
  */
-function ring(r) {
+function ring(r, team) {
 	var i = 0;
 	for (var a = 0; a < Math.PI * 2; a += 0.1) {
 		var x = width/2 + Math.cos(a) * r, 
 			y = height/2 + Math.sin(a) * r
 		if (get(x, y) == undefined) {
-			var dot = create(teams[Math.floor(teams.length * (a/(Math.PI*2)))], x, y);
-			
-			/*switch (random(1,50)) {
-				case 1:
-					dot.type = types.king;
-					break;
-				case 2:
-				case 3:
-					dot.image = types.shield;
-					break;
-			}*/
+			create(team, x, y);
 		}
 	}
 }
 
-ring(5);
-ring(10);
-
+for (var i = 3; i < 18; i+=3) {
+	ring(i, teams[(i/3) % teams.length]);
+}
 create(teams[0], width / 2, height / 2).type = types.shapeshifter;
-create(teams[0], width / 2 + 9, height / 2).type = types.nuke;
-create(teams[0], width / 2 - 9, height / 2).type = types.suicide;
+create(teams[0], width / 2 + 7, height / 2).type = types.nuke;
+create(teams[0], width / 2 - 7, height / 2).type = types.suicide;

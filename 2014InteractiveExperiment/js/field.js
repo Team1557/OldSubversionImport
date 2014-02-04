@@ -1,11 +1,16 @@
-var updateInterval = 1000 / 5;
+var updateInterval = 1000 / 2;
 
 var dots = [];
 
 function move(dot, x, y) {
-	if (x < 0 || y < 0 || x >= width || y >= height) {
-		return false;
-	}
+	if (x < 0)
+		x = width - 1;
+	if (y < 0)
+		y = height - 1;
+	if (x >= width)
+		x = 0;
+	if (y >= height)
+		y = 0;
 	
 	dot.x = x;
 	dot.y = y;
@@ -165,15 +170,15 @@ var ai = {
 var tasks = {
 	"reaper": function () {
 		this.age += 1;
-		if (this.age > 50)
-			kill(this);
+		if (teamCounts[this.team.name] > 60) {
+			if (this.age > 50) {
+				kill(this);
+				teamCounts[this.team.name]--;
+			}
+		}
 	},
 	
 	"wander": function () {
-		// 30% chance to wander
-		if (Math.random() > 0.30)
-			return false;
-
 		var x = Math.round(random(-1, 1)),
 			y = Math.round(random(-1, 1)),
 			target = get(this.x + x, this.y + y);
@@ -189,15 +194,14 @@ var tasks = {
 			}
 			return true;
 		} else {
-			this.age -= 1;
+			this.age -= 2;
 			return ai.move(this, this.x + x, this.y + y);
 		}
 	},
 	
 	"attack": function () {
-		if (Math.random() > 0.15)
+		if (teamCounts[this.team.name] < 10)
 			return false;
-
 		// Find the weakest
 		var targetTeam,
 			targetCount = Number.MAX_VALUE;
@@ -223,15 +227,18 @@ var tasks = {
 	},
 	
 	"hive": function () {
-		if (Math.random() < 0.1)
-			return ai.moveTowards(this, teamCOG[this.team.name]);
+		return ai.moveTowards(this, teamCOG[this.team.name]);
+	},
+	
+	"flee": function () {
+		if (teamCounts[this.team.name] < 10) {
+			if (Math.pow(cog.x - this.x, 2) + Math.pow(cog.y - this.y, 2) < Math.pow(15, 2)) {
+				ai.moveAway(this, cog);
+			}
+		}
 	},
 	
 	"breed": function () {
-		// 10% chance to attempt same-team breeding
-		if (Math.random() > 0.01)
-			return false;
-		
 		var mate,
 			self = this;
 		function doCheck(xO, yO) {
@@ -259,24 +266,53 @@ var tasks = {
 			ai.breed(this, mate);
 			return true;
 		}
-	}
+	},
+	
+	"mitosis": function() {
+		if (teamCounts[this.team.name] < 5) {
+			ai.breed(this, this);
+		}
+	},
 };
 
 var mainAI = [
-//	tasks["reaper"],
-	tasks["wander"],
-	tasks["hive"],
-//	tasks["breed"],
-	tasks["attack"],
+	tasks["reaper"],
+	[tasks["wander"], 0.30],
+	[tasks["flee"], 0.50],
+	[tasks["attack"], 0.20],
+	[tasks["hive"], 0.30],
+	[tasks["mitosis"], 0.1],
+//	[tasks["breed"], 0.01],
 ];
 
-var teams = [
-	{"name": "White",	"color": "#FCF3E7",	"ai": mainAI},
-	{"name": "Blue",	"color": "#4AABB1",	"ai": mainAI},
-	{"name": "Orange",	"color": "#F1A20D",	"ai": mainAI},
-	{"name": "Red",		"color": "#DA0734",	"ai": mainAI},
-	//{"name": "Ryan",		"color": "rgb(255,128,128)",	"ai": mainAI},
-];
+
+var teams = [];
+function addTeam(team) {
+	team.id = teams.length;
+	teams.push(team);
+	$("#team-info-panel table").append('<tr><td><div class="team-color" data-team="'+team.id+'" style="background-color:'+team.color+'"></div> '+team.name+'</td><td class="team-count" data-team="'+team.id+'">0</td></tr>');
+	
+	$('<span class="button button_color" data-team="'+team.id+'"></span>').appendTo("#buttons").click(function() {
+		selectedTeam = team;
+		$(".button_color").css({
+			"border": "0px",
+			"width": "16px",
+			"height": "16px"
+		});
+		$(this).css({
+			"border": "1px dashed black",
+			"width": "14px",
+			"height": "14px"
+		});
+	}).css("background-color", team.color);;
+}
+
+function updateTeamTable() {
+	$(".team-count").each(function() {
+		var team = teams[$(this).data("team")*1];
+		$(this).html(teamCounts[team.name] || 0);
+	});
+}
 
 function get(x, y) {
 	var dot;
@@ -315,7 +351,13 @@ function update() {
 		}
 		
 		for (var i = 0; i < dot.team.ai.length; i++) {
-			if (dot.team.ai[i].apply(dot) == true) {
+			var ai = dot.team.ai[i];
+			if (typeof ai == "object") {
+				if (Math.random() > ai[1])
+					continue;
+				ai = ai[0];
+			}
+			if (ai.apply(dot) == true) {
 				break;
 			}
 		}
@@ -326,9 +368,10 @@ function update() {
 			}
 		}
 	});
+	
+	updateTeamTable();
 }
 
 
 function onClick() {
-	//create(selectedTeam, mouse.x, mouse.y);
 }
