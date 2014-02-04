@@ -24,7 +24,12 @@ public class VacuumArmLiftCommand extends CommandBase {
 
     // Called repeatedly when this command is scheduled to run
     protected void execute() {
-        if (getMovesArmsUp()) {
+        
+        // Method 2 manual movement
+        arms.setArmSpeed(oi.getArmSpeed());
+        
+        // Method 1, automated movement, terminator strength
+        /*if (getMovesArmsUp()) {
             if (timeSinceInitialized() < RobotMap.vacuumArmSlowTime) {
                 double armValue = MathUtils.lerp(RobotMap.vacuumArmUpSpeed, RobotMap.vacuumArmUpSlowSpeed, timeSinceInitialized() / RobotMap.vacuumArmSlowTime);
                 arms.setArmSpeed(armValue / 100.0);
@@ -33,8 +38,8 @@ public class VacuumArmLiftCommand extends CommandBase {
             }
         } else {            
             arms.setArmSpeed(0.75);
-            Timer.delay(1);
-        }
+            setTimeout(1);
+        }*/
     }
     
     protected boolean getMovesArmsUp() {

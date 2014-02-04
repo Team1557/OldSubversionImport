@@ -2,6 +2,7 @@ package com.twelvevoltbolt.gallium.commands;
 
 import com.twelvevoltbolt.gallium.MathUtils;
 import com.twelvevoltbolt.gallium.RobotMap;
+import edu.wpi.first.wpilibj.Encoder;
 
 /**
  * A tank drive command that takes input from two joysticks and outputs to the
@@ -22,6 +23,7 @@ public class TankDriveCommand extends CommandBase {
     
     public TankDriveCommand() {
         requires(drive);
+        // drive.leftMotor1.configEncoderCodesPerRev(codesPerRev);
     }
 
     // Called just before this Command runs the first time
@@ -36,12 +38,18 @@ public class TankDriveCommand extends CommandBase {
         }
     }
     
+    public static double MAX_SPEED_WHILE_VACUUM = 0.7;
+    
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        drive.updateGears();
+//      drive.updateGears();
         
         motorLeft = normalize(oi.getLeftInput(), motorLeft);
         motorRight = normalize(oi.getRightInput(), motorRight);
+        
+        if (vacuum.isSucks()) {
+            //if (motorLeft < 
+        }
         
         if (oi.getLeftInput() != 0 || oi.getRightInput() != 0) {
             drive.drive(motorLeft, motorRight);
@@ -49,7 +57,7 @@ public class TankDriveCommand extends CommandBase {
             double angle = oi.getFiringAngle();
             
             if (Math.abs(angle) > 0.3) {
-                drive.drive(angle / 2, -angle / 2);
+                drive.drive(angle / 4, -angle / 4);
             } else {
                 drive.drive(0, 0);
             }

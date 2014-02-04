@@ -5,7 +5,6 @@ import com.twelvevoltbolt.gallium.commands.CommandBase;
 import com.twelvevoltbolt.gallium.commands.TankDriveCommand;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -16,7 +15,6 @@ public class DriveSubsystem extends Subsystem {
 
     int speedShiftUp = 1000;
     int speedShiftDown = 500;
-    Solenoid superShifter;
     public CANJaguar leftMotor1;
     public CANJaguar leftMotor2;
     public CANJaguar rightMotor1;
@@ -24,12 +22,13 @@ public class DriveSubsystem extends Subsystem {
     RobotDrive drive;
     
     public DriveSubsystem() {
-        superShifter = new Solenoid(RobotMap.SuperShifter);
         try {
             leftMotor1 = new CANJaguar(RobotMap.leftMotor1);
             leftMotor2 = new CANJaguar(RobotMap.leftMotor2);
             rightMotor1 = new CANJaguar(RobotMap.rightMotor1);
             rightMotor2 = new CANJaguar(RobotMap.rightMotor2);
+            
+            // leftMotor1.configEncoderCodesPerRev(200);
         } catch (CANTimeoutException ex) {
             System.out.println("Drive subsystem error");
             ex.printStackTrace();
@@ -74,27 +73,9 @@ public class DriveSubsystem extends Subsystem {
         setReversed(!getReversed());
     }
     
-    // Gear Shifting System, state fo the gear
-    private boolean gear;
     
-    public void setGear(boolean gear) {
-        this.gear = gear;
-    }
-    
-    public boolean getGear() {
-        return gear;
-    }
-    
-    public void toggleGear() {
-        setGear(!getGear());
-    }
-    
-    public void shiftGear(boolean gear) {
-        superShifter.set(gear);
-    }
-
     public void updateGears() {
-        try {
+        /*try {
             double avg = (leftMotor1.getSpeed());
             if ((avg > speedShiftUp) && !getGear()) {
                 setGear(true);
@@ -111,6 +92,6 @@ public class DriveSubsystem extends Subsystem {
             }
         } catch (CANTimeoutException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

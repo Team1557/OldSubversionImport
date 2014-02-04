@@ -2,6 +2,7 @@ package com.twelvevoltbolt.gallium;
 
 import com.twelvevoltbolt.gallium.commands.FireCommand;
 import com.twelvevoltbolt.gallium.commands.JoystickArmCommand;
+import com.twelvevoltbolt.gallium.commands.ShiftCommand;
 import com.twelvevoltbolt.gallium.commands.VacuumSuckCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -24,12 +25,17 @@ public class OI {
     Button suckButton = new JoystickButton(alt, 2);
     Button armControl = new JoystickButton(alt, 1);
     Button fireTriggerButton = new JoystickButton(alt, 3);
+    Button shiftDownButton = new JoystickButton(left, 1);
+    Button shiftUpButton = new JoystickButton(right, 1);
     Button debugButton = new JoystickButton(alt, 10);
 
     public OI() {
         armControl.whileHeld(new JoystickArmCommand());
         suckButton.whileHeld(new VacuumSuckCommand());
 
+        shiftDownButton.whenPressed(new ShiftCommand(false));
+        shiftUpButton.whenPressed(new ShiftCommand(true));
+        
         // Fire based on joystick input
         fireTriggerButton.whenPressed(new FireCommand());
     }
@@ -37,6 +43,10 @@ public class OI {
     public double getLeftInput() {
         double value = left.getAxis(Joystick.AxisType.kY);
 
+        if (Math.abs(value) < 0.05) {
+            return 0;
+        }
+        
         // Square the input
         if (value >= 0) {
             return value * value;
@@ -48,6 +58,10 @@ public class OI {
     public double getRightInput() {
         double value = right.getAxis(Joystick.AxisType.kY);
 
+        if (Math.abs(value) < 0.05) {
+            return 0;
+        }
+        
         // Square the input
         if (value >= 0) {
             return value * value;
@@ -62,7 +76,23 @@ public class OI {
      * @return
      */
     public double getFiringAngle() {
-        return alt.getAxis(Joystick.AxisType.kX);
+        double value = alt.getAxis(Joystick.AxisType.kX);
+        
+        if (Math.abs(value) < 0.1) {
+            return 0;
+        }
+        
+        return value;
+    }
+    
+    public double getArmSpeed() {
+        double value = alt.getAxis(Joystick.AxisType.kY);
+        
+        if (Math.abs(value) < 0.1) {
+            return 0;
+        }
+        
+        return value / 2.0;
     }
 
     public boolean isDebug() {

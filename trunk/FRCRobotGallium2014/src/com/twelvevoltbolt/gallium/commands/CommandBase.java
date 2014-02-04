@@ -6,6 +6,7 @@ import com.twelvevoltbolt.gallium.OI;
 import com.twelvevoltbolt.gallium.subsystems.CompressorSubsystem;
 import com.twelvevoltbolt.gallium.subsystems.DriveSubsystem;
 import com.twelvevoltbolt.gallium.subsystems.FiringSubsystem;
+import com.twelvevoltbolt.gallium.subsystems.ShifterSubsystem;
 import com.twelvevoltbolt.gallium.subsystems.VacuumArmSubsystem;
 import com.twelvevoltbolt.gallium.subsystems.VacuumSubsystem;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
@@ -26,6 +27,7 @@ public abstract class CommandBase extends Command {
     public static FiringSubsystem firing;
     public static CompressorSubsystem compressor;
     public static VacuumArmSubsystem arms;
+    public static ShifterSubsystem shifter;
     
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
@@ -44,6 +46,8 @@ public abstract class CommandBase extends Command {
             compressor = new CompressorSubsystem();
             System.out.println("Creating arms");
             arms = new VacuumArmSubsystem();
+            System.out.println("Creating shifters");
+            shifter = new ShifterSubsystem();
         } catch (CANTimeoutException ex) {
             System.out.println("CAN exception while creating subsystems");
             ex.printStackTrace();

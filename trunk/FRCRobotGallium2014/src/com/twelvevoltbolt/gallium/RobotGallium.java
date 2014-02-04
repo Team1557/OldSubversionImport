@@ -42,6 +42,8 @@ public class RobotGallium extends IterativeRobot {
         
         autonomousCommand = new AutonomousCommand();
         teleopCommand = new TeleopCommand();
+        
+        System.out.println("Done with robot initialize");
     }
 
     public void autonomousInit() {
