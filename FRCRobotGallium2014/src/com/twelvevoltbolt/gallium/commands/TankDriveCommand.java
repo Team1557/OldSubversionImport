@@ -50,6 +50,8 @@ public class TankDriveCommand extends CommandBase {
             
             if (Math.abs(angle) > 0.3) {
                 drive.drive(angle / 2, -angle / 2);
+            } else {
+                drive.drive(0, 0);
             }
         }
     }

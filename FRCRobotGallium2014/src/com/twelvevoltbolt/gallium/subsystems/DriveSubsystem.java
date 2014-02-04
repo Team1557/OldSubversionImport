@@ -24,7 +24,7 @@ public class DriveSubsystem extends Subsystem {
     RobotDrive drive;
     
     public DriveSubsystem() {
-        superShifter = new Solenoid(RobotMap. SuperShifter);
+        superShifter = new Solenoid(RobotMap.SuperShifter);
         try {
             leftMotor1 = new CANJaguar(RobotMap.leftMotor1);
             leftMotor2 = new CANJaguar(RobotMap.leftMotor2);
@@ -46,7 +46,14 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void drive(double left, double right) {
-        drive.tankDrive(-(reversed ? right : left), -(reversed ? left : right));
+        double actualLeft = -(reversed ? right : left);
+        double actualRight = -(reversed ? left : right);
+        
+        if (CommandBase.oi.isDebug()) {
+            System.out.println("Driving: " + actualLeft + ", " + actualRight);
+        }
+        
+        drive.tankDrive(actualLeft, actualRight);
     }
     
     public void arcadeDrive(double magnitude, double angle) {
@@ -88,19 +95,19 @@ public class DriveSubsystem extends Subsystem {
 
     public void updateGears() {
         try {
-            double avg = (leftMotor1.getSpeed()); // + rightMotor1.getSpeed()) / 2;
-            if ((avg < speedShiftUp) && !getGear()) {
+            double avg = (leftMotor1.getSpeed());
+            if ((avg > speedShiftUp) && !getGear()) {
                 setGear(true);
                 shiftGear(gear);
                 System.out.println("Shifting up " + avg);
-            } else if ((avg > speedShiftDown) && getGear()) {
+            } else if ((avg < speedShiftDown) && getGear()) {
                 setGear(false);
                 shiftGear(gear);
                 System.out.println("Shifting down " + avg);
             }
             
             if (CommandBase.oi.isDebug()) {
-                System.out.println("MotorSpeed: " + avg);
+                System.out.println("Speed: " + avg);
             }
         } catch (CANTimeoutException e) {
             e.printStackTrace();

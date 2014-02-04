@@ -77,4 +77,10 @@ public class RobotGallium extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+
+    public void disabledInit() {
+    }
+
+    public void disabledPeriodic() {
+    }
 }
