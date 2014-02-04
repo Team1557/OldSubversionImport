@@ -26,10 +26,10 @@ var interpolate = {
 	a: 0
 };
 var tween = new TWEEN.Tween( interpolate )
-	.to({ a: 1 }, updateInterval - 2)
+	.to({ a: 1 }, updateInterval - (updateInterval / 3))
 	.easing(TWEEN.Easing.Cubic.InOut);
 var tween2 = new TWEEN.Tween( interpolate )
-	.to({ a: 1 }, 2)
+	.to({ a: 1 }, updateInterval / 3)
 	.easing(TWEEN.Easing.Linear.None)
 	.onComplete(function() {
 		// Reset the tween
@@ -127,8 +127,8 @@ function render() {
 		}
 	}
 	
-	if (down) {
-		if (get(mouse.x, mouse.y) == undefined) {
+	if (down && selectedTeam != undefined) {
+		if (mouse.y >= 0 && get(mouse.x, mouse.y) == undefined) {
 			create(selectedTeam, mouse.x, mouse.y);
 		} else {
 			setTeam(get(mouse.x, mouse.y), selectedTeam);

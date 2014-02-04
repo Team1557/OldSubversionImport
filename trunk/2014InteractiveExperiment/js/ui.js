@@ -11,25 +11,6 @@ $(".button_pause").click(function() {
 	$(this).css("background-image", "url('" + (paused ? "img/play.png" : "img/pause.png") + "')");
 });
 
-$(".button_color").each(function() {
-	var team = teams[$(this).data("team")*1];
-	$(this).css("background-color", team.color);
-	
-	$(this).click(function() {
-		selectedTeam = team;
-		$(".button_color").css({
-			"border": "0px",
-			"width": "16px",
-			"height": "16px"
-		});
-		$(this).css({
-			"border": "1px dashed black",
-			"width": "14px",
-			"height": "14px"
-		});
-	});
-});
-
 var canvas = $("#canvas")[0];
 function resize() {
 	canvas.width = 0;
@@ -56,20 +37,21 @@ function updateMouse(e) {
 	mouse.pageY = e.pageY;
 }
 
-$("body").mousemove(function(e) {
+$("canvas").mousemove(function(e) {
 	updateMouse(e);
 });
 
 var down = false;
-$("body").mousedown(function(e) {
+$("canvas").mousedown(function(e) {
 	down = true;
-});
-$("body").mouseup(function(e) {
+}).mouseup(function(e) {
 	down = false;
+}).mouseleave(function() {
+	mouse.x = -1;
+	mouse.y = -1;
 });
 
-
-$("body").click(function(e) {
+$("canvas").click(function(e) {
 	updateMouse(e);
 	if (e.pageY > 16) {
 		onClick();

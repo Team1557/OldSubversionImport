@@ -11,10 +11,10 @@
 		<div id="buttons">
 			<span class="button button_pause"></span>
 			<span class="button"></span>
-			<span class="button button_color" data-team="0"></span>
-			<span class="button button_color" data-team="1"></span>
-			<span class="button button_color" data-team="2"></span>
-			<span class="button button_color" data-team="3"></span>
+		</div>
+		
+		<div id="team-info-panel">
+			<table></table>
 		</div>
 		
 		<canvas id="canvas"></canvas>
@@ -25,6 +25,15 @@
 		<script src="js/ui.js"></script>
 		<script src="js/types.js"></script>
 		<script src="js/render.js"></script>
+		
+		<script>
+addTeam({"name": "Red", "color": "#DA0734", "ai": mainAI});
+addTeam({"name": "Orange",	"color": "#F1A20D",	"ai": mainAI});
+addTeam({"name": "Yellow",	"color": "#E3DB00",	"ai": mainAI});
+addTeam({"name": "Green",	"color": "#5FC24A",	"ai": mainAI});
+addTeam({"name": "Blue",	"color": "#4AABB1",	"ai": mainAI});
+addTeam({"name": "White",	"color": "#FCF3E7",	"ai": mainAI});
+		</script>
 		
 		<script src="js/start_ring.js"></script>
 	</body>
