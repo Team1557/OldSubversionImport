@@ -1,4 +1,4 @@
-var updateInterval = 1000 / 2;
+var updateInterval = 1000 / 5;
 
 var dots = [];
 
@@ -229,7 +229,7 @@ var tasks = {
 	
 	"breed": function () {
 		// 10% chance to attempt same-team breeding
-		if (Math.random() > 0.05)
+		if (Math.random() > 0.01)
 			return false;
 		
 		var mate,
@@ -255,7 +255,7 @@ var tasks = {
 		doCheck(1, 0);
 		doCheck(1, -1);
 		
-		if (mate != undefined && mate != false && this.team == mate.team) {
+		if (mate != undefined && this.team == mate.team && mate != false) {
 			ai.breed(this, mate);
 			return true;
 		}
@@ -263,18 +263,19 @@ var tasks = {
 };
 
 var mainAI = [
-	//tasks["reaper"],
+//	tasks["reaper"],
 	tasks["wander"],
 	tasks["hive"],
+//	tasks["breed"],
 	tasks["attack"],
-	//tasks["breed"]
 ];
 
 var teams = [
 	{"name": "White",	"color": "#FCF3E7",	"ai": mainAI},
 	{"name": "Blue",	"color": "#4AABB1",	"ai": mainAI},
 	{"name": "Orange",	"color": "#F1A20D",	"ai": mainAI},
-	{"name": "Red",		"color": "#DA0734",	"ai": mainAI}
+	{"name": "Red",		"color": "#DA0734",	"ai": mainAI},
+	//{"name": "Ryan",		"color": "rgb(255,128,128)",	"ai": mainAI},
 ];
 
 function get(x, y) {
@@ -329,5 +330,5 @@ function update() {
 
 
 function onClick() {
-	create(selectedTeam, mouse.x, mouse.y);
+	//create(selectedTeam, mouse.x, mouse.y);
 }

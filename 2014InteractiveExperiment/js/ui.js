@@ -60,6 +60,15 @@ $("body").mousemove(function(e) {
 	updateMouse(e);
 });
 
+var down = false;
+$("body").mousedown(function(e) {
+	down = true;
+});
+$("body").mouseup(function(e) {
+	down = false;
+});
+
+
 $("body").click(function(e) {
 	updateMouse(e);
 	if (e.pageY > 16) {
