@@ -57,7 +57,7 @@ public class RobotMap {
     
     
     public static double motorRampStart = 0.6;
-    public static double motorRampStep = 0.015;
+    public static double motorRampStep = 0.1;
     
     /**
      * Motor Shift Speeds

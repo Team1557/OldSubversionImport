@@ -1,7 +1,6 @@
 package com.twelvevoltbolt.gallium.subsystems;
 
 import com.twelvevoltbolt.gallium.RobotMap;
-import com.twelvevoltbolt.gallium.commands.CommandBase;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,17 +16,31 @@ public class VacuumArmSubsystem extends Subsystem {
     protected void initDefaultCommand() {
     }
     
+    //double maxValue = 1;
+    
     public void setArmSpeed(double speed) {
         try {
-            if (CommandBase.vacuum.isSucks()) {
-                if (speed > 0) {
-                    speed = Math.min(speed, 0.5);
+            /*if (speed > 0.1) {
+                maxValue = 1;
+            } else if (speed < 0.1) {
+                maxValue -= 0.07;
+            }
+            
+            if (maxValue < 0.2) {
+                maxValue = 0.2;
+            }
+            
+            if (Math.abs(speed) > maxValue) {
+                if (speed < 0) {
+                    speed = -maxValue;
                 } else {
-                    speed = Math.max(speed, -0.5);
+                    speed = maxValue;
                 }
             }
             
-            vacuumArm.setX(speed);
+            System.out.println("Vacuum arm: " + speed);
+            */
+            vacuumArm.setX(-speed);
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
