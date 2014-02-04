@@ -26,10 +26,10 @@ var interpolate = {
 	a: 0
 };
 var tween = new TWEEN.Tween( interpolate )
-	.to({ a: 1 }, updateInterval / 2)
+	.to({ a: 1 }, updateInterval - 2)
 	.easing(TWEEN.Easing.Cubic.InOut);
 var tween2 = new TWEEN.Tween( interpolate )
-	.to({ a: 1 }, updateInterval / 2)
+	.to({ a: 1 }, 2)
 	.easing(TWEEN.Easing.Linear.None)
 	.onComplete(function() {
 		// Reset the tween
@@ -124,6 +124,14 @@ function render() {
 		if (hover.type != undefined && hover.type.description != undefined) {
 			ctx.fillStyle = "white";
 			ctx.fillText(hover.type.description, 0, h);
+		}
+	}
+	
+	if (down) {
+		if (get(mouse.x, mouse.y) == undefined) {
+			create(selectedTeam, mouse.x, mouse.y);
+		} else {
+			setTeam(get(mouse.x, mouse.y), selectedTeam);
 		}
 	}
 }
