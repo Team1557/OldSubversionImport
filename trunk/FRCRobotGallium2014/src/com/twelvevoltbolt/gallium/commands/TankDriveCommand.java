@@ -2,24 +2,31 @@ package com.twelvevoltbolt.gallium.commands;
 
 import com.twelvevoltbolt.gallium.MathUtils;
 import com.twelvevoltbolt.gallium.RobotMap;
-import edu.wpi.first.wpilibj.Encoder;
 
 /**
  * A tank drive command that takes input from two joysticks and outputs to the
  * drive.
  *
- * The Driver (Left) Joysticks always override the alternate joysticks.
- * The Alternate (Right) Joysticks control the turning motion with the horizontal axis, when the Driver joysticks are not active.
- * When the Trigger on the Alternate (Right) Joystick is held, the vertical axis on the Alternate (Right) Joystick controls the ball pickup arm.
+ * Left:
+ *     Y axis: Drive left
+ *     Trigger: Shift Down
  * 
+ * Right:
+ *     Y axis: Drive right
+ *     Trigger: Shift up
  * 
+ * Alternate:
+ *     2: Vacuum
+ *     3: Fire
+ *     X axis: Turning, when driver is not active
+ *     Trigger + Y axis: Arm control
  * 
  * @author code
  */
 public class TankDriveCommand extends CommandBase {
     
-    double motorLeft = 0;
-    double motorRight = 0;
+//    double motorLeft = 0;
+//    double motorRight = 0;
     
     public TankDriveCommand() {
         requires(drive);
@@ -30,37 +37,45 @@ public class TankDriveCommand extends CommandBase {
     protected void initialize() {
     }
 
-    public double normalize(double joystick, double motor) {
-        if (Math.abs(joystick) < Math.abs(motor) || Math.abs(joystick)< RobotMap.motorRampStart) {
-            return joystick;
-        } else {
-            return motor + MathUtils.sign(joystick) * Math.min(RobotMap.motorRampStep, Math.abs(joystick) - Math.abs(motor));
-        }
-    }
+//    public double normalize(double joystick, double motor) {
+//        if (Math.abs(joystick) < Math.abs(motor) || Math.abs(joystick)< RobotMap.motorRampStart) {
+//            return joystick;
+//        } else {
+//            return motor + MathUtils.sign(joystick) * Math.min(RobotMap.motorRampStep, Math.abs(joystick) - Math.abs(motor));
+//        }
+//    }
     
     public static double MAX_SPEED_WHILE_VACUUM = 0.7;
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//      drive.updateGears();
+        drive.updateGears();
         
-        motorLeft = normalize(oi.getLeftInput(), motorLeft);
-        motorRight = normalize(oi.getRightInput(), motorRight);
+//        motorLeft = normalize(oi.getLeftInput(), motorLeft);
+//        motorRight = normalize(oi.getRightInput(), motorRight);
+//        
+//        if (vacuum.isSucks()) {
+//            //if (motorLeft < 
+//        }
         
-        if (vacuum.isSucks()) {
-            //if (motorLeft < 
-        }
+        double motorLeft = oi.getLeftInput();
+        double motorRight = oi.getRightInput();
         
-        if (oi.getLeftInput() != 0 || oi.getRightInput() != 0) {
-            drive.drive(motorLeft, motorRight);
-        } else {
+        if (Math.abs(motorLeft) < 0.03 && Math.abs(motorRight) < 0.03) {
+            // Alt drive
             double angle = oi.getFiringAngle();
             
-            if (Math.abs(angle) > 0.3) {
-                drive.drive(angle / 4, -angle / 4);
+            if (Math.abs(angle) > 0.1) {
+                if (oi.isDebug()) {
+                    System.out.println("Alt drive: " + angle);
+                }
+
+                drive.drive(angle * .75, -angle * .75);
             } else {
                 drive.drive(0, 0);
             }
+        } else {
+            drive.drive(-motorLeft, -motorRight);
         }
     }
 

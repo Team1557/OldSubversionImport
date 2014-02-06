@@ -28,6 +28,11 @@ public class DriveSubsystem extends Subsystem {
             rightMotor1 = new CANJaguar(RobotMap.rightMotor1);
             rightMotor2 = new CANJaguar(RobotMap.rightMotor2);
             
+            leftMotor1.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            leftMotor2.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            rightMotor1.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            rightMotor2.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            
             // leftMotor1.configEncoderCodesPerRev(200);
         } catch (CANTimeoutException ex) {
             System.out.println("Drive subsystem error");
@@ -75,9 +80,10 @@ public class DriveSubsystem extends Subsystem {
     
     
     public void updateGears() {
-        /*try {
+        try {
             double avg = (leftMotor1.getSpeed());
-            if ((avg > speedShiftUp) && !getGear()) {
+            
+            /*if ((avg > speedShiftUp) && !getGear()) {
                 setGear(true);
                 shiftGear(gear);
                 System.out.println("Shifting up " + avg);
@@ -85,13 +91,13 @@ public class DriveSubsystem extends Subsystem {
                 setGear(false);
                 shiftGear(gear);
                 System.out.println("Shifting down " + avg);
-            }
+            }*/
             
             if (CommandBase.oi.isDebug()) {
                 System.out.println("Speed: " + avg);
             }
         } catch (CANTimeoutException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }

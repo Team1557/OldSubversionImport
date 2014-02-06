@@ -33,6 +33,6 @@ public class TurnAndAimCommand extends CommandGroup {
         }
         
         addSequential(new WaitCommand(1));
-        addSequential(new FireCommand());        
+        addSequential(new FireActionCommand());        
     }
 }

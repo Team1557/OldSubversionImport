@@ -4,15 +4,19 @@
  */
 package com.twelvevoltbolt.gallium.commands;
 
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-
 /**
  *
  * @author code
  */
 public class FireCommand extends CommandBase { // CommandGroup {
+    
+    private boolean state;
+    
+    public FireCommand(boolean state) {
+        requires(firing);
+        
+        this.state = state;
+    }
 
     /**
      * The maximum delay is determined by the multiplier, where an input of 1
@@ -91,14 +95,17 @@ public class FireCommand extends CommandBase { // CommandGroup {
 //    }
 
     protected void execute() {
-        CommandBase.firing.fire(2);
+        firing.getLeftArmOn().set(state);
+        firing.getRightArmOn().set(state);
+        firing.getLeftArmOff().set(!state);
+        firing.getRightArmOff().set(!state);
     }
 
     protected void initialize() {
     }
 
     protected boolean isFinished() {
-        return isTimedOut();
+        return true;
     }
 
     protected void end() {

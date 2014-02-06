@@ -2,11 +2,11 @@ package com.twelvevoltbolt.gallium.subsystems;
 
 import com.twelvevoltbolt.gallium.RobotMap;
 import com.twelvevoltbolt.gallium.commands.CommandBase;
+import com.twelvevoltbolt.gallium.commands.VacuumSuckCommand;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-// TODO: Determine polarity of vacuum
 public class VacuumSubsystem extends Subsystem {
 
     public CANJaguar vacuum1;
@@ -28,9 +28,11 @@ public class VacuumSubsystem extends Subsystem {
     
     public void setSuck(boolean suck) {
         if (CommandBase.oi.isDebug()) {
-            System.out.println("This sucks: " + suck);
+            System.out.println("Vacuum: " + suck);
         }
+        
         try {
+            this.sucks = suck;
             if (suck) {
                 vacuum1.setX(+1);
                 vacuum2.setX(-1);
@@ -38,8 +40,6 @@ public class VacuumSubsystem extends Subsystem {
                 vacuum1.setX(0);
                 vacuum2.setX(0);
             }
-            
-            this.sucks = suck;
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
             

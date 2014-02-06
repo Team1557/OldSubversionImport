@@ -1,21 +1,24 @@
 package com.twelvevoltbolt.gallium.subsystems;
 
 import com.twelvevoltbolt.gallium.RobotMap;
-import com.twelvevoltbolt.gallium.commands.CommandBase;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.util.AllocationException;
 
 public class FiringSubsystem extends Subsystem {
 
-    private Solenoid arm;
-    private Solenoid arm2;
+    private Solenoid lArmOn;
+    private Solenoid lArmOff;
+    
+    private Solenoid rArmOn;
+    private Solenoid rArmOff;
 
     public FiringSubsystem() {
         try {
-            arm = new Solenoid(RobotMap.armLauncher);
-            arm2 = new Solenoid(RobotMap.armLauncher2);
+            lArmOn = new Solenoid(RobotMap.leftArmLauncherOn); //Finish by implementing by adding support for all 4 solenoids
+            lArmOff = new Solenoid(RobotMap.leftArmLauncherOff);
+            rArmOn = new Solenoid(RobotMap.rightArmLauncherOn);
+            rArmOff = new Solenoid(RobotMap.rightArmLauncherOff);
         } catch (AllocationException ex) {
             System.out.println("Solenoids failed to initialize.");
         }
@@ -23,27 +26,20 @@ public class FiringSubsystem extends Subsystem {
 
     protected void initDefaultCommand() {
     }
-
-    public Solenoid getArm() {
-        return arm;
+    
+    public Solenoid getLeftArmOn() {
+        return lArmOn;
     }
 
-    public Solenoid getArm2() {
-        return arm2;
+    public Solenoid getLeftArmOff() {
+        return lArmOff;
     }
 
-    public void fire() {
-        fire(2);
+    public Solenoid getRightArmOn() {
+        return rArmOn;
     }
 
-    public void fire(int seconds) {
-        if (CommandBase.oi.isDebug()) {
-            System.out.println("Firing with timeout of : " + seconds);
-        }
-        getArm().set(true);
-        getArm2().set(true);
-        Timer.delay(seconds);
-        getArm().set(false);
-        getArm2().set(false);
+    public Solenoid getRightArmOff() {
+        return rArmOff;
     }
 }
