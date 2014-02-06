@@ -1,10 +1,5 @@
 package com.twelvevoltbolt.gallium.commands;
 
-import com.twelvevoltbolt.gallium.MathUtils;
-import com.twelvevoltbolt.gallium.RobotMap;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Timer;
-
 /**
  *
  * @author code
@@ -53,10 +48,12 @@ public class VacuumArmLiftCommand extends CommandBase {
     
     // Called once after isFinished returns true
     protected void end() {
+        arms.setArmSpeed(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }
 }

@@ -5,8 +5,6 @@
 
 package com.twelvevoltbolt.gallium.commands;
 
-import edu.wpi.first.wpilibj.Timer;
-
 class DriveCommand extends CommandBase {
 
     private double time;
@@ -27,8 +25,7 @@ class DriveCommand extends CommandBase {
 
     protected void execute() {
         drive.drive(left, right);
-        Timer.delay(time);
-        drive.drive(0, 0);
+        setTimeout(time);
     }
 
     protected boolean isFinished() {
@@ -36,9 +33,11 @@ class DriveCommand extends CommandBase {
     }
 
     protected void end() {
+        drive.drive(0, 0);
     }
 
     protected void interrupted() {
+        end();
     }
 
 }

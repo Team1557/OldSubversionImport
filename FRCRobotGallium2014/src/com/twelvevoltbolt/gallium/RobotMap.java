@@ -17,7 +17,8 @@ public class RobotMap {
     public static final int rightMotor2 = 5; // Jaguar port
     
     // SuperShifters
-    public static final int SuperShifter = 9;
+    public static final int superShifter1 = 5;
+    public static final int superShifter2 = 6;
     
     // Vacuum
     public static int vacuum = 1;
@@ -27,8 +28,11 @@ public class RobotMap {
     public static int vacuumArmMotor = 8;
     
     // The arm launcher
-    public static final int armLauncher = 5;
-    public static final int armLauncher2 = 6;
+    public static final int leftArmLauncherOn = 1;
+    public static final int leftArmLauncherOff = 2;
+    
+    public static final int rightArmLauncherOn = 4;
+    public static final int rightArmLauncherOff = 3;
     
     // Port of relay for compressor
     public static final int compressorRelay = 1;

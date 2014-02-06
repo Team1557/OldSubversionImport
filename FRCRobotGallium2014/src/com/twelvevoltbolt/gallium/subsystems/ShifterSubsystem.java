@@ -12,16 +12,19 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShifterSubsystem extends Subsystem {
 
-    Solenoid superShifter;
+    Solenoid superShifter1;
+    Solenoid superShifter2;
     
     public ShifterSubsystem() {
-        superShifter = new Solenoid(RobotMap.SuperShifter);
+        superShifter1 = new Solenoid(RobotMap.superShifter1);
+        superShifter2 = new Solenoid(RobotMap.superShifter2);
     }
 
     protected void initDefaultCommand() {
     }
 
     public void shiftGear(boolean gear) {
-        superShifter.set(gear);
+        superShifter1.set(gear);
+        superShifter2.set(!gear);
     }
 }
