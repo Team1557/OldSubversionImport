@@ -11,8 +11,12 @@ public class AutonomousCommand extends CommandGroup {
         boolean drive = AutonomousTables.getAutoBoolean("DRIVE", true);
         
         if (drive) {
-            double driveTime1 = AutonomousTables.getAutoNumber("DRIVE_TIME_1", 1);
-            addSequential(new DriveCommand(0.5, 0.5, driveTime1));
+            double driveTime = AutonomousTables.getAutoNumber("DRIVE_TIME_1", 1);
+            
+            if (driveTime > 0) {
+                double driveSpeed = AutonomousTables.getAutoNumber("DRIVE_SPEED_1", 0.5);
+                addSequential(new DriveCommand(driveSpeed, driveSpeed, driveTime));
+            }
         }
         
         boolean fire = AutonomousTables.getAutoBoolean("FIRE", true);
@@ -23,8 +27,12 @@ public class AutonomousCommand extends CommandGroup {
         }
 
         if (drive) {
-            double driveTime2 = AutonomousTables.getAutoNumber("DRIVE_TIME_2", 1);
-            addSequential(new DriveCommand(0.5, 0.5, driveTime2));
+            double driveTime = AutonomousTables.getAutoNumber("DRIVE_TIME_2", 1);
+            
+            if (driveTime > 0) {
+                double driveSpeed = AutonomousTables.getAutoNumber("DRIVE_SPEED_2", 0.5);
+                addSequential(new DriveCommand(driveSpeed, driveSpeed, driveTime));
+            }
         }
     }
 }
