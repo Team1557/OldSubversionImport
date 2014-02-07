@@ -50,4 +50,28 @@ public class AutonomousTables {
             return def;
         }
     }
+    
+    public static void setAutoNumber(String key, double value) throws NotConnectedException {
+        if (check()) {
+            getAutonomous().putNumber(key, value);
+        } else {
+            throw new NotConnectedException();
+        }
+    }
+    
+    public static void setAutoString(String key, String value) throws NotConnectedException {
+        if (check()) {
+            getAutonomous().putString(key, value);
+        } else {
+            throw new NotConnectedException();
+        }
+    }
+    
+    public static void setAutoBoolean(String key, boolean value) throws NotConnectedException {
+        if (check()) {
+            getAutonomous().putBoolean(key, value);
+        } else {
+            throw new NotConnectedException();
+        }
+    }
 }
