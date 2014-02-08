@@ -8,6 +8,7 @@
 package com.twelvevoltbolt.gallium;
 
 
+import com.twelvevoltbolt.autonomous.AutonomousTables;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import com.twelvevoltbolt.gallium.commands.CommandBase;
 import com.twelvevoltbolt.gallium.commands.AutonomousCommand;
 import com.twelvevoltbolt.gallium.commands.TeleopCommand;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,8 +39,12 @@ public class RobotGallium extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+        // NetworkTable.setClientMode();
+        // NetworkTable.setIPAddress("10.15.57.2");
+        
         CommandBase.init();
         RoboRealm.init();
+        AutonomousTables.init();
         
         autonomousCommand = new AutonomousCommand();
         teleopCommand = new TeleopCommand();
