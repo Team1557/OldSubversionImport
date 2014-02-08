@@ -226,17 +226,15 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="driveTimeAfterFire" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="driveTimeAfterFire" min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                           <Component id="driveTimeAfterFireLabel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -288,7 +286,7 @@
         <Component class="javax.swing.JSlider" name="driveTimeAfterFire">
           <Properties>
             <Property name="maximum" type="int" value="300"/>
-            <Property name="value" type="int" value="300"/>
+            <Property name="value" type="int" value="150"/>
           </Properties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="driveTimeAfterFireStateChanged"/>
@@ -312,7 +310,7 @@
         <Component class="javax.swing.JSlider" name="driveTime">
           <Properties>
             <Property name="maximum" type="int" value="300"/>
-            <Property name="value" type="int" value="300"/>
+            <Property name="value" type="int" value="150"/>
           </Properties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="driveTimeStateChanged"/>
@@ -330,9 +328,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JSlider" name="driveSpeed">
-          <Properties>
-            <Property name="value" type="int" value="100"/>
-          </Properties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="driveSpeedStateChanged"/>
           </Events>
