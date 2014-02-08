@@ -129,7 +129,7 @@ public class Main extends javax.swing.JFrame {
         driveTimeLabel.setText("3 Seconds");
 
         driveTimeAfterFire.setMaximum(300);
-        driveTimeAfterFire.setValue(300);
+        driveTimeAfterFire.setValue(150);
         driveTimeAfterFire.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 driveTimeAfterFireStateChanged(evt);
@@ -143,7 +143,7 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setText("Drive Time:");
 
         driveTime.setMaximum(300);
-        driveTime.setValue(300);
+        driveTime.setValue(150);
         driveTime.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 driveTimeStateChanged(evt);
@@ -155,7 +155,6 @@ public class Main extends javax.swing.JFrame {
         jLabel10.setText("Drive Speed:");
         jLabel10.setToolTipText("");
 
-        driveSpeed.setValue(100);
         driveSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 driveSpeedStateChanged(evt);
@@ -192,14 +191,13 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(driveTimeAfterFire, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(jLabel3))))
+                        .addComponent(driveTimeAfterFire, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
-                        .addComponent(driveTimeAfterFireLabel)))
+                        .addComponent(driveTimeAfterFireLabel))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
