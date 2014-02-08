@@ -7,6 +7,7 @@ package com.twelvevoltbolt.autonomous;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
+import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 
 public class AutonomousTables {
     
@@ -29,7 +30,11 @@ public class AutonomousTables {
     
     public static double getAutoNumber(String key, double def) {
         if (check()) {
-            return getAutonomous().getNumber(key);
+            try {
+                return getAutonomous().getNumber(key);
+            } catch (TableKeyNotDefinedException ex) {
+                return def;
+            }
         } else {
             return def;
         }
@@ -37,7 +42,11 @@ public class AutonomousTables {
     
     public static String getAutoString(String key, String def) {
         if (check()) {
-            return getAutonomous().getString(key);
+            try {
+                return getAutonomous().getString(key);
+            } catch (TableKeyNotDefinedException ex) {
+                return def;
+            }
         } else {
             return def;
         }
@@ -45,7 +54,11 @@ public class AutonomousTables {
     
     public static boolean getAutoBoolean(String key, boolean def) {
         if (check()) {
-            return getAutonomous().getBoolean(key);
+            try {
+                return getAutonomous().getBoolean(key);
+            } catch (TableKeyNotDefinedException ex) {
+                return def;
+            }
         } else {
             return def;
         }
