@@ -15,9 +15,18 @@ public class Main extends javax.swing.JFrame {
         roborealmAimBox.setSelected(AutonomousTables.getAutoBoolean("ROBOREALM", true));
         waitForHotGoalBox.setSelected(AutonomousTables.getAutoBoolean("WAIT_FOR_HOTGOAL", true));
         debugBox.setSelected(AutonomousTables.getAutoBoolean("DEBUG", false));
-        driveTime.setValue(AutonomousTables.getAutoNumber("DRIVE_TIME_1", 1 * 100) == 1 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_TIME_1", 0) * 100));
-        driveTimeAfterFire.setValue(AutonomousTables.getAutoNumber("DRIVE_TIME_2", 1 * 100) == 1 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_TIME_2", 0) * 100));
-        driveSpeed.setValue(AutonomousTables.getAutoNumber("DRIVE_SPEED", 1 * 100) == 1 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_SPEED", 0) * 100));
+        driveTime.setValue(AutonomousTables.getAutoNumber("DRIVE_TIME_1", 0) == 0 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_TIME_1", 0) * 100));
+        driveTimeAfterFire.setValue(AutonomousTables.getAutoNumber("DRIVE_TIME_2", 0) == 0 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_TIME_2", 0) * 100));
+        driveSpeed.setValue(AutonomousTables.getAutoNumber("DRIVE_SPEED", 0) == 0 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_SPEED", 0) * 100));
+        fireBallBoxStateChanged(null);
+        driveForwardBoxStateChanged(null);
+        roborealmAimBoxStateChanged(null);
+        fireBallBoxStateChanged(null);
+        waitForHotGoalBoxStateChanged(null);
+        debugBoxStateChanged(null);
+        driveTimeStateChanged(null);
+        driveTimeAfterFireStateChanged(null);
+        driveSpeedStateChanged(null);
     }
 
     @SuppressWarnings("unchecked")
