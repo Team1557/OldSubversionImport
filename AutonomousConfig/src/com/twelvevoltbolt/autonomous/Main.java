@@ -48,7 +48,8 @@ public class Main extends javax.swing.JFrame {
         jCheckBox2.setText("jCheckBox2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("AutonomousControl");
+        setTitle("Autonomous Config");
+        setResizable(false);
 
         driveTime1Slider.setMaximum(300);
         driveTime1Slider.setValue(300);
