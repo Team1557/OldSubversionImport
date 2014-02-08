@@ -2,6 +2,7 @@ package com.twelvevoltbolt.autonomous;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -17,7 +18,8 @@ public class Main extends javax.swing.JFrame {
         debugBox.setSelected(AutonomousTables.getAutoBoolean("DEBUG", false));
         driveTime.setValue(AutonomousTables.getAutoNumber("DRIVE_TIME_1", 0) == 0 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_TIME_1", 0) * 100));
         driveTimeAfterFire.setValue(AutonomousTables.getAutoNumber("DRIVE_TIME_2", 0) == 0 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_TIME_2", 0) * 100));
-        driveSpeed.setValue(AutonomousTables.getAutoNumber("DRIVE_SPEED", 0) == 0 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_SPEED", 0) * 100));
+        driveSpeed.setValue(AutonomousTables.getAutoNumber("DRIVE_SPEED_1", 0) == 0 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_SPEED_1", 0) * 100));
+        driveSpeedAfterFire.setValue(AutonomousTables.getAutoNumber("DRIVE_SPEED_2", 0) == 0 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_SPEED_2", 0) * 100));
         fireBallBoxStateChanged(null);
         driveForwardBoxStateChanged(null);
         roborealmAimBoxStateChanged(null);
@@ -27,6 +29,8 @@ public class Main extends javax.swing.JFrame {
         driveTimeStateChanged(null);
         driveTimeAfterFireStateChanged(null);
         driveSpeedStateChanged(null);
+        driveSpeedAfterFireStateChanged(null);
+        this.setIconImage(new ImageIcon(this.getClass().getResource("icon.png")).getImage());
     }
 
     @SuppressWarnings("unchecked")
@@ -52,7 +56,11 @@ public class Main extends javax.swing.JFrame {
         driveSpeedLabel = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         driveSpeed = new javax.swing.JSlider();
+        jLabel11 = new javax.swing.JLabel();
+        driveSpeedAfterFire = new javax.swing.JSlider();
+        driveSpeedAfterFireLabel = new javax.swing.JLabel();
         lockValues = new javax.swing.JToggleButton();
+        resetButton = new javax.swing.JButton();
 
         jCheckBox2.setText("jCheckBox2");
 
@@ -137,7 +145,7 @@ public class Main extends javax.swing.JFrame {
 
         driveTimeLabel.setText("3 Seconds");
 
-        driveTimeAfterFire.setMaximum(300);
+        driveTimeAfterFire.setMaximum(1000);
         driveTimeAfterFire.setValue(150);
         driveTimeAfterFire.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -151,7 +159,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel1.setText("Drive Time:");
 
-        driveTime.setMaximum(300);
+        driveTime.setMaximum(1000);
         driveTime.setValue(150);
         driveTime.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -170,6 +178,17 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setText("Drive Speed After Firing:");
+        jLabel11.setToolTipText("");
+
+        driveSpeedAfterFire.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                driveSpeedAfterFireStateChanged(evt);
+            }
+        });
+
+        driveSpeedAfterFireLabel.setText("Power of 1");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -185,19 +204,7 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(driveTime, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(57, 57, 57)
-                        .addComponent(driveTimeLabel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(driveSpeedLabel))
-                    .addComponent(driveSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel10)))
-                .addGap(10, 10, 10))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(driveTimeLabel))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(driveTimeAfterFire, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -207,7 +214,26 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(jLabel3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(driveSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addComponent(jLabel10)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(driveSpeedLabel)
+                            .addGap(45, 45, 45)))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(driveSpeedAfterFire, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(driveSpeedAfterFireLabel)
+                            .addGap(45, 45, 45))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel11)
+                            .addGap(11, 11, 11))))
+                .addGap(10, 10, 10))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,33 +241,48 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(driveSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(5, 5, 5)
-                                .addComponent(driveSpeedLabel))
-                            .addComponent(jLabel10))
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(driveTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addComponent(driveTimeLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                        .addComponent(driveTimeLabel))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(driveSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(driveSpeedLabel)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(driveTimeAfterFire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addComponent(driveTimeAfterFireLabel)
-                        .addGap(20, 20, 20))))
+                        .addComponent(driveTimeAfterFireLabel))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(driveSpeedAfterFire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(driveSpeedAfterFireLabel)))
+                .addGap(11, 11, 11))
         );
 
         lockValues.setText("Lock Values");
         lockValues.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 lockValuesStateChanged(evt);
+            }
+        });
+
+        resetButton.setText("Reset to Default");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
             }
         });
 
@@ -260,8 +301,10 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lockValues, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lockValues, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                            .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(37, 37, 37))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,11 +319,13 @@ public class Main extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(61, 61, 61)
-                                .addComponent(lockValues)))
+                                .addGap(49, 49, 49)
+                                .addComponent(lockValues)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(resetButton)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -332,7 +377,7 @@ public class Main extends javax.swing.JFrame {
         } catch (NotConnectedException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        driveTimeLabel.setText((driveTime.getValue() / 100.0) > 1.0 ? (driveTime.getValue() / 100.0) + " seconds" : (driveTime.getValue() / 100.0) + " second");
+        driveTimeLabel.setText((driveTime.getValue() / 100.0) != 1.0 ? (driveTime.getValue() / 100.0) + " seconds" : (driveTime.getValue() / 100.0) + " second");
     }//GEN-LAST:event_driveTimeStateChanged
 
     private void driveTimeAfterFireStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_driveTimeAfterFireStateChanged
@@ -341,17 +386,26 @@ public class Main extends javax.swing.JFrame {
         } catch (NotConnectedException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        driveTimeAfterFireLabel.setText((driveTimeAfterFire.getValue() / 100.0) > 1.0 ? (driveTimeAfterFire.getValue() / 100.0) + " seconds" : (driveTimeAfterFire.getValue() / 100.0) + " second");
+        driveTimeAfterFireLabel.setText((driveTimeAfterFire.getValue() / 100.0) != 1.0 ? (driveTimeAfterFire.getValue() / 100.0) + " seconds" : (driveTimeAfterFire.getValue() / 100.0) + " second");
     }//GEN-LAST:event_driveTimeAfterFireStateChanged
 
     private void driveSpeedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_driveSpeedStateChanged
         try {
-            AutonomousTables.setAutoNumber("DRIVE_SPEED", driveSpeed.getValue() / 100.0);
+            AutonomousTables.setAutoNumber("DRIVE_SPEED_1", driveSpeed.getValue() / 100.0);
         } catch (NotConnectedException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         driveSpeedLabel.setText("Power of " + (driveSpeed.getValue() / 100.0));
     }//GEN-LAST:event_driveSpeedStateChanged
+	
+	private void driveSpeedAfterFireStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_driveSpeedAfterFireStateChanged
+        try {
+            AutonomousTables.setAutoNumber("DRIVE_SPEED_2", driveSpeedAfterFire.getValue() / 100.0);
+        } catch (NotConnectedException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        driveSpeedAfterFireLabel.setText("Power of " + (driveSpeedAfterFire.getValue() / 100.0));
+    }//GEN-LAST:event_driveSpeedAfterFireStateChanged
 
     private void lockValuesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_lockValuesStateChanged
         if (lockValues.isSelected()) {
@@ -363,6 +417,7 @@ public class Main extends javax.swing.JFrame {
             driveTime.setEnabled(false);
             driveTimeAfterFire.setEnabled(false);
             driveSpeed.setEnabled(false);
+            driveSpeedAfterFire.setEnabled(false);
         } else {
             fireBallBox.setEnabled(true);
             driveForwardBox.setEnabled(true);
@@ -372,8 +427,23 @@ public class Main extends javax.swing.JFrame {
             driveTime.setEnabled(true);
             driveTimeAfterFire.setEnabled(true);
             driveSpeed.setEnabled(true);
+            driveSpeedAfterFire.setEnabled(true);
         }
     }//GEN-LAST:event_lockValuesStateChanged
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        if (!lockValues.isSelected()) {
+            fireBallBox.setSelected(true);
+            driveForwardBox.setSelected(true);
+            roborealmAimBox.setSelected(true);
+            waitForHotGoalBox.setSelected(true);
+            debugBox.setSelected(false);
+            driveTime.setValue(100);
+            driveTimeAfterFire.setValue(100);
+            driveSpeed.setValue(100);
+            driveSpeedAfterFire.setValue(100);
+        }
+    }//GEN-LAST:event_resetButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -403,6 +473,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JCheckBox debugBox;
     private javax.swing.JCheckBox driveForwardBox;
     private javax.swing.JSlider driveSpeed;
+    private javax.swing.JSlider driveSpeedAfterFire;
+    private javax.swing.JLabel driveSpeedAfterFireLabel;
     private javax.swing.JLabel driveSpeedLabel;
     private javax.swing.JSlider driveTime;
     private javax.swing.JSlider driveTime1Slider;
@@ -413,10 +485,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToggleButton lockValues;
+    private javax.swing.JButton resetButton;
     private javax.swing.JCheckBox roborealmAimBox;
     private javax.swing.JCheckBox waitForHotGoalBox;
     // End of variables declaration//GEN-END:variables
