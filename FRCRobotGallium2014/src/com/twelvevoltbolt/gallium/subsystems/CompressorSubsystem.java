@@ -9,6 +9,7 @@ import com.twelvevoltbolt.gallium.RobotMap;
 import com.twelvevoltbolt.gallium.commands.CompressorRegulateCommand;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 
 public class CompressorSubsystem extends Subsystem {
@@ -17,6 +18,8 @@ public class CompressorSubsystem extends Subsystem {
     
     public CompressorSubsystem() {
         compressor = new Compressor(RobotMap.compressorShutoffDigitalInput, RobotMap.compressorRelay);
+        
+        LiveWindow.addActuator(getName(), "Compressor", compressor);
     }
     
     protected void initDefaultCommand() {

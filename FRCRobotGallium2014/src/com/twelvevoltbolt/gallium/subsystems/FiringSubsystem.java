@@ -3,6 +3,7 @@ package com.twelvevoltbolt.gallium.subsystems;
 import com.twelvevoltbolt.gallium.RobotMap;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.util.AllocationException;
 
 public class FiringSubsystem extends Subsystem {
@@ -22,6 +23,11 @@ public class FiringSubsystem extends Subsystem {
         } catch (AllocationException ex) {
             System.out.println("Solenoids failed to initialize.");
         }
+        
+        LiveWindow.addActuator(getName(), "Left Arm On", lArmOn);
+        LiveWindow.addActuator(getName(), "Left Arm Off", lArmOff);
+        LiveWindow.addActuator(getName(), "Right Arm On", rArmOn);
+        LiveWindow.addActuator(getName(), "Right Arm Off", rArmOff);
     }
 
     protected void initDefaultCommand() {

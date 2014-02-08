@@ -14,9 +14,6 @@ public class AutonomousTables {
     public static NetworkTable server;
     
     public static void init() {
-        NetworkTable.setClientMode();
-        NetworkTable.setIPAddress("10.15.57.2");
-        
         server = NetworkTable.getTable("SmartDashboard");
     }
     
@@ -34,6 +31,8 @@ public class AutonomousTables {
                 return getAutonomous().getNumber(key);
             } catch (TableKeyNotDefinedException ex) {
                 return def;
+            } catch (NullPointerException ex) {
+                return def;
             }
         } else {
             return def;
@@ -46,6 +45,8 @@ public class AutonomousTables {
                 return getAutonomous().getString(key);
             } catch (TableKeyNotDefinedException ex) {
                 return def;
+            } catch (NullPointerException ex) {
+                return def;
             }
         } else {
             return def;
@@ -57,6 +58,8 @@ public class AutonomousTables {
             try {
                 return getAutonomous().getBoolean(key);
             } catch (TableKeyNotDefinedException ex) {
+                return def;
+            } catch (NullPointerException ex) {
                 return def;
             }
         } else {

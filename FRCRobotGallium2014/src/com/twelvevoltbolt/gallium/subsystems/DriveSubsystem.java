@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  * A drive system consisting of 4 motors, 2 on each side with the same output, left and right
@@ -38,7 +39,13 @@ public class DriveSubsystem extends Subsystem {
             System.out.println("Drive subsystem error");
             ex.printStackTrace();
         }
+        
         drive = new RobotDrive(leftMotor1, leftMotor2, rightMotor1, rightMotor2);
+        
+        LiveWindow.addActuator(getName(), "Left Motor 1", leftMotor1);
+        LiveWindow.addActuator(getName(), "Left Motor 2", leftMotor2);
+        LiveWindow.addActuator(getName(), "Right Motor 1", rightMotor1);
+        LiveWindow.addActuator(getName(), "Right Motor 2", rightMotor2);
     }
 
     public void initDefaultCommand() {

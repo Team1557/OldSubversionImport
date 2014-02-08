@@ -5,7 +5,7 @@
 
 package com.twelvevoltbolt.gallium.commands;
 
-class DriveCommand extends CommandBase {
+public class DriveCommand extends CommandBase {
 
     private double time;
     private double left = 0;
@@ -21,11 +21,11 @@ class DriveCommand extends CommandBase {
     }
     
     protected void initialize() {
+        setTimeout(getTime());
     }
 
     protected void execute() {
-        drive.drive(left, right);
-        setTimeout(time);
+        drive.drive(getLeft(), getRight());
     }
 
     protected boolean isFinished() {
@@ -38,6 +38,30 @@ class DriveCommand extends CommandBase {
 
     protected void interrupted() {
         end();
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
+    }
+
+    public double getLeft() {
+        return left;
+    }
+
+    public void setLeft(double left) {
+        this.left = left;
+    }
+
+    public double getRight() {
+        return right;
+    }
+
+    public void setRight(double right) {
+        this.right = right;
     }
 
 }
