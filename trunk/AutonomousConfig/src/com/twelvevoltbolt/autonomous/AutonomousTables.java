@@ -11,7 +11,7 @@ public class AutonomousTables {
     public static void init() {
         NetworkTable.setClientMode();
         NetworkTable.setIPAddress("10.15.57.2");
-       
+        //NetworkTable.setIPAddress("localhost");
         server = NetworkTable.getTable("SmartDashboard");
     }
    
