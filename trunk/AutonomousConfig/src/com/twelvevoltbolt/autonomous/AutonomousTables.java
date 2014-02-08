@@ -5,9 +5,6 @@
 
 package com.twelvevoltbolt.autonomous;
 
-import static com.twelvevoltbolt.autonomous.AutonomousTables.check;
-import static com.twelvevoltbolt.autonomous.AutonomousTables.getAutonomous;
-import static com.twelvevoltbolt.autonomous.AutonomousTables.server;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
 
@@ -17,7 +14,7 @@ public class AutonomousTables {
     
     public static void init() {
         NetworkTable.setClientMode();
-        NetworkTable.setIPAddress("10.15.57.2");
+        NetworkTable.setIPAddress("127.0.0.1");
         
         server = NetworkTable.getTable("SmartDashboard");
     }
@@ -51,6 +48,30 @@ public class AutonomousTables {
             return getAutonomous().getBoolean(key);
         } else {
             return def;
+        }
+    }
+    
+    public static void setAutoNumber(String key, double value) throws NotConnectedException {
+        if (check()) {
+            getAutonomous().putNumber(key, value);
+        } else {
+            throw new NotConnectedException();
+        }
+    }
+    
+    public static void setAutoString(String key, String value) throws NotConnectedException {
+        if (check()) {
+            getAutonomous().putString(key, value);
+        } else {
+            throw new NotConnectedException();
+        }
+    }
+    
+    public static void setAutoBoolean(String key, boolean value) throws NotConnectedException {
+        if (check()) {
+            getAutonomous().putBoolean(key, value);
+        } else {
+            throw new NotConnectedException();
         }
     }
 }
