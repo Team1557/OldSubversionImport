@@ -13,8 +13,4 @@ public class RoboRealm {
     public static void init() {
         server = NetworkTable.getTable("SmartDashboard");
     }
-    
-    public static void debug() {
-        System.out.println(server.getNumber("COG_X"));
-    }
 }

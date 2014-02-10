@@ -77,10 +77,6 @@ public class RobotGallium extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        
-        if (CommandBase.oi.isDebug()) {
-            RoboRealm.debug();
-        }
     }
     
     /**
