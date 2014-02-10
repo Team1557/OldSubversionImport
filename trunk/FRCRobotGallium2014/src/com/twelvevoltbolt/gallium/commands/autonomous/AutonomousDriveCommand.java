@@ -21,6 +21,9 @@ public class AutonomousDriveCommand extends DriveCommand {
     
     public AutonomousDriveCommand(String enableKey, String timeKey, String speedKey, boolean defaultEnabled, double defaultTime, double defaultSpeed) {
         super(defaultSpeed, defaultSpeed, defaultTime);
+        this.enableKey = enableKey;
+        this.timeKey = timeKey;
+        this.speedKey = speedKey;
     }
 
     // Called just before this Command runs the first time
