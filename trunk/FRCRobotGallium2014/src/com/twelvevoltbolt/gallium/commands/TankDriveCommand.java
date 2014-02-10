@@ -25,8 +25,8 @@ import com.twelvevoltbolt.gallium.RobotMap;
  */
 public class TankDriveCommand extends CommandBase {
     
-//    double motorLeft = 0;
-//    double motorRight = 0;
+    double motorLeft = 0;
+    double motorRight = 0;
     
     public TankDriveCommand() {
         requires(drive);
@@ -37,13 +37,13 @@ public class TankDriveCommand extends CommandBase {
     protected void initialize() {
     }
 
-//    public double normalize(double joystick, double motor) {
-//        if (Math.abs(joystick) < Math.abs(motor) || Math.abs(joystick)< RobotMap.motorRampStart) {
-//            return joystick;
-//        } else {
-//            return motor + MathUtils.sign(joystick) * Math.min(RobotMap.motorRampStep, Math.abs(joystick) - Math.abs(motor));
-//        }
-//    }
+    public double normalize(double joystick, double motor) {
+        if (Math.abs(joystick) < Math.abs(motor) || Math.abs(joystick) < RobotMap.motorRampStart) {
+            return motor - MathUtils.sign(joystick) * Math.min(RobotMap.motorRampStep, Math.abs(motor) - Math.abs(joystick));
+        } else {
+            return joystick;
+        }
+    }
     
     public static double MAX_SPEED_WHILE_VACUUM = 0.7;
     
@@ -51,15 +51,15 @@ public class TankDriveCommand extends CommandBase {
     protected void execute() {
         drive.updateGears();
         
-//        motorLeft = normalize(oi.getLeftInput(), motorLeft);
-//        motorRight = normalize(oi.getRightInput(), motorRight);
+        motorLeft = normalize(oi.getLeftInput(), motorLeft);
+        motorRight = normalize(oi.getRightInput(), motorRight);
 //        
 //        if (vacuum.isSucks()) {
 //            //if (motorLeft < 
 //        }
         
-        double motorLeft = oi.getLeftInput();
-        double motorRight = oi.getRightInput();
+//        double motorLeft = oi.getLeftInput();
+//        double motorRight = oi.getRightInput();
         
         if (Math.abs(motorLeft) < 0.03 && Math.abs(motorRight) < 0.03) {
             // Alt drive
