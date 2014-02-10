@@ -59,8 +59,8 @@ public class RobotMap {
      */
     public static int vacuumArmUpSlowSpeed = 20;
     
-    
-    public static double motorRampStart = 0.6;
+    // The speed at which the ramp-down starts to apply
+    public static double motorRampStart = 0.4;
     public static double motorRampStep = 0.1;
     
     /**
