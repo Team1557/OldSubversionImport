@@ -1,5 +1,17 @@
 package com.twelvevoltbolt.autonomous;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -8,18 +20,24 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class Main extends javax.swing.JFrame {
 
+    public HashMap<String, Object> defaults = new HashMap<>();
+    public DebugWindow debugWindow;
+    public boolean useDebugWindow = true;
+    
     public Main() {
         initComponents();
         AutonomousTables.init();
-        fireBallBox.setSelected(AutonomousTables.getAutoBoolean("FIRE", true));
-        driveForwardBox.setSelected(AutonomousTables.getAutoBoolean("DRIVE", true));
-        roborealmAimBox.setSelected(AutonomousTables.getAutoBoolean("ROBOREALM", true));
-        waitForHotGoalBox.setSelected(AutonomousTables.getAutoBoolean("WAIT_FOR_HOTGOAL", true));
-        debugBox.setSelected(AutonomousTables.getAutoBoolean("DEBUG", false));
-        driveTime.setValue(AutonomousTables.getAutoNumber("DRIVE_TIME_1", 0) == 0 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_TIME_1", 0) * 100));
-        driveTimeAfterFire.setValue(AutonomousTables.getAutoNumber("DRIVE_TIME_2", 0) == 0 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_TIME_2", 0) * 100));
-        driveSpeed.setValue(AutonomousTables.getAutoNumber("DRIVE_SPEED_1", 0) == 0 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_SPEED_1", 0) * 100));
-        driveSpeedAfterFire.setValue(AutonomousTables.getAutoNumber("DRIVE_SPEED_2", 0) == 0 ? 100 : (int) (AutonomousTables.getAutoNumber("DRIVE_SPEED_2", 0) * 100));
+        refreshDefaults();
+        fireBallBox.setSelected(AutonomousTables.getAutoBoolean("FIRE", ((boolean)defaults.get("fireBall"))));
+        driveForwardBox.setSelected(AutonomousTables.getAutoBoolean("DRIVE", ((boolean)defaults.get("driveForward"))));
+        roborealmAimBox.setSelected(AutonomousTables.getAutoBoolean("ROBOREALM", ((boolean)defaults.get("roborealmAim"))));
+        waitForHotGoalBox.setSelected(AutonomousTables.getAutoBoolean("WAIT_FOR_HOTGOAL", ((boolean)defaults.get("waitForHotGoal"))));
+        debugBox.setSelected(AutonomousTables.getAutoBoolean("DEBUG", ((boolean)defaults.get("debug"))));
+        driveTime.setValue(AutonomousTables.getAutoNumber("DRIVE_TIME_1", 0) == 0 ? (int) defaults.get("driveTime") : (int) (AutonomousTables.getAutoNumber("DRIVE_TIME_1", 0) * 100));
+        driveTimeAfterFire.setValue(AutonomousTables.getAutoNumber("DRIVE_TIME_2", 0) == 0 ? (int) defaults.get("driveTimeAfterFire") : (int) (AutonomousTables.getAutoNumber("DRIVE_TIME_2", 0) * 100));
+        driveSpeed.setValue(AutonomousTables.getAutoNumber("DRIVE_SPEED_1", 0) == 0 ? (int) defaults.get("driveSpeed") : (int) (AutonomousTables.getAutoNumber("DRIVE_SPEED_1", 0) * 100));
+        driveSpeedAfterFire.setValue(AutonomousTables.getAutoNumber("DRIVE_SPEED_2", 0) == 0 ? (int) defaults.get("driveSpeedAfterFire") : (int) (AutonomousTables.getAutoNumber("DRIVE_SPEED_2", 0) * 100));
+        locationBox.setSelectedItem(AutonomousTables.getAutoString("LOCATION", (String) defaults.get("location")));
         fireBallBoxStateChanged(null);
         driveForwardBoxStateChanged(null);
         roborealmAimBoxStateChanged(null);
@@ -30,7 +48,11 @@ public class Main extends javax.swing.JFrame {
         driveTimeAfterFireStateChanged(null);
         driveSpeedStateChanged(null);
         driveSpeedAfterFireStateChanged(null);
+        locationBoxActionPerformed(null);
         this.setIconImage(new ImageIcon(this.getClass().getResource("icon.png")).getImage());
+        if (useDebugWindow) {
+            debugWindow = new DebugWindow();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -47,7 +69,7 @@ public class Main extends javax.swing.JFrame {
         roborealmAimBox = new javax.swing.JCheckBox();
         waitForHotGoalBox = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
-        directionBox = new javax.swing.JComboBox();
+        locationBox = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         driveTimeLabel = new javax.swing.JLabel();
         driveTimeAfterFire = new javax.swing.JSlider();
@@ -63,6 +85,7 @@ public class Main extends javax.swing.JFrame {
         driveSpeedAfterFireLabel = new javax.swing.JLabel();
         lockValues = new javax.swing.JToggleButton();
         resetButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
 
         jCheckBox2.setText("jCheckBox2");
 
@@ -112,10 +135,10 @@ public class Main extends javax.swing.JFrame {
 
         jLabel2.setText("Location:");
 
-        directionBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Left", "Middle", "Right", "Goalie Zone" }));
-        directionBox.addActionListener(new java.awt.event.ActionListener() {
+        locationBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Left", "Middle", "Right", "Goalie Zone" }));
+        locationBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                directionBoxActionPerformed(evt);
+                locationBoxActionPerformed(evt);
             }
         });
 
@@ -140,7 +163,7 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(debugBox)
                             .addComponent(waitForHotGoalBox)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(directionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(locationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -159,7 +182,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(directionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(locationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -308,6 +331,13 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        saveButton.setText("Save as Default");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -317,14 +347,15 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(driveTime1Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lockValues, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                            .addComponent(lockValues, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,21 +363,22 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(214, 214, 214)
-                        .addComponent(driveTime1Slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(driveTime1Slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(64, 64, 64)
+                                .addGap(54, 54, 54)
                                 .addComponent(lockValues)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(saveButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(resetButton)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -440,7 +472,7 @@ public class Main extends javax.swing.JFrame {
             driveTimeAfterFire.setEnabled(false);
             driveSpeed.setEnabled(false);
             driveSpeedAfterFire.setEnabled(false);
-            directionBox.setEnabled(false);
+            locationBox.setEnabled(false);
         } else {
             resetButton.setEnabled(true);
             fireBallBox.setEnabled(true);
@@ -452,38 +484,69 @@ public class Main extends javax.swing.JFrame {
             driveTimeAfterFire.setEnabled(true);
             driveSpeed.setEnabled(true);
             driveSpeedAfterFire.setEnabled(true);
-            directionBox.setEnabled(true);
+            locationBox.setEnabled(true);
         }
     }//GEN-LAST:event_lockValuesStateChanged
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        fireBallBox.setSelected(true);
-        driveForwardBox.setSelected(true);
-        roborealmAimBox.setSelected(true);
-        waitForHotGoalBox.setSelected(true);
-        debugBox.setSelected(false);
-        driveTime.setValue(100);
-        driveTimeAfterFire.setValue(100);
-        driveSpeed.setValue(100);
-        driveSpeedAfterFire.setValue(100);
+        fireBallBox.setSelected((boolean) defaults.get("fireBall"));
+        driveForwardBox.setSelected((boolean) defaults.get("driveForward"));
+        roborealmAimBox.setSelected((boolean) defaults.get("roborealmAimBox"));
+        waitForHotGoalBox.setSelected((boolean) defaults.get("waitForHotGoal"));
+        debugBox.setSelected((boolean) defaults.get("debug"));
+        driveTime.setValue((int) defaults.get("driveTime"));
+        driveTimeAfterFire.setValue((int) defaults.get("driveTimeAfterFire"));
+        driveSpeed.setValue((int) defaults.get("driveSpeed"));
+        driveSpeedAfterFire.setValue((int) defaults.get("driveSpeedAfterFire"));
     }//GEN-LAST:event_resetButtonActionPerformed
 
-    private void directionBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_directionBoxActionPerformed
+    private void locationBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_locationBoxActionPerformed
         try {
-            Object selected = directionBox.getSelectedItem();
-            if (selected.equals("Left")) {
-                AutonomousTables.setAutoString("DIRECTION", "LEFT");
-            } else if (selected.equals("Middle")) {
-                AutonomousTables.setAutoString("DIRECTION", "MIDDLE");
-            } else if (selected.equals("Right")) {
-                AutonomousTables.setAutoString("DIRECTION", "RIGHT");
-            } else {
-                AutonomousTables.setAutoString("DIRECTION", "GOALIE");
-            }           
+            AutonomousTables.setAutoString("LOCATION", (String) locationBox.getSelectedItem());          
         } catch (NotConnectedException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_directionBoxActionPerformed
+    }//GEN-LAST:event_locationBoxActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        File saveFile = new File("autonomousconfig_default.txt");
+        if (saveFile.exists()) {
+            saveFile.delete();
+        }
+        try {
+            saveFile.createNewFile();
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Path path = Paths.get("autonomousconfig_default.txt");
+        BufferedWriter writer;
+        try {
+            writer = Files.newBufferedWriter(path, Charset.defaultCharset());
+            writer.write("fireBall=" + fireBallBox.isSelected());
+            writer.newLine();
+            writer.write("driveForward=" + driveForwardBox.isSelected());
+            writer.newLine();
+            writer.write("roborealmAim=" + roborealmAimBox.isSelected());
+            writer.newLine();
+            writer.write("waitForHotGoal=" + waitForHotGoalBox.isSelected());
+            writer.newLine();
+            writer.write("debug=" + debugBox.isSelected());
+            writer.newLine();
+            writer.write("driveTime=" + driveTime.getValue());
+            writer.newLine();
+            writer.write("driveTimeAfterFire=" + driveTimeAfterFire.getValue());
+            writer.newLine();
+            writer.write("driveSpeed=" + driveSpeed.getValue());
+            writer.newLine();
+            writer.write("driveSpeedAfterFire=" + driveSpeedAfterFire.getValue());
+            writer.newLine();
+            writer.write("location=" + locationBox.getSelectedItem());
+            writer.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        refreshDefaults();       
+    }//GEN-LAST:event_saveButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -507,11 +570,38 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
+  
+    public void refreshDefaults() {
+        if (new File("autonomousconfig_default.txt").exists()) {
+            BufferedReader br;
+            try {
+                br = new BufferedReader(new FileReader("autonomousconfig_default.txt"));
+                for (String s; (s = br.readLine()) != null;) {
+                    String[] parts = s.split("=");
+                    defaults.put(parts[0], parts[1]);
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            defaults.put("fireBall", true);
+            defaults.put("driveForward", true);
+            defaults.put("roborealmAim", true);
+            defaults.put("waitForHotGoal", true);
+            defaults.put("debug", false);
+            defaults.put("driveTime", 100);
+            defaults.put("driveTimeAfterFire", 100);
+            defaults.put("driveSpeed", 100);
+            defaults.put("driveSpeedAfterFire", 100);
+            defaults.put("location", "Middle");
+        }         
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox debugBox;
-    private javax.swing.JComboBox directionBox;
     private javax.swing.JCheckBox driveForwardBox;
     private javax.swing.JSlider driveSpeed;
     private javax.swing.JSlider driveSpeedAfterFire;
@@ -531,9 +621,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JComboBox locationBox;
     private javax.swing.JToggleButton lockValues;
     private javax.swing.JButton resetButton;
     private javax.swing.JCheckBox roborealmAimBox;
+    private javax.swing.JButton saveButton;
     private javax.swing.JCheckBox waitForHotGoalBox;
     // End of variables declaration//GEN-END:variables
 }
