@@ -38,11 +38,31 @@ public class TankDriveCommand extends CommandBase {
     }
 
     public double normalize(double joystick, double motor) {
+        
+        if (Math.abs(joystick) < Math.abs(motor)) {
+            if (joystick > 0) {
+                double result = Math.min(motor - RobotMap.motorRampStep, motor);
+                System.out.println("Joystick>0 I:"+joystick+", O:" + result);
+                return result;
+            } else if (Math.abs(motor) < RobotMap.motorRampStep) {
+                System.out.println("Joystick<step");
+                return 0;
+            } else if (joystick < 0) {
+                double result = Math.min(motor + RobotMap.motorRampStep, motor);
+                System.out.println("Joystick<0 I:"+joystick+", O:" + result);
+                return Math.max(motor + RobotMap.motorRampStep, motor);
+            }
+        }
+        
+        return joystick;
+        
+        /*
         if (Math.abs(joystick) < Math.abs(motor) || Math.abs(joystick) < RobotMap.motorRampStart) {
             return motor - MathUtils.sign(joystick) * Math.min(RobotMap.motorRampStep, Math.abs(motor) - Math.abs(joystick));
         } else {
             return joystick;
         }
+        */
     }
     
     public static double MAX_SPEED_WHILE_VACUUM = 0.7;
@@ -51,15 +71,15 @@ public class TankDriveCommand extends CommandBase {
     protected void execute() {
         drive.updateGears();
         
-        motorLeft = normalize(oi.getLeftInput(), motorLeft);
-        motorRight = normalize(oi.getRightInput(), motorRight);
+//        motorLeft = normalize(oi.getLeftInput(), motorLeft);
+//        motorRight = normalize(oi.getRightInput(), motorRight);
 //        
 //        if (vacuum.isSucks()) {
 //            //if (motorLeft < 
 //        }
         
-//        double motorLeft = oi.getLeftInput();
-//        double motorRight = oi.getRightInput();
+        motorLeft = oi.getLeftInput();
+        motorRight = oi.getRightInput();
         
         if (Math.abs(motorLeft) < 0.03 && Math.abs(motorRight) < 0.03) {
             // Alt drive
