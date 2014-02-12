@@ -37,9 +37,9 @@ public class TrackingCommand extends CommandBase {
         if (RoboRealm.server != null) {
             double x = RoboRealm.server.getNumber("COG_X");
             if (x < targetX - trackMargin) {
-                angle = -0.3;
+                angle = -0.6;
             } else if (x > targetX + trackMargin) {
-                angle = 0.3;
+                angle = 0.6;
             }
             
             double y = RoboRealm.server.getNumber("COG_Y");
