@@ -1,18 +1,43 @@
 
 package com.twelvevoltbolt.gallium.commands;
 
-import com.twelvevoltbolt.gallium.commands.autonomous.AutonomousDriveCommand;
-import com.twelvevoltbolt.gallium.commands.autonomous.AutonomousFireActionCommand;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import com.twelvevoltbolt.gallium.commands.autonomous.AutonomousConfiguredCommand;
 
-public class AutonomousCommand extends CommandGroup {
+public class AutonomousCommand extends CommandBase {
 
+    AutonomousConfiguredCommand cmd;
+    
     public AutonomousCommand() {
-        addSequential(new AutonomousDriveCommand("DRIVE", "DRIVE_TIME_1", "DRIVE_SPEED_1", true, 1, 0.75));
-        addSequential(new WaitCommand(1));
-        addSequential(new AutonomousFireActionCommand("FIRE"));
-        addSequential(new WaitCommand(1));
-        addSequential(new AutonomousDriveCommand("DRIVE", "DRIVE_TIME_2", "DRIVE_SPEED_2", true, 1, 0.75));
+//        requires(firing);
+//        requires(drive);
     }
+
+    protected void initialize() {
+        cmd = new AutonomousConfiguredCommand();
+        cmd.start();
+    }
+
+    protected void execute() {
+    }
+
+    protected boolean isFinished() {
+        return !cmd.isRunning();
+    }
+
+    protected void end() {
+        System.out.println("Ending AutonomousCommand");
+        if (cmd != null) {
+            cmd.cancel();
+        }
+    }
+
+    protected void interrupted() {
+        end();
+    }
+
+    public synchronized void cancel() {
+        super.cancel();
+        end();
+    }
+
 }

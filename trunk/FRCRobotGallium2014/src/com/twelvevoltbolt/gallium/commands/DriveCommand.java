@@ -17,7 +17,6 @@ public class DriveCommand extends CommandBase {
         this.right = right;
         
         requires(drive);
-        requires(firing);
     }
     
     protected void initialize() {
