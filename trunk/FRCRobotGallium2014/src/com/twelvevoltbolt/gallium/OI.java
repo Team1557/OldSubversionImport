@@ -31,7 +31,7 @@ public class OI {
     Button suckButton = new JoystickButton(alt, 2);
     Button fireTriggerButton = new JoystickButton(alt, 3);
     Button debugButton = new JoystickButton(alt, 10);
-    Button trackButton = new JoystickButton(alt, 11);
+//    Button trackButton = new JoystickButton(alt, 11);
 
     public OI() {
         armControl.whileHeld(new JoystickArmCommand());
@@ -44,7 +44,7 @@ public class OI {
         // Fire based on joystick input
         fireTriggerButton.whenPressed(new FireActionCommand());
         
-        trackButton.toggleWhenPressed(new TrackingCommand());
+//        trackButton.toggleWhenPressed(new TrackingCommand());
     }
 
     public double getLeftInput() {
