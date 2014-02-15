@@ -82,14 +82,29 @@ public class OI {
      *
      * @return
      */
-    public double getFiringAngle() {
+    public double getAltTurnAngle() {
         double value = alt.getAxis(Joystick.AxisType.kX);
-        
+
         if (Math.abs(value) < 0.1) {
             return 0;
         }
-        
+
         return value;
+    }
+
+    public double getAltInput() {
+        double value = alt.getAxis(Joystick.AxisType.kY);
+
+        if (Math.abs(value) < 0.05) {
+            return 0;
+        }
+
+        // Square the input
+        if (value >= 0) {
+            return value * value;
+        } else {
+            return -(value * value);
+        }
     }
     
     public double getArmSpeed() {

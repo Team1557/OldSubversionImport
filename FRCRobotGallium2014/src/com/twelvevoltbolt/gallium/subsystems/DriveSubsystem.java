@@ -26,6 +26,7 @@ public class DriveSubsystem extends Subsystem {
         try {
             leftMotor1 = new CANJaguar(RobotMap.leftMotor1);
             leftMotor1.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            leftMotor1.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
         } catch (CANTimeoutException ex) {
             System.out.println("Drive subsystem error");
             ex.printStackTrace();

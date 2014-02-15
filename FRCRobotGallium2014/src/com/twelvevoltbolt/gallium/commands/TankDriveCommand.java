@@ -1,6 +1,5 @@
 package com.twelvevoltbolt.gallium.commands;
 
-import com.twelvevoltbolt.gallium.MathUtils;
 import com.twelvevoltbolt.gallium.RobotMap;
 
 /**
@@ -13,7 +12,7 @@ import com.twelvevoltbolt.gallium.RobotMap;
  * 
  * Right:
  *     Y axis: Drive right
- *     Trigger: Shift up
+ *     Trigger: Shift Up
  * 
  * Alternate:
  *     2: Vacuum
@@ -82,19 +81,23 @@ public class TankDriveCommand extends CommandBase {
         motorRight = oi.getRightInput();
         
         if (Math.abs(motorLeft) < 0.03 && Math.abs(motorRight) < 0.03) {
-            // Alt drive
-            double angle = oi.getFiringAngle();
+            //Alt drive
+            double amountForward = oi.getAltInput();
+            double angle = oi.getAltTurnAngle();
             
-            if (Math.abs(angle) > 0.1) {
+            if (Math.abs(angle) > 0.1 || Math.abs(amountForward) > 0.1) {
+                // drive.drive(angle * .75, -angle * .75);
+                
                 if (oi.isDebug()) {
-                    System.out.println("Alt drive: " + angle);
+                    System.out.println("Alt drive: " + angle + ", " + amountForward);
                 }
-
-                drive.drive(angle * .75, -angle * .75);
+                
+                drive.arcadeDrive(oi.getAltInput() * .75, oi.getAltTurnAngle() * .75);
             } else {
                 drive.drive(0, 0);
             }
         } else {
+            //Normal Drive
             drive.drive(-motorLeft, -motorRight);
         }
     }

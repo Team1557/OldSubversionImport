@@ -6,7 +6,7 @@
 package com.twelvevoltbolt.autonomous;
 
 
-class NotConnectedException extends Exception {
+public class NotConnectedException extends Exception {
 
     public NotConnectedException() {
     }
