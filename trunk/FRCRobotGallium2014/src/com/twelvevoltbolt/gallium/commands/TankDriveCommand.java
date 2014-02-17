@@ -92,7 +92,7 @@ public class TankDriveCommand extends CommandBase {
                     System.out.println("Alt drive: " + angle + ", " + amountForward);
                 }
                 
-                drive.arcadeDrive(oi.getAltInput() * .75, oi.getAltTurnAngle() * .75);
+                drive.arcadeDrive(oi.getAltInput() * .75, oi.getAltTurnAngle());
             } else {
                 drive.drive(0, 0);
             }
