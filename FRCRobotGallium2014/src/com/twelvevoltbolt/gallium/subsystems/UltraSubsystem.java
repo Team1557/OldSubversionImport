@@ -1,7 +1,7 @@
 package com.twelvevoltbolt.gallium.subsystems;
 
 import com.twelvevoltbolt.gallium.RobotMap;
-import edu.wpi.first.wpilibj.DigitalModule;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -10,18 +10,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */ 
 public class UltraSubsystem extends Subsystem {
 
-    DigitalModule ultra;
+    Ultrasonic ultra;
     
     public UltraSubsystem() {
-        ultra.allocateDIO(RobotMap.UltrasonicSensor, true);
+        ultra = new Ultrasonic(RobotMap.pingChannel, RobotMap.echoChannel);
+//        ultra.getRangeInches();
     }
 
     protected void initDefaultCommand() {
         
-    }
-    
-    public int getRange() {
-        return ultra.getPWM(RobotMap.UltrasonicSensor);
     }
     
 }
