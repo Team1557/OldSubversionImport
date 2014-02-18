@@ -30,6 +30,7 @@ public class DriveSubsystem extends Subsystem {
         try {
             leftMotor1 = new CANJaguar(RobotMap.leftMotor1);
             leftMotor1.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            leftMotor1.configEncoderCodesPerRev(200);
 //            leftMotor1.setSpeedReference(CANJaguar.SpeedReference.kQuadEncoder);
         } catch (CANTimeoutException ex) {
             System.out.println("Drive subsystem error");
@@ -39,6 +40,7 @@ public class DriveSubsystem extends Subsystem {
         try {
             leftMotor2 = new CANJaguar(RobotMap.leftMotor2);
             leftMotor2.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            leftMotor2.configEncoderCodesPerRev(200);
         } catch (CANTimeoutException ex) {
             System.out.println("Drive subsystem error");
             ex.printStackTrace();
@@ -47,6 +49,7 @@ public class DriveSubsystem extends Subsystem {
         try {
             rightMotor1 = new CANJaguar(RobotMap.rightMotor1);
             rightMotor1.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            rightMotor1.configEncoderCodesPerRev(200);
         } catch (CANTimeoutException ex) {
             System.out.println("Drive subsystem error");
             ex.printStackTrace();
@@ -55,6 +58,7 @@ public class DriveSubsystem extends Subsystem {
         try {
             rightMotor2 = new CANJaguar(RobotMap.rightMotor2);
             rightMotor2.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            rightMotor2.configEncoderCodesPerRev(200);
         } catch (CANTimeoutException ex) {
             System.out.println("Drive subsystem error");
             ex.printStackTrace();

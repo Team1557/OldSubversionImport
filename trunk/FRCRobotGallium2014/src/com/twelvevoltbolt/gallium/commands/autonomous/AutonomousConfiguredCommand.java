@@ -23,15 +23,15 @@ public class AutonomousConfiguredCommand extends CommandGroup {
         String direction = AutonomousTables.getAutoString("LOCATION", "Middle");
         if (direction.equals("Left") || direction.equals("Right")) {
             
-            addSequential(new AutonomousDriveCommand("DRIVE", "DRIVE_TIME_1", "DRIVE_SPEED_1", true, 1, 0.75));
+            addSequential(new AutonomousDriveCommand("DRIVE", "DRIVE_TIME_1", "DRIVE_SPEED_1", true, 4.5, 0.75));
             addSequential(new WaitCommand(1));
             addSequential(new AutonomousFireActionCommand("FIRE"));
             addSequential(new WaitCommand(1));
-            addSequential(new AutonomousDriveCommand("DRIVE", "DRIVE_TIME_2", "DRIVE_SPEED_2", true, 1, 0.75));
+            addSequential(new AutonomousDriveCommand("DRIVE", "DRIVE_TIME_2", "DRIVE_SPEED_2", true, 0, 0.75));
             
         } else if (direction.equals("Middle")) {
             
-            addSequential(new AutonomousDriveCommand("DRIVE", "DRIVE_TIME_1", "DRIVE_SPEED_1", true, 1, 0.75));
+            addSequential(new AutonomousDriveCommand("DRIVE", "DRIVE_TIME_1", "DRIVE_SPEED_1", true, 4.5, 0.75));
             addSequential(new WaitCommand(1));
 
             double turnTime = AutonomousTables.getAutoNumber("DRIVE_TURN_TIME", 0.75);
