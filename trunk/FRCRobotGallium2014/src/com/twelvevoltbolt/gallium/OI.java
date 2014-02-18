@@ -27,7 +27,7 @@ public class OI {
     Button shiftDownButton = new JoystickButton(left, 1);
     Button shiftUpButton = new JoystickButton(right, 1);
     
-    Button armControl = new JoystickButton(alt, 1);
+    public Button armControl = new JoystickButton(alt, 1);
     Button suckButton = new JoystickButton(alt, 2);
     Button fireTriggerButton = new JoystickButton(alt, 3);
     Button debugButton = new JoystickButton(alt, 10);
