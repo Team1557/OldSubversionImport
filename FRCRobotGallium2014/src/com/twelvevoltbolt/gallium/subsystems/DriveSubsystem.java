@@ -20,6 +20,10 @@ public class DriveSubsystem extends Subsystem {
     public CANJaguar leftMotor2;
     public CANJaguar rightMotor1;
     public CANJaguar rightMotor2;
+//    public Jaguar leftMotor1;
+//    public Jaguar leftMotor2;
+//    public Jaguar rightMotor1;
+//    public Jaguar rightMotor2;
     RobotDrive drive;
     
     public DriveSubsystem() {
@@ -55,6 +59,11 @@ public class DriveSubsystem extends Subsystem {
             System.out.println("Drive subsystem error");
             ex.printStackTrace();
         }
+        
+        /*leftMotor1 = new Jaguar(RobotMap.leftMotor1);
+        leftMotor2 = new Jaguar(RobotMap.leftMotor2);
+        rightMotor1 = new Jaguar(RobotMap.rightMotor1);
+        rightMotor2 = new Jaguar(RobotMap.rightMotor2);*/
         
         drive = new RobotDrive(leftMotor1, leftMotor2, rightMotor1, rightMotor2);
         
@@ -106,15 +115,15 @@ public class DriveSubsystem extends Subsystem {
         try {
             double avg = (leftMotor1.getSpeed());
             
-            /*if ((avg > speedShiftUp) && !getGear()) {
-                setGear(true);
-                shiftGear(gear);
-                System.out.println("Shifting up " + avg);
-            } else if ((avg < speedShiftDown) && getGear()) {
-                setGear(false);
-                shiftGear(gear);
-                System.out.println("Shifting down " + avg);
-            }*/
+//            if ((avg > speedShiftUp) && !getGear()) {
+//                setGear(true);
+//                shiftGear(gear);
+//                System.out.println("Shifting up " + avg);
+//            } else if ((avg < speedShiftDown) && getGear()) {
+//                setGear(false);
+//                shiftGear(gear);
+//                System.out.println("Shifting down " + avg);
+//            }
             
             if (CommandBase.oi.isDebug()) {
                 System.out.println("Speed: " + avg);

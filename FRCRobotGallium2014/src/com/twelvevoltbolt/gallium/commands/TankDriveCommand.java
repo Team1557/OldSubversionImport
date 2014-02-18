@@ -68,7 +68,7 @@ public class TankDriveCommand extends CommandBase {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        drive.updateGears();
+//        drive.updateGears();
         
 //        motorLeft = normalize(oi.getLeftInput(), motorLeft);
 //        motorRight = normalize(oi.getRightInput(), motorRight);
@@ -99,6 +99,10 @@ public class TankDriveCommand extends CommandBase {
         } else {
             //Normal Drive
             drive.drive(-motorLeft, -motorRight);
+            
+            if (oi.isDebug()) {
+                System.out.println("Tank drive: " + motorLeft + ", " + motorRight);
+            }
         }
     }
 

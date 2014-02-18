@@ -17,8 +17,9 @@ public class RobotMap {
     public static final int rightMotor2 = 5; // Jaguar port
     
     // Ultrasonic screwdriver
-    public static final int pingChannel = -0;
-    public static final int echoChannel = -0;
+    public static final int ultra = 2;
+    public static final int pingChannel = 2;
+    public static final int echoChannel = 2;
     
     // SuperShifters
     public static final int superShifter1 = 5;
