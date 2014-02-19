@@ -20,6 +20,9 @@ public class RobotMap {
     public static final int superShifter1 = 5;
     public static final int superShifter2 = 6;
     
+    public static final int encoderA = 2;
+    public static final int encoderB = 3;
+    
     // Vacuum
     public static int vacuum = 1;
     

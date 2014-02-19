@@ -1,6 +1,7 @@
 package com.twelvevoltbolt.gallium.commands;
 
 import com.twelvevoltbolt.gallium.RobotMap;
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
  * A tank drive command that takes input from two joysticks and outputs to the
@@ -100,6 +101,9 @@ public class TankDriveCommand extends CommandBase {
             }
         } else {
             //Normal Drive
+//            System.out.println("r " + shifter.getEncoder().getRate());
+//            System.out.println("s " + shifter.getEncoder().getRaw() + ".0");
+            
             drive.drive(-motorLeft, -motorRight);
             
             if (oi.isDebug()) {
