@@ -1,7 +1,7 @@
-package com.twelvevoltbolt.gallium.commands;
+package com.twelvevoltbolt.disk.commands;
 
-import com.twelvevoltbolt.gallium.RobotMap;
-import edu.wpi.first.wpilibj.can.CANTimeoutException;
+import com.twelvevoltbolt.disk.RobotMap;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * A tank drive command that takes input from two joysticks and outputs to the
@@ -23,12 +23,12 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
  * 
  * @author code
  */
-public class TankDriveCommand extends CommandBase {
+public class ArcadeDriveCommand extends CommandBase {
     
     double motorLeft = 0;
     double motorRight = 0;
     
-    public TankDriveCommand() {
+    public ArcadeDriveCommand() {
         requires(drive);
         // drive.leftMotor1.configEncoderCodesPerRev(codesPerRev);
     }
@@ -66,50 +66,17 @@ public class TankDriveCommand extends CommandBase {
     }
     
     public static double MAX_SPEED_WHILE_VACUUM = 0.7;
-    
+
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//        drive.updateGears();
-        
-//        motorLeft = normalize(oi.getLeftInput(), motorLeft);
-//        motorRight = normalize(oi.getRightInput(), motorRight);
-//        
-//        if (vacuum.isSucks()) {
-//            //if (motorLeft < 
-//        }
-        
-        motorLeft = oi.getLeftInput();
-        motorRight = oi.getRightInput();
-        
-        /*if (Math.abs(motorLeft) < 0.03 && Math.abs(motorRight) < 0.03) {
-            //Alt drive
-            double amountForward = oi.getAltInput();
-            double angle = oi.getAltTurnAngle();
-            
-            if (Math.abs(angle) > 0.1 || Math.abs(amountForward) > 0.1) {
-                // drive.drive(angle * .75, -angle * .75);
-                
-                if (oi.isDebug()) {
-                    System.out.println("Alt drive: " + angle + ", " + amountForward);
-                }
-                
-                if (!oi.armControl.get()) {
-                    drive.arcadeDrive(oi.getAltInput() * .75, oi.getAltTurnAngle());
-                }
-            } else {
-                drive.drive(0, 0);
-            }
-        } else */{
-            //Normal Drive
-//            System.out.println("r " + shifter.getEncoder().getRate());
-//            System.out.println("s " + shifter.getEncoder().getRaw() + ".0");
-            
-            drive.drive(-motorLeft, -motorRight);
-            
-            if (oi.isDebug()) {
-                System.out.println("Tank drive: " + motorLeft + ", " + motorRight);
-            }
+        Joystick left = oi.getMainJoystick();
+
+        drive.drive(left.getAxis(Joystick.AxisType.kY), left.getAxis(Joystick.AxisType.kX));
+
+        if (oi.isDebug()) {
+            System.out.println("Tank drive: " + motorLeft + ", " + motorRight);
         }
+
     }
 
     // Make this return true when this Command no longer needs to run execute()

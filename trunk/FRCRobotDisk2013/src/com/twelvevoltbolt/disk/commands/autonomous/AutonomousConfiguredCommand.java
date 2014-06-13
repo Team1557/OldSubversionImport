@@ -3,11 +3,11 @@
  * and open the template in the editor.
  */
 
-package com.twelvevoltbolt.gallium.commands.autonomous;
+package com.twelvevoltbolt.disk.commands.autonomous;
 
 import com.twelvevoltbolt.autonomous.AutonomousTables;
-import com.twelvevoltbolt.gallium.commands.DriveCommand;
-import com.twelvevoltbolt.gallium.commands.ShiftCommand;
+import com.twelvevoltbolt.disk.commands.DriveCommand;
+import com.twelvevoltbolt.disk.commands.ShiftCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
