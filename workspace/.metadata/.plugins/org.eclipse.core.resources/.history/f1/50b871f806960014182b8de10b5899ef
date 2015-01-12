@@ -1,0 +1,71 @@
+
+package org.usfirst.frc.team1557.robot;
+
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
+
+/**
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to each mode, as described in the IterativeRobot
+ * documentation. If you change the name of this class or the package after
+ * creating this project, you must also update the manifest file in the resource
+ * directory.
+ */
+public class Robot extends IterativeRobot {
+	Servo servoOne;
+	Joystick mainJoy;
+	BuiltInAccelerometer BA;
+
+	public void robotInit() {
+		
+		BA = new BuiltInAccelerometer(Range.k2G);
+		
+		System.out.println("Test pls");
+		mainJoy = new Joystick(0);
+		servoOne = new Servo(0);
+	
+	}
+
+	/**
+	 * This function is called periodically during autonomous
+	 */
+	public void autonomousPeriodic() {
+		
+
+	}
+
+	int ticks = 0;
+	
+	/**
+	 * This function is called periodically during operator control
+	 */
+	public void teleopPeriodic() {
+		ticks++;
+		
+		double x = BA.getX(),
+				y = BA.getY(),
+				z = BA.getZ();
+		
+		//if (Math.abs(x) > .01 && Math.abs(y) > .01 && Math.abs(z - 1) > .01) {
+		if (ticks > 3) {
+			ticks = 0;
+			System.out.printf("X: %8.4f, Y: %8.4f, Z: %8.4f%n", BA.getX(), BA.getY(), BA.getZ() );
+		}
+		
+		servoOne.set((mainJoy.getRawAxis(0) + 1) / 2);
+		//servoOne.setAngle(Math.atan2(mainJoy.getX(), mainJoy.getY()) * (360.0 / Math.PI));
+	
+	}
+
+	/**
+	 * This function is called periodically during test mode
+	 */
+	public void testPeriodic() {
+
+	}
+
+}

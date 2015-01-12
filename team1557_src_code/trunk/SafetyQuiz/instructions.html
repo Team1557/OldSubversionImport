@@ -1,0 +1,75 @@
+﻿
+<!--acbbccdbb-->
+<html>
+<head>
+<title>1557 Safety Quiz</title>
+
+<link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.0.custom.min.css" />
+<script src="jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="style.css"/>
+
+<style>
+#welcomeText {
+	font-family:coolvetica;
+	font-size:60px;
+}
+
+#startButton {
+	font-size:90px;
+}
+
+.photo {
+	padding:1.5%;
+	background-image:url('subtlenet2.png');
+	border:2px solid #ddd;
+	position:absolute;
+}
+
+#safetyMantisImage {
+	right:5%;
+	bottom:10%;
+	-webkit-transform:rotate(-17deg);
+}
+
+#voltyImage {
+	left:2%;
+	bottom:7%;
+	-webkit-transform:rotate(12deg);
+}
+
+li {
+	font-family:coolvetica;
+	font-size:24px;
+}
+</style>
+
+</head>
+<body>
+<img class="photo" src="safetyMantis3.jpg" onclick="this.src='safetyMantis4.jpg';" id="safetyMantisImage" width="30%"/>
+<img class="photo" src="volty.jpg" id="voltyImage" height="40%"/>
+
+<center><span id="welcomeText">Quiz Instructions</span></center>
+<ul>
+<li>Questions can have more than one correct answer.</li>
+<li>Select an answer by clicking on the button. <div style="font-size:20px;" id="sampleButton" class="large red button">A</div></li>
+</ul>
+
+<div style="height:100px"></div>
+<center><div class="supersuperduper white button" id="startButton">Start!</div></center>
+
+<script type="text/javascript" lang="JavaScript">
+	$("#startButton").bind("click", function() {
+		window.location = "quiz.html";
+	});
+	
+	function randomFromInterval(from,to)
+{
+    return Math.floor(Math.random()*(to-from+1)+from);
+}
+
+																																																																																							emotes = [":)",":o",":D",":P",":|","(ー_ー)!!","(-.-)","(-_-)","(╯°□°）╯︵ ┻━┻","(^o^)","(~_~)"," !(^^)!"," (@_@","O:-)","X-(","~:0",":-D","(*v*)",":-#","</3","=^.^=","*<:o)","O.o",":-S","B-)",":_(",":'(","\:D/","*-*",":o3","#-o",":*)","//_^",">:)","<><",":-(",":(",":-(","=P",":-P","8-)","$_$",":->","=)",":-)",":)","#","<3",":-|","X-p",":-)*",":-*","XD","=D",")-:","(-:","<3","=/",":-)(-:","<:3)~","~,~",":-B","^_^","<l:0",":-/","=8)","=(",":-(",":(",":-7",":-@","=O",":-o",":-)",":)",":-Q",":>",":P",":o",":-J",":-&","=-O",":-\\",":-E","=D",";-)",";)","O:-)",":-D",":'(",":-[",":-!",":-(",":(",":-\\",":-*",":-X",":-$",":-)",":)",":-P","=-O",";-)",";)",">:O",];currentEmote = 0;$("#sampleButton").bind("click", function() {$("#sampleButton").css("font-family","Helvetica");$("#sampleButton").html(emotes[randomFromInterval(0,emotes.length-1)]);});
+</script>
+<a href="quiz.html">&nbsp;</a>
+
+</body>
+</html>

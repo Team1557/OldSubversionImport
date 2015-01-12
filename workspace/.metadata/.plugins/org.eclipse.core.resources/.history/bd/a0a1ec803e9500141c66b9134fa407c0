@@ -1,0 +1,17 @@
+package com.twelvevoltbolt.recycle.opencv;
+
+import org.opencv.core.*;
+import org.opencv.highgui.Highgui;
+
+public class Main {
+
+	public static void main(String[] args) {
+		System.loadLibrary( Core.NATIVE_LIBRARY_NAME );
+		
+		Mat image = Highgui.imread("table.jpg");
+		
+		Mat mat = Mat.eye( 3, 3, CvType.CV_8UC1 );
+		System.out.println( "mat = " + mat.dump() );
+	}
+
+}
